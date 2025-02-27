@@ -1,18 +1,6 @@
 @extends('dashboard/layouts.template')
 @section('content')
 
-
-
-        
-
-    
-
-
-
-
-
-
-
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
@@ -189,7 +177,6 @@
                                 </a>
                             </div>
                         </li>
-
                     </ul>
 
                 </nav>
