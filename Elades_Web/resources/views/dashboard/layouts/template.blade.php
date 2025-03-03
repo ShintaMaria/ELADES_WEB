@@ -27,6 +27,7 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
     @include('dashboard/layouts.sidebar')
+    @include('dashboard/layouts.topbar')
     @yield('content')
     </body>
 
