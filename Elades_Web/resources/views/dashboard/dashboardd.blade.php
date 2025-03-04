@@ -183,21 +183,21 @@
                 <div class="modal-body">Pilih "LogOut" Jika Anda Yakin Untuk Keluar</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <!-- <a class="btn btn-primary" href="landingpage/landing_page.blade.php">Logout</a> -->
-                    <a class="btn btn-primary" href="{{ route('landingpage') }}">Logout</a>
-                </div>
-            </div>
+                     <a class="btn btn-primary" href="landingpage/landing_page.blade.php">Logout</a> -->
+                    <!-- <a class="btn btn-primary" href="{{ route('landingpage') }}">Logout</a>
+                </div> -->
+            <!-- </div>
         </div>
-    </div> -->
+    </div>  -->
 
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('dashboard/assets/vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{ asset('dashboard/assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="{{ asset('dashboard/assets/vendor/jquery-easing/jquery.easing.min.js')}}></script>
+    <script src="{{ asset('dashboard/assets/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
-    <!-- Custom scripts for all pages-->
+    <!-- Custom scripts for all pages -->
     <script src="{{ asset('dashboard/assets/js/sb-admin-2.min.js')}}"></script>
 
     <!-- Page level plugins -->
