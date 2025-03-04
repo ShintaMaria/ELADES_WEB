@@ -5,6 +5,9 @@ use App\Http\Controllers\dashboard\DashboardController;
 use App\Http\Controllers\pengaduan\InfrastrukturController;
 use App\Http\Controllers\pengaduan\KeamananController;
 use App\Http\Controllers\pengaduan\SaranController;
+use App\Http\Controllers\informasi\KabarDesaController;
+// use App\Http\Controllers\informasi\ArtikelTerkiniController;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -34,6 +37,16 @@ Route::group(['namespace'=>'App\Http\Controllers\pengaduan'],function()
     Route::resource('/saran',SaranController::class);
 });
 
+Route::group(['namespace'=>'App\Http\Controllers\informasi'],function()
+{
+    Route::resource('/kabardesa',KabarDesaController::class);
+});
+
+// Route::group(['namespace'=>'App\Http\Controllers\informasi'],function()
+// {
+//     Route::resource('/artikel',ArtikelTerkiniController::class);
+// });
+
 
 Route::get('/dashboardd', function () {
     return view('dashboard.dashboardd');
@@ -55,3 +68,11 @@ Route::get('/keamanan', function () {
 Route::get('/saran', function () {
     return view('pengaduan.saran');
 })->name('saran');
+
+Route::get('/informasi', function () {
+    return view('informasi.kabar_desa');
+})->name('kabardesa');
+
+// Route::get('/informasi', function () {
+//     return view('informasi.artikel_terkini');
+// })->name('artikel');
