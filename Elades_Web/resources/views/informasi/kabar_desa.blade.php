@@ -17,33 +17,60 @@
             <div class="card shadow mb-4">
                 <!-- Header dengan judul dan search box -->
                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                    <h6 class="m-0 font-weight-bold text-primary"></h6>
+                <a href="#" class="btn btn-primary btn-sm">Tambah Kabar Desa Baru</a>
                     <!-- Tempat baru untuk search box -->
                     <div id="customSearchContainer"></div>
                 </div>
                 
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
-                                </tr>
-                            </thead>
-                            <!-- tambah disini untuk menghubungkan tabel ke database -->
-                    </div>
-                </div>
-            </div>
+                <div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Judul</th>
+                <th>Deskripsi</th>
+                <th>Tanggal</th>
+                <th>Gambar</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @isset($kabars)
+                @foreach($kabars as $kabar)
+                <tr>
+                    <td>{{ $kabar->judul }}</td>
+                    <td>{{ $kabar->deskripsi }}</td>
+                    <td>{{ $kabar->tanggal }}</td>
+                    <td>
+                        @if($kabar->gambar)
+                            <img src="{{ asset($kabar->gambar) }}" width="100">
+                        @else
+                            Tidak ada gambar
+                        @endif
+                    </td>
+                    <td>
+                        
+                    <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
+                    <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
+
+                    </td>
+                </tr>
+                @endforeach
+            @endisset
+        </tbody>
+    </table>
+</div>
+
+</div>
+
 
         </div>
         <!-- /.container-fluid -->
     </div>
     <!-- End of Page Wrapper -->
+     
+    <!-- button edit hapus -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
