@@ -12,15 +12,17 @@
           <li><a href="#hero" class="active ">Home</a></li>
           
           <!-- <li><a href="#services">Services</a></li> -->
-          <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <li class="dropdown"><a href="#"><span>Detail</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
-              <li><a href="#">Dropdown 1</a></li>
+              <li><a href="#">Struktur organisasi</a></li>
               <!-- <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                 
               </li> -->
-              <li><a href="#">Dropdown 2</a></li>
-              <li><a href="#">Dropdown 3</a></li>
-              <li><a href="#">Dropdown 4</a></li>
+              <li><a href="#">Visi dan Misi</a></li>
+              <li><a href="#">Aplikasi E-Lades</a></li>
+              <li><a href="#">Artikel Terkini</a></li>
+              <li><a href="#">Pertanyaan Umum</a></li>
+              <li><a href="#">Maps Kauman</a></li>
             </ul>
           </li>
           <li><a href="#contact">Contact</a></li>
