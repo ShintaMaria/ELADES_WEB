@@ -4,12 +4,12 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Index - iLanding Bootstrap Template</title>
+  <title>Website Desa Kauman Ngnjuk</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="{{ asset('landingpage/assets/img/favicon.png')}}" rel="icon">
+  <link href="{{ asset('landingpage/assets/img/logonavbar.png')}}" rel="icon">
   <link href="{{ asset('landingpage/assets/img/apple-touch-icon.png')}}" rel="apple-touch-icon">
   <!-- <img src="{{ asset('landingpage/assets/img/desa.jpeg') }}" alt="Gambar Desa"> -->
   <!-- Fonts -->
@@ -117,13 +117,13 @@
     </div>
 
     <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">iLanding</strong> <span>All Rights Reserved</span></p>
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">4B1</strong> <span>All Rights Reserved</span></p>
       <div class="credits">
         <!-- All the links in the footer should remain intact. -->
         <!-- You can delete the links only if you've purchased the pro version. -->
         <!-- Licensing information: https://bootstrapmade.com/license/ -->
         <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        
       </div>
     </div>
 
