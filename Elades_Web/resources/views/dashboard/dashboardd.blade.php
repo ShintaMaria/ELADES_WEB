@@ -14,118 +14,179 @@
                     </div>
 
                     <!-- Content Row -->
-                    <div class="row">
+                    <!-- Content Row -->
+<div class="row">
 
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Earnings (Monthly)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-2 col-md-4 mb-2">
+        <div class="card border-left-primary shadow" style="height: auto; min-height: 100px;">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="font-weight-bold text-primary text-uppercase mb-1" style="font-size: 10px;">
+                            Surat Masuk
                         </div>
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Earnings (Annual)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
-                                            </div>
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar bg-info" role="progressbar"
-                                                            style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Pending Requests Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Pending Requests</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
                     </div>
+                    <div class="col-auto">
+                        <i class="fas fa-envelope fa-sm text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Earnings (Annual) Card Example -->
+    <div class="col-xl-2 col-md-4 mb-2">
+        <div class="card border-left-success shadow" style="height: auto; min-height: 100px;">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="font-weight-bold text-success text-uppercase mb-1" style="font-size: 10px;">
+                            Surat Keluar
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-paper-plane fa-sm text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tasks Card Example -->
+    <div class="col-xl-2 col-md-4 mb-2">
+        <div class="card border-left-info shadow" style="height: auto; min-height: 100px;">
+        <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="font-weight-bold text-success text-uppercase mb-1" style="font-size: 10px;">
+                            Surat Ditolak
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-times-circle fa-sm text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pending Requests Card Example -->
+    <div class="col-xl-2 col-md-4 mb-2">
+        <div class="card border-left-warning shadow" style="height: auto; min-height: 100px;">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="font-weight-bold text-warning text-uppercase mb-1" style="font-size: 10px;">
+                            Pengaduan Masuk
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-comments fa-sm text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Users Card Example -->
+    <div class="col-xl-2 col-md-4 mb-2">
+        <div class="card border-left-dark shadow" style="height: auto; min-height: 100px;">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="font-weight-bold text-dark text-uppercase mb-1" style="font-size: 10px;">
+                            Pengaduan Dalam Tindakan
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">150</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-tools fa-sm text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Total Sales Card (Patokan) -->
+    <div class="col-xl-2 col-md-4 mb-2">
+        <div class="card border-left-secondary shadow" style="height: auto; min-height: 100px;">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="font-weight-bold text-primary text-uppercase mb-1" style="font-size: 10px;">
+                            Pengaduan Selesai
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">3,200</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-check-circle fa-sm text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- End of Content Row -->
+
 
                     <!-- Content Row -->
 
                     <div class="row">
 
                         <!-- Area Chart -->
-                        <div class="col-xl-8 col-lg-7">
+                        <div class="col-xl-12 col-lg-7">
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </div>
+                                
+                                <script>
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    var ctx = document.getElementById("myAreaChart").getContext("2d");
+
+                                    var myAreaChart = new Chart(ctx, {
+                                        type: "line",
+                                        data: {
+                                            labels: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"], // Label bulan
+                                            datasets: [
+                                                {
+                                                    label: "Surat Masuk",
+                                                    data: [12, 19, 3, 5, 2, 3, 10, 15, 8, 6, 9, 4], // Data surat masuk
+                                                    borderColor: " #6a9f73",
+                                                    backgroundColor: "rgba(81, 255, 0, 0.3)", // Warna merah transparan
+                                                    fill: true 
+                                                },
+                                                {
+                                                    label: "Pengaduan Masuk",
+                                                    data: [8, 10, 5, 2, 14, 7, 9, 4, 6, 11, 13, 7], // Data pengaduan masuk
+                                                    borderColor: " #e74a3b",
+                                                    backgroundColor: "rgba(229, 255, 0, 0.3)", // Warna biru transparan
+                                                    fill: true
+                                                }
+                                            ]
+                                        },
+                                        options: {
+                                            responsive: true,
+                                            maintainAspectRatio: false,
+                                            scales: {
+                                                x: {
+                                                    grid: {
+                                                        display: false
+                                                    }
+                                                },
+                                                y: {
+                                                    beginAtZero: true
+                                                }
+                                            }
+                                        }
+                                    });
+                                });
+                                </script>
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="chart-area">
@@ -149,13 +210,13 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
+            <!-- <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
                         <span>Copyright &copy; Your Website 2025</span>
                     </div>
                 </div>
-            </footer>
+            </footer> -->
             <!-- End of Footer -->
 
         </div>
@@ -201,12 +262,12 @@
     <script src="{{ asset('dashboard/assets/js/sb-admin-2.min.js')}}"></script>
 
     <!-- Page level plugins -->
-    <script src="{{ asset('dashboard/assets/vendor/chart.js/Chart.min.js')}}"></script>
+    <!-- <script src="{{ asset('dashboard/assets/vendor/chart.js/Chart.min.js')}}"></script> -->
 
     <!-- Page level custom scripts -->
     <script src="{{ asset('dashboard/assets/js/demo/chart-area-demo.js')}}"></script>
     <script src="{{ asset('dashboard/assets/js/demo/chart-pie-demo.js')}}"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </body>
 
 </html>
