@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Website Desa Kauman Ngnjuk</title>
+  <title>Desa Kauman Nganjuk</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
