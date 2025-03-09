@@ -61,7 +61,7 @@
     <div class="col-lg-3 col-md-6">
       <div class="stat-item">
         <div class="stat-icon">
-          <i class="bi bi-trophy"></i>
+          <i class="bi bi-people"></i>
         </div>
         <div class="stat-content">
           
@@ -73,7 +73,7 @@
     <div class="col-lg-3 col-md-6">
       <div class="stat-item">
         <div class="stat-icon">
-          <i class="bi bi-briefcase"></i>
+          <i class="bi bi-house-door"></i>
         </div>
         <div class="stat-content">
         <p class="mb-2 fw-bold">Jumlah KK</p>
@@ -85,7 +85,7 @@
     <div class="col-lg-3 col-md-6">
       <div class="stat-item">
         <div class="stat-icon">
-          <i class="bi bi-graph-up"></i>
+          <i class="bi bi-map"></i>
         </div>
         <div class="stat-content">
         <p class="mb-2 fw-bold">Jumlah Dusun</p>
@@ -97,7 +97,7 @@
     <div class="col-lg-3 col-md-6">
       <div class="stat-item">
         <div class="stat-icon">
-          <i class="bi bi-award"></i>
+          <i class="bi bi-rulers"></i>
         </div>
         <div class="stat-content">
         <p class="mb-2 fw-bold">Luas Wilayah</p>
@@ -220,7 +220,7 @@
 
           <div class="col-xl-3 col-md-6" data-aos="zoom-in" data-aos-delay="100">
             <div class="feature-box orange">
-              <i class="bi bi-award"></i>
+              <i class="bi bi-file-earmark-text"></i>
               <h4>Pelayanan Administrasi</h4>
               <p>Ajukan surat keterangan, izin usaha, dan dokumen kependudukan dengan mudah secara online.</p>
             </div>
@@ -228,7 +228,7 @@
 
           <div class="col-xl-3 col-md-6" data-aos="zoom-in" data-aos-delay="200">
             <div class="feature-box blue">
-              <i class="bi bi-patch-check"></i>
+              <i class="bi bi-newspaper"></i>
               <h4>Informasi Publik</h4>
               <p>Dapatkan berita terbaru dan pengumuman penting desa.</p>
             </div>
@@ -236,7 +236,7 @@
 
           <div class="col-xl-3 col-md-6" data-aos="zoom-in" data-aos-delay="300">
             <div class="feature-box green">
-              <i class="bi bi-sunrise"></i>
+              <i class="bi bi-people"></i>
               <h4>Program & Kegiatan</h4>
               <p>Ikuti berbagai program pembangunan, pemberdayaan masyarakat, dan kegiatan sosial di desa.</p>
             </div>
@@ -244,7 +244,7 @@
 
           <div class="col-xl-3 col-md-6" data-aos="zoom-in" data-aos-delay="400">
             <div class="feature-box red">
-              <i class="bi bi-shield-check"></i>
+              <i class="bi bi-exclamation-triangle"></i>
               <h4>Keamanan & Pengaduan</h4>
               <p>Laporkan masalah keamanan, infrastruktur, atau layanan desa melalui sistem pengaduan online.</p>
             </div>
@@ -283,7 +283,7 @@
                     <p>Ajukan pembuatan surat melalui aplikasi tanpa perlu datang ke kantor desa.</p>
                   </div>
                   <div class="feature-icon flex-shrink-0">
-                    <i class="bi bi-display"></i>
+                    <i class="bi bi-file-earmark-text"></i>
                 </div>
               </div>
             </div><!-- End .feature-item -->
@@ -295,7 +295,7 @@
                   <p>Lihat status dan riwayat pengajuan surat secara lengkap, mulai dari permohonan hingga persetujuan, langsung di aplikasi.</p>
                 </div>
                 <div class="feature-icon flex-shrink-0">
-                  <i class="bi bi-feather"></i>
+                  <i class="bi bi-journal-check"></i>
                 </div>
               </div>
             </div><!-- End .feature-item -->
@@ -307,7 +307,7 @@
             <p>Dapatkan info terbaru tentang kegiatan dan kebijakan desa langsung melalui aplikasi.</p>
           </div>
           <div class="feature-icon flex-shrink-0">
-            <i class="bi bi-eye"></i>
+            <i class="bi bi-bell"></i>
           </div>
         </div>
       </div><!-- End .feature-item -->
@@ -339,7 +339,7 @@
       <div class="feature-item mb-5" data-aos="fade-left" data-aos-delay="200">
         <div class="d-flex align-items-center gap-4">
           <div class="feature-icon flex-shrink-0">
-            <i class="bi bi-code-square"></i>
+            <i class="bi bi-exclamation-triangle"></i>
           </div>
           <div class="feature-content">
             <h3>Fitur Pengaduan Masyarakat </h3>
@@ -363,7 +363,7 @@
       <div class="feature-item" data-aos="fade-left" data-aos-delay="400">
         <div class="d-flex align-items-center gap-4">
           <div class="feature-icon flex-shrink-0">
-            <i class="bi bi-browser-chrome"></i>
+            <i class="bi bi-search"></i>
           </div>
           <div class="feature-content">
             <h3>Cek dan Lacak Status Pengajuan</h3>
@@ -396,7 +396,7 @@
             <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
                 <div class="service-card d-flex">
                     <div class="icon flex-shrink-0">
-                        <i class="bi bi-file-text"></i>
+                        <i class="bi-newspaper"></i>
                     </div>
                     <div>
                         <h3>{{ $artikel->judul }}</h3>
