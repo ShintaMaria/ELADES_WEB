@@ -14,6 +14,6 @@ class KabarDesaController extends Controller
         $kabars = KabarDesa::all();
 
         // Kirim data ke view
-        return view('informasi.kabar_desa', compact('kabars'));
+        return view('informasi.kabar.kabar_desa', compact('kabars'));
     }
 }
