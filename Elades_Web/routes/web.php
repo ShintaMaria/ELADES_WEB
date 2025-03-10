@@ -27,4 +27,10 @@ Route::get('/saran', [SaranController::class, 'index'])->name('saran');
 
 // Informasi
 Route::get('/kabar_desa', [KabarDesaController::class, 'index'])->name('kabardesa');
+
+// Artikel Terkini (CRUD menggunakan resource)
+//Route::resource('artikel_terkini', ArtikelTerkiniController::class);
 Route::get('/artikel_terkini', [ArtikelTerkiniController::class, 'index'])->name('artikel');
+
+Route::resource('artikels', ArtikelTerkiniController::class);
+
