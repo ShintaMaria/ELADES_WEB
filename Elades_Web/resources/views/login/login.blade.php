@@ -8,6 +8,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <link href="{{ asset('landingpage/assets/img/logonavbar.png')}}" rel="icon">
+
     <title>Kauman Nganjuk - Login Admin</title>
 
     <!-- Custom fonts for this template-->
