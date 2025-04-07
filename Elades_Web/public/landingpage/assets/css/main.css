@@ -730,7 +730,7 @@ section,
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("/landingpage/assets/img/3.jpg") no-repeat center center/cover;
+  background: url("/landingpage/assets/img/nganjuk.jpg") no-repeat center center/cover;
   /* opacity: 0.8; */
   /* backdrop-filter: blur(1000px); 
   border-radius: 10px;
@@ -939,32 +939,24 @@ section,
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 2rem;
+  padding: 0.75rem 1rem;
 }
 
 .hero .stat-item .stat-icon {
   flex-shrink: 0;
-  width: 64px;
-  height: 64px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: color-mix(in srgb, var(--accent-color), transparent 92%);
-  border-radius: 50px;
+  border-radius: 10px;
   transition: 0.3s;
 }
 
 .hero .stat-item .stat-icon i {
-  font-size: 1.5rem;
-  color: var(--accent-color);
-}
-
-.hero .stat-item:hover .stat-icon {
-  background-color: var(--accent-color);
-}
-
-.hero .stat-item:hover .stat-icon i {
-  color: var(--contrast-color);
+  font-size: 3rem;
+  color: #fff;
 }
 
 .hero .stat-item .stat-content {
@@ -979,8 +971,12 @@ section,
 
 .hero .stat-item .stat-content p {
   font-size: 0.875rem;
-  color: color-mix(in srgb, var(--default-color), transparent 40%);
+  color: #fff;
   margin: 0;
+}
+
+.stat-content h2 {
+  color: #fff; 
 }
 
 @media (max-width: 575px) {
@@ -2371,6 +2367,17 @@ section,
 /*--------------------------------------------------------------
 # Starter Section Section
 --------------------------------------------------------------*/
-.starter-section {
+/* .starter-section { */
   /* Add your styles here */
+/* } */
+
+
+
+.stats-row,
+.stats-row .col-lg-3,
+.stats-row .col-md-6,
+.stats-row .stat-item {
+  background-color: transparent !important;
+  /* box-shadow: none !important; kalau ternyata ada bayangan */
+  /* border: none !important; kalau kotaknya berasal dari border */
 }
