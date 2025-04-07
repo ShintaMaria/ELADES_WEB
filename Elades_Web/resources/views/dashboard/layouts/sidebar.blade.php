@@ -112,6 +112,13 @@
         <span>Artikel Terkini</span></a>
 </li>
 
+<!-- Nav Item - Tables -->
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('statistik') }}">
+        <i class="fas fa-chart-bar"></i>
+        <span>Data Statistik</span></a>
+</li>
+
 <!-- Divider -->
 <hr class="sidebar-divider d-none d-md-block">
 
