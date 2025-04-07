@@ -64,7 +64,7 @@
         <div class="stat-content">
           
           <p class="mb-2 fw-bold">Total Jiwa</p>
-          <h2><span data-purecounter-start="0" data-purecounter-end="13464" data-purecounter-duration="2" class="purecounter"></span></h2>
+          <h2><span data-purecounter-start="0" data-purecounter-end="{{ $statistik->total_jiwa ?? 0 }}" data-purecounter-duration="2" class="purecounter"></span></h2>
         </div>
       </div>
     </div>
@@ -75,7 +75,7 @@
         </div>
         <div class="stat-content">
         <p class="mb-2 fw-bold">Jumlah KK</p>
-        <h2><span data-purecounter-start="0" data-purecounter-end="13464" data-purecounter-duration="2" class="purecounter">j</span></h2>
+        <h2><span data-purecounter-start="0" data-purecounter-end="{{ $statistik->jumlah_kk ?? 0 }}" data-purecounter-duration="2" class="purecounter"></span></h2>
           
         </div>
       </div>
@@ -87,7 +87,7 @@
         </div>
         <div class="stat-content">
         <p class="mb-2 fw-bold">Jumlah Dusun</p>
-        <h2><span data-purecounter-start="0" data-purecounter-end="13464" data-purecounter-duration="2" class="purecounter"></span></h2>
+        <h2><span data-purecounter-start="0" data-purecounter-end="{{ $statistik->jumlah_dusun ?? 0 }}" data-purecounter-duration="2" class="purecounter"></span></h2>
           
         </div>
       </div>
@@ -99,7 +99,8 @@
         </div>
         <div class="stat-content">
         <p class="mb-2 fw-bold">Luas Wilayah</p>
-        <h2><span data-purecounter-start="0" data-purecounter-end="64" data-purecounter-duration="2" class="purecounter"></span> km²</h2>
+        <h2><span data-purecounter-start="0" data-purecounter-end="{{ $statistik->luas_wilayah ?? 0 }}" data-purecounter-duration="2" class="purecounter"></span> km²</h2>
+            </div>
           
         </div>
       </div>
