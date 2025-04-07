@@ -23,19 +23,75 @@
                 </div>
                 
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>gambar</th>
-                                    <th>deskripsi</th>
-                                    <th>lokasi</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <!-- tambah disini untuk menghubungkan tabel ke database -->
-                    </div>
-                </div>
+    <div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Status</th>
+            <th>Media</th>
+            <th>Deskripsi</th>
+            <th>Alamat</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        @isset($infrastruktur)
+        @foreach($infrastruktur as $infra)
+        <tr id="row-{{ $infra->id }}">
+            
+            <td id="status-{{ $infra->id }}">{{ $infra->status ?? 'Baru' }}</td>
+            <td>{{ $infra->media }}</td>
+            <td>{{ \Illuminate\Support\Str::limit($infra->deskripsi, 50) }}</td>
+            <td>{{ $infra->alamat }}</td>
+            <td>
+            <button onclick="tolak({{ $infra->id }})" class="btn btn-danger btn-sm">Tolak</button><br>
+            <button onclick="ubahStatus({{ $infra->id }}, 'Sedang Diproses')" class="btn btn-primary btn-sm">Proses</button><br>
+            <button onclick="ubahStatus({{ $infra->id }}, 'Selesai')" class="btn btn-success btn-sm">Selesai</button>
+        </td>
+
+        </tr>
+        @endforeach
+        @endisset
+    </tbody>
+</table>
+
+<script>
+    function ubahStatus(id, statusBaru) {
+        // Kirim permintaan AJAX ke server untuk update status
+        fetch(`/infrastruktur/${id}/update-status`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ status: statusBaru })
+        }).then(response => response.json()).then(data => {
+            if (data.success) {
+                document.getElementById(`status-${id}`).innerText = statusBaru;
+            }
+        }).catch(error => console.error('Error:', error));
+    }
+
+    function tolak(id) {
+        let alasan = prompt("Masukkan alasan penolakan:");
+        if (alasan) {
+            fetch(`/infrastruktur/${id}/update-status`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ status: 'Ditolak - ' + alasan })
+            }).then(response => response.json()).then(data => {
+                if (data.success) {
+                    document.getElementById(`status-${id}`).innerText = "Ditolak - " + alasan;
+                }
+            }).catch(error => console.error('Error:', error));
+        }
+    }
+</script>
+    </div>
+</div>
             </div>
 
         </div>
