@@ -142,6 +142,9 @@
 
   <!-- Main JS File -->
   <script src="{{ asset('landingpage/assets/js/main.js')}}"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/purecounterjs@1.5.0/dist/purecounter_vanilla.js"></script>
+
 
 </body>
 
