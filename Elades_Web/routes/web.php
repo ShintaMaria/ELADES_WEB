@@ -48,3 +48,13 @@ Route::get('/artikel_terkini', [ArtikelTerkiniController::class, 'index'])->name
 
 Route::resource('artikels', ArtikelTerkiniController::class);
 
+
+use App\Http\Controllers\informasi\StatistikController;
+
+Route::get('/statistik', [StatistikController::class, 'index'])->name('statistik');
+Route::get('/statistik/edit', [StatistikController::class, 'edit'])->name('statistik.edit');
+Route::put('/statistik/update', [StatistikController::class, 'update'])->name('statistik.update');
+
+// Route::get('/statistikk', function () {
+//     return view('informasi.statistik.statistikk');
+// })->name('statistik');
