@@ -16,21 +16,47 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('dashboard/assets/css/sb-admin-2.min.css') }}" rel="stylesheet">
+
+    <!-- Custom style override -->
+    <style>
+        .forgot {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+        }
+
+        .forgot::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("{{ asset('landingpage/assets/img/nganjuk.jpg') }}") no-repeat center center/cover;
+            filter: brightness(70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .card {
+            max-width: 500px;
+            margin: auto;
+        }
+    </style>
 </head>
 
-<body class="bg-gradient-primary">
+<body class="forgot">
 
     <div class="container">
-
         <!-- Outer Row -->
         <div class="row justify-content-center">
-
-            <div class="col-md-6"> {{-- ubah ukuran jadi lebih kecil --}}
-                <div class="card o-hidden border-0 shadow-lg my-5" style="max-width: 100%;"> {{-- tambahkan max-width opsional --}}
+            <div class="col-md-6">
+                <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0">
                         <!-- Card Body -->
                         <div class="p-5">
                             <div class="text-center">
+                                <img src="{{ asset('dashboard/assets/img/balai.png') }}" alt="Logo" style="width: 210px; height: auto; margin-bottom: 20px;">
                                 <h1 class="h4 text-gray-900 mb-2">Lupa Password?</h1>
                                 <p class="mb-4">Silakan masukkan alamat email Anda di bawah ini, dan kami akan mengirimkan tautan untuk mengatur ulang kata sandi Anda!</p>
                             </div>
@@ -51,9 +77,7 @@
                     </div>
                 </div>
             </div>
-
         </div>
-
     </div>
 
     <!-- JavaScript -->
