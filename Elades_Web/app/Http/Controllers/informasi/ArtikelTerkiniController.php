@@ -29,7 +29,7 @@ class ArtikelTerkiniController extends Controller
 
         Artikel::create($request->all());
 
-        return redirect()->route('artikel_terkini.index')->with('success', 'Artikel berhasil ditambahkan.');
+        return redirect()->route('artikel')->with('success', 'Artikel berhasil ditambahkan.');
     }
 
     public function edit(Artikel $artikel)
@@ -47,12 +47,12 @@ class ArtikelTerkiniController extends Controller
 
         $artikel->update($request->all());
 
-        return redirect()->route('artikel_terkini.index')->with('success', 'Artikel berhasil diperbarui.');
+        return redirect()->route('artikel')->with('success', 'Artikel berhasil diperbarui.');
     }
 
     public function destroy(Artikel $artikel)
     {
         $artikel->delete();
-        return redirect()->route('artikel_terkini.index')->with('success', 'Artikel berhasil dihapus.');
+        return redirect()->route('artikel')->with('success', 'Artikel berhasil dihapus.');
     }
 }
