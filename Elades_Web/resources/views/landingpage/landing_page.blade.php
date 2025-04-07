@@ -6,7 +6,7 @@
     <section id="hero" class="hero section">
 
 <div class="container" data-aos="fade-up" data-aos-delay="100">
-<!-- <img src="{{ asset('landingpage/assets/img/desa.jpeg') }}" alt="Gambar Desa"> -->
+<!-- <img src="{{ asset('landingpage/assets/img/3.jpg') }}" alt="Gambar Desa"> -->
   <div class="row align-items-center">
     <div class="col-lg-6">
       <div class="hero-content" data-aos="fade-up" data-aos-delay="200">
@@ -24,9 +24,7 @@
         Selamat datang di Website Resmi Desa Kauman. Temukan informasi terbaru, layanan administrasi, serta potensi Desa Kauman. Bersama, kita wujudkan desa yang maju, dan sejahtera!
         </p>
 
-        <div class="hero-buttons">
-          <a href="https://www.instagram.com/kelurahankaumannganjuk/" class="btn btn-primary me-0 me-sm-2 mx-1">Follow</a>
-        </div>
+       
       </div>
     </div>
 
@@ -35,7 +33,7 @@
         <div class="customers-badge">
         <h4 class="fw-bold mb-2">Jadwal Pelayanan</h4>
   <h5 class="mb-3">Kantor Desa Kauman</h5>
-  <div class="schedule-box jadwal-box p-3  text-center">
+  <div class="schedule-box jadwal-box p-1  text-center">
     <div class="row">
       <div class="col">
         <span class="fw-bold">Buka</span>
@@ -57,7 +55,7 @@
     </div>
   </div>
 
-  <div class="row stats-row gy-4 mt-5" data-aos="fade-up" data-aos-delay="500">
+  <div class="row stats-row gy-2 mt-3" data-aos="fade-up" data-aos-delay="500">
     <div class="col-lg-3 col-md-6">
       <div class="stat-item">
         <div class="stat-icon">
@@ -109,21 +107,20 @@
   </div>
 
 </div>
-
 </section><!-- /Hero Section -->
 
+
+
+
     <!-- About Section -->
-<section id="about" class="about section text-center">
-
+<section id="struktur" class="about section text-center">
 <div class="container" data-aos="fade-up" data-aos-delay="100">
-
   <!-- Judul di tengah atas -->
   <div class="row justify-content-center">
     <div class="col-12">
       <h1><span class="about-meta">Struktur Organisasi Desa Kauman</span></h1>
     </div>
   </div>
-
   <!-- Gambar full kanan dan kiri -->
   <div class="row justify-content-center mt-4">
     <div class="col-12" data-aos="fade-up" data-aos-delay="300">
@@ -134,43 +131,34 @@
       </div>
     </div>
   </div>
-
 </div>
-
 </section><!-- /About Section -->
+
+
 
 
     <!-- Features Section -->
     <section id="features" class="features section">
-
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>VISI & MISI Desa Kauman</h2>
       </div><!-- End Section Title -->
-
       <div class="container">
-
         <div class="d-flex justify-content-center">
-
           <ul class="nav nav-tabs" data-aos="fade-up" data-aos-delay="100">
-
             <li class="nav-item">
               <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#features-tab-1">
                 <h4>VISI</h4>
               </a>
             </li><!-- End tab nav item -->
-
             <li class="nav-item">
               <a class="nav-link" data-bs-toggle="tab" data-bs-target="#features-tab-2">
                 <h4>MISI</h4>
               </a><!-- End tab nav item -->
             </li>
           </ul>
-
         </div>
-
         <div class="tab-content" data-aos="fade-up" data-aos-delay="200">
-
           <div class="tab-pane fade active show" id="features-tab-1">
             <div class="row">
               <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center">
@@ -178,14 +166,12 @@
                 <p class="fst-italic">
                 "Mewujudkan pelayanan desa yang modern, cepat, dan transparan melalui digitalisasi untuk meningkatkan kesejahteraan masyarakat"
                 </p>
-                
               </div>
               <div class="col-lg-6 order-1 order-lg-2 text-center">
                 <img src="{{ asset('landingpage/assets/img/satu.jpg')}}" alt="" class="img-fluid">
               </div>
             </div>
           </div><!-- End tab content item -->
-
           <div class="tab-pane fade" id="features-tab-2">
             <div class="row">
               <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center">
@@ -203,14 +189,13 @@
               </div>
             </div>
           </div><!-- End tab content item -->
-
-
         </div>
-
       </div>
-
     </section><!-- /Features Section -->
 
+
+
+    
     <!-- Features Cards Section -->
     <section id="features-cards" class="features-cards section">
 
@@ -498,14 +483,14 @@
     <section id="contact" class="contact section light-background">
   <!-- Section Title -->
   <div class="container section-title" data-aos="fade-up">
-    <h2>Maps Kelurahan Kauman</h2>
-    <p>Berikut adalah peta wilayah Kelurahan Kauman, Nganjuk.</p>
+    <h2>Maps Desa Kauman</h2>
+    <p>Berikut adalah alamat Kantor Desa Kauman, Nganjuk.</p>
   </div><!-- End Section Title -->
 
   <div class="container" data-aos="fade-up" data-aos-delay="100">
     <div class="map-container" style="width: 100%; height: 400px;">
       <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3955.497696543763!2d111.90921231477614!3d-7.605503494529451!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e785f9d8c0e8b2d%3A0x5027a76e3564b60!2sKauman%2C%20Kec.%20Nganjuk%2C%20Kabupaten%20Nganjuk%2C%20Jawa%20Timur!5e0!3m2!1sid!2sid!4v1610000000000!5m2!1sid!2sid"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3954.81955339159!2d111.89245081002755!3d-7.594609075017216!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e784afd7c743a65%3A0x1d2fe986afb87add!2sKantor%20Kelurahan%20Kauman!5e0!3m2!1sid!2sid!4v1743982002832!5m2!1sid!2sid"
         width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0">
       </iframe>
     </div>
