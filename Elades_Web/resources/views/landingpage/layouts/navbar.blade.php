@@ -7,7 +7,7 @@
         <h7 class="sitename">Desa Kauman <br> Kecamatan Nganjuk</h7>
       </a>
 
-      <nav id="navmenu" class="navmenu">
+      <nav id="navmenu" class="navmenu ">
         <ul>
           <li><a href="#hero" class="active ">Home</a></li>
           
