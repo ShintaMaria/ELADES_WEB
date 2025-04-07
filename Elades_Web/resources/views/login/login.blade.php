@@ -58,7 +58,8 @@
                             <div class="col-12">
                                 <div class="p-5">
                                     <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4"><strong>Login Admin!</strong></h1>
+                                    <img src="{{ asset('dashboard/assets/img/balai.png') }}" alt="Logo" style="width: 210px; height: auto; margin-bottom: 20px;">
+                                    <!-- <h1 class="h4 text-gray-900 mb-4"><strong>Login Admin!</strong></h1> -->
                                     </div>
 
                                     <!-- Laravel login form -->
