@@ -11,7 +11,7 @@
   <!-- Favicons -->
   <link href="{{ asset('landingpage/assets/img/logonavbar.png')}}" rel="icon">
   <link href="{{ asset('landingpage/assets/img/apple-touch-icon.png')}}" rel="apple-touch-icon">
-  <!-- <img src="{{ asset('landingpage/assets/img/desa.jpeg') }}" alt="Gambar Desa"> -->
+  
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
@@ -117,7 +117,7 @@
     </div>
 
     <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">4B1</strong> <span>All Rights Reserved</span></p>
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">B1ONE TEAM</strong> <span>All Rights Reserved</span></p>
       <div class="credits">
         <!-- All the links in the footer should remain intact. -->
         <!-- You can delete the links only if you've purchased the pro version. -->
