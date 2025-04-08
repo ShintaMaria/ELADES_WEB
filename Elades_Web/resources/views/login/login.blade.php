@@ -60,31 +60,44 @@
                             <div class="col-12">
                                 <div class="p-5">
                                     <div class="text-center">
-                                    <img src="{{ asset('dashboard/assets/img/balai.png') }}" alt="Logo" style="width: 210px; height: auto; margin-bottom: 20px;">
-                                    <!-- <h1 class="h4 text-gray-900 mb-4"><strong>Login Admin!</strong></h1> -->
+                                        <img src="{{ asset('dashboard/assets/img/balai.png') }}" alt="Logo" style="width: 210px; height: auto; margin-bottom: 20px;">
                                     </div>
 
                                     <!-- Laravel login form -->
                                     <form class="user" method="POST" action="{{ route('login') }}">
                                         @csrf
+
+                                        <!-- pesan gagal login -->
+                                        @if (session('error'))
+                                            <div class="alert alert-danger text-center">
+                                                {{ session('error') }}
+                                            </div>
+                                        @endif
+
                                         <div class="form-group">
                                             <input type="email" name="email" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address..." required>
+                                                placeholder="Enter Email Address..." required value="{{ old('email') }}">
+                                            @error('email')
+                                                <small class="text-danger pl-2">{{ $message }}</small>
+                                            @enderror
                                         </div>
+
                                         <div class="form-group position-relative">
                                             <input type="password" name="password" class="form-control form-control-user"
                                                 id="exampleInputPassword" placeholder="Password" required>
                                             <span toggle="#exampleInputPassword" class="fa fa-fw fa-eye field-icon toggle-password" 
                                                 style="position:absolute; top:50%; right:15px; transform:translateY(-50%); cursor:pointer;"></span>
+                                            @error('password')
+                                                <small class="text-danger pl-2">{{ $message }}</small>
+                                            @enderror
                                         </div>
 
-                                        
                                         <button type="submit" class="btn btn-primary btn-user btn-block">
                                             Login
                                         </button>
                                         <hr>
-                                        <a href="#" class="btn btn-google btn-user btn-block">
+                                        <a href="{{ route('google.login') }}" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> Login with Google
                                         </a>
                                     </form>
@@ -111,6 +124,8 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('dashboard/assets/js/sb-admin-2.min.js') }}"></script>
+
+    <!-- Show/Hide Password Script -->
     <script>
     document.addEventListener('DOMContentLoaded', function () {
         const togglePassword = document.querySelector('.toggle-password');
@@ -123,7 +138,7 @@
             this.classList.toggle('fa-eye-slash');
         });
     });
-</script>
+    </script>
 
 </body>
 
