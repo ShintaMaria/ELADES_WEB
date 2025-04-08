@@ -17,7 +17,7 @@
             <div class="card shadow mb-4">
                 <!-- Header dengan judul dan search box -->
                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                <a href="#" class="btn btn-primary btn-sm">Tambah Kabar Desa Baru</a>
+                <a href="{{ route('kabardesa.create') }}" class="btn btn-primary btn-sm">Tambah Kabar Desa Baru</a>
                     <!-- Tempat baru untuk search box -->
                     <div id="customSearchContainer"></div>
                 </div>
@@ -43,16 +43,19 @@
                     <td>{{ $kabar->tanggal }}</td>
                     <td>
                         @if($kabar->gambar)
-                            <img src="{{ asset($kabar->gambar) }}" width="100">
-                        @else
-                            Tidak ada gambar
+                            <img src="{{ asset('storage/'.$kabar->gambar) }}" width="100"><br>
                         @endif
                     </td>
                     <td>
                         
-                    <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
-                    <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
-
+                    <a href="{{ route('kabardesa.edit', $kabar->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
+                    <form action="{{ route('kabardesa.destroy', $kabar->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus artikel ini?');">
+                            <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 @endforeach
