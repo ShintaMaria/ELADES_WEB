@@ -18,7 +18,10 @@
             <label for="link" class="form-label">Link</label>
             <input type="url" class="form-control" id="link" name="link" value="{{ $artikel->link }}">
         </div>
-        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="submit" class="btn btn-primary px-4">
+            <i class="fas fa-save mr-2"></i>Simpan
+        </button>
+        <a href="{{ route('artikels.index') }}" class="btn btn-secondary">Batal</a>
     </form>
 </div>
 @endsection
