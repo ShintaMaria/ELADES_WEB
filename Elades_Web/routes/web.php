@@ -9,6 +9,7 @@ use App\Http\Controllers\pengaduan\KeamananController;
 use App\Http\Controllers\pengaduan\SaranController;
 use App\Http\Controllers\informasi\KabarDesaController;
 use App\Http\Controllers\informasi\ArtikelTerkiniController;
+use App\Http\Controllers\dashboard\ProfileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -58,3 +59,15 @@ Route::put('/statistik/update', [StatistikController::class, 'update'])->name('s
 // Route::get('/statistikk', function () {
 //     return view('informasi.statistik.statistikk');
 // })->name('statistik');
+
+use App\Http\Controllers\login\GoogleController;
+
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::put('/profile/photo', [ProfileController::class, 'updatePhoto'])->name('profile.updatePhoto');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
+});
