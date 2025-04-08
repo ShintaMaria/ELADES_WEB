@@ -1,63 +1,62 @@
 @extends('dashboard/layouts.template')
 @section('content')
 
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
+<!-- Page Wrapper -->
+<div id="wrapper">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
 
-            <!-- Page Heading -->
-            <h1 style="margin-top: 0px;">Layanan Aspirasi</h1>
-            <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item active">Pengaduan Infrastruktur</li>
-            </ol>
+        <!-- Page Heading -->
+        <h1 style="margin-top: 0px;">Layanan Aspirasi</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item active">Pengaduan Infrastruktur</li>
+        </ol>
 
-            <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-                <!-- Header dengan judul dan search box -->
-                <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                    <h6 class="m-0 font-weight-bold text-primary"></h6>
-                    <!-- Tempat baru untuk search box -->
-                    <div id="customSearchContainer"></div>
-                </div>
-                
-                <div class="card-body">
-    <div class="table-responsive">
-    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-    <thead>
-        <tr>
-            <th>Status</th>
-            <th>Media</th>
-            <th>Deskripsi</th>
-            <th>Alamat</th>
-            <th>Aksi</th>
-        </tr>
-    </thead>
-    <tbody>
-        @isset($infrastruktur)
-        @foreach($infrastruktur as $infra)
-        <tr id="row-{{ $infra->id }}">
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <!-- Header dengan judul dan search box -->
+            <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                <h6 class="m-0 font-weight-bold text-primary"></h6>
+
+                <!-- Tempat baru untuk search box -->
+                <div id="customSearchContainer"></div>
+            </div>
             
-            <td id="status-{{ $infra->id }}">{{ $infra->status ?? 'Baru' }}</td>
-            <td>{{ $infra->media }}</td>
-            <td>{{ \Illuminate\Support\Str::limit($infra->deskripsi, 50) }}</td>
-            <td>{{ $infra->alamat }}</td>
-            <td>
-            <button onclick="tolak({{ $infra->id }})" class="btn btn-danger btn-sm">Tolak</button><br>
-            <button onclick="ubahStatus({{ $infra->id }}, 'Sedang Diproses')" class="btn btn-primary btn-sm">Proses</button><br>
-            <button onclick="ubahStatus({{ $infra->id }}, 'Selesai')" class="btn btn-success btn-sm">Selesai</button>
-        </td>
-
-        </tr>
-        @endforeach
-        @endisset
-    </tbody>
-</table>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Waktu</th>
+                                <th>Pelapor</th>
+                                <th>Direspon</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @isset($infrastruktur)
+                            @foreach($infrastruktur as $infra)
+                            <tr id="row-{{ $infra->id }}">
+                                <td>{{ $loop->iteration }}</td>
+                                <td id="status-{{ $infra->id }}">{{ $infra->status ?? 'Baru' }}</td>
+                                <td>{{ $infra->media }}</td>
+                                <td>{{ \Illuminate\Support\Str::limit($infra->deskripsi, 50) }}</td>
+                                <td>{{ $infra->alamat }}</td>
+                                <td>
+                                    <button onclick="tolak({{ $infra->id }})" class="btn btn-danger btn-sm">Tolak</button><br>
+                                    <button onclick="ubahStatus({{ $infra->id }}, 'Sedang Diproses')" class="btn btn-primary btn-sm">Review</button><br>
+                                    <button onclick="ubahStatus({{ $infra->id }}, 'Selesai')" class="btn btn-success btn-sm">Selesai</button>
+                                </td>
+                            </tr>
+                            @endforeach
+                            @endisset
+                        </tbody>
+                    </table>
 
 <script>
     function ubahStatus(id, statusBaru) {
-        // Kirim permintaan AJAX ke server untuk update status
         fetch(`/infrastruktur/${id}/update-status`, {
             method: 'POST',
             headers: {
@@ -90,50 +89,47 @@
         }
     }
 </script>
-    </div>
-</div>
+                </div>
             </div>
-
         </div>
-        <!-- /.container-fluid -->
+
     </div>
-    <!-- End of Page Wrapper -->
+    <!-- /.container-fluid -->
+</div>
+<!-- End of Page Wrapper -->
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="{{ asset('dashboard/assets/vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{ asset('dashboard/assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<!-- Bootstrap core JavaScript-->
+<script src="{{ asset('dashboard/assets/vendor/jquery/jquery.min.js')}}"></script>
+<script src="{{ asset('dashboard/assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="{{ asset('dashboard/assets/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+<!-- Core plugin JavaScript-->
+<script src="{{ asset('dashboard/assets/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="{{ asset('dashboard/assets/js/sb-admin-2.min.js')}}"></script>
+<!-- Custom scripts for all pages-->
+<script src="{{ asset('dashboard/assets/js/sb-admin-2.min.js')}}"></script>
 
-    <!-- Page level plugins -->
-    <script src="{{ asset('dashboard/assets/vendor/datatables/jquery.dataTables.min.js')}}"></script>
-    <script src="{{ asset('dashboard/assets/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+<!-- Page level plugins -->
+<script src="{{ asset('dashboard/assets/vendor/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{ asset('dashboard/assets/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 
-    <!-- Page level custom scripts -->
-    <script>
-        $(document).ready(function () {
-            var table = $('#dataTable').DataTable({
-                lengthChange: false // Menghilangkan opsi "Show X entries"
-            });
-
-            // Memindahkan search box ke dalam #customSearchContainer
-            $('#dataTable_filter').appendTo("#customSearchContainer");
-
-            // Menyesuaikan tampilan search box agar lebih rapi
-            $('#customSearchContainer input').addClass('form-control').attr('placeholder', 'Cari data...');
-            $('#customSearchContainer label').contents().filter(function () {
-                return this.nodeType === 3;
-            }).remove(); // Menghapus label default DataTables
+<!-- Page level custom scripts -->
+<script>
+    $(document).ready(function () {
+        var table = $('#dataTable').DataTable({
+            lengthChange: false
         });
-    </script>
+
+        $('#dataTable_filter').appendTo("#customSearchContainer");
+        $('#customSearchContainer input').addClass('form-control').attr('placeholder', 'Cari data...');
+        $('#customSearchContainer label').contents().filter(function () {
+            return this.nodeType === 3;
+        }).remove();
+    });
+</script>
 
 @endsection
