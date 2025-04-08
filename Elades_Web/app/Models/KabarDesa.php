@@ -16,4 +16,6 @@ class KabarDesa extends Model
         'tanggal', 
         'gambar'
     ];
+
+    public $timestamps = false;
 }
