@@ -1,4 +1,4 @@
-@extends('dashboard.layouts.template')
+@extends('dashboard.layouts.plain')
 @section('content')
 
 <div class="container-fluid">
@@ -50,12 +50,17 @@
                             @csrf
                             @method('PUT')
                             <div class="mb-3">
-                                <label class="form-label" for="foto">Upload Foto Baru</label>
-                                <input type="file" name="foto" class="form-control" accept="image/*" required>
+                                <label class="form-label w-100 text-center" for="foto">Upload Foto Baru</label>
+                                <input type="file" name="foto" class="form-control @error('foto') is-invalid @enderror" accept="image/*" required>
+                                @error('foto')
+                                    <div class="invalid-feedback text-center">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
 
                             <div class="d-flex justify-content-between">
-                                <button class="btn btn-primary" type="submit">
+                                <button class="btn btn-primary w-100" type="submit">
                                     <i class="fas fa-upload me-1"></i> Upload Foto
                                 </button>
                             </div>
