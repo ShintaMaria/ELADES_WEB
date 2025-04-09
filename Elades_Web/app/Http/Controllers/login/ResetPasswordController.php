@@ -54,7 +54,7 @@ class ResetPasswordController extends Controller
         );
 
         if ($status === Password::PASSWORD_RESET) {
-            return redirect()->route('login')->with('status', 'Password Anda telah berhasil diganti.');
+            return redirect()->route('login')->with('status', 'Password Anda telah berhasil diganti. Silahkan Login!');
         }
 
         // deteksi token expired saat reset
