@@ -23,12 +23,12 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         // hapus foto lama jika ada
-        if ($user->gambar && Storage::exists('public/gambar/' . $user->gambar)) {
-            Storage::delete('public/gambar/' . $user->gambar);
+        if ($user->gambar && Storage::exists('public/gambar_profil/' . $user->gambar)) {
+            Storage::delete('public/gambar_profil/' . $user->gambar);
         }
 
         // simpan foto baru
-        $fotoBaru = $request->file('foto')->store('public/gambar');
+        $fotoBaru = $request->file('foto')->store('public/gambar_profil');
         $namaFile = basename($fotoBaru);
 
         $user->gambar = $namaFile;
@@ -55,6 +55,21 @@ class ProfileController extends Controller
         $user->save();
 
         return back()->with('profile_update', 'Password berhasil diperbarui.');
+    }
+
+    public function deletePhoto(Request $request)
+    {
+        $user = Auth::user();
+
+        if ($user->gambar) {
+            Storage::delete('public/gambar_profil/' . $user->gambar);
+            $user->gambar = null;
+            $user->save();
+
+            return back()->with('profile_update', 'Foto profil berhasil dihapus.');
+        }
+
+        return back()->with('profile_gagal', 'Tidak ada foto profil untuk dihapus.');
     }
 
 }
