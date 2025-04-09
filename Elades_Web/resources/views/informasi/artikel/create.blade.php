@@ -17,7 +17,8 @@
             <label for="link" class="form-label">Link</label>
             <input type="url" class="form-control" id="link" name="link">
         </div>
-        <button type="submit" class="btn btn-success">Simpan</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+        <a href="{{ route('artikels.index') }}" class="btn btn-secondary">Kembali</a>
     </form>
 </div>
 @endsection
