@@ -92,10 +92,21 @@
             <li class="nav-item dropdown no-arrow">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                    <img class="img-profile rounded-circle"
-                        src="{{ asset('dashboard/assets/img/undraw_profile.svg')}}">
-                </a>
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
+                    @if(Auth::user()->gambar)
+                        {{-- jika ada gambar, tampilkan gambar profil --}}
+                        <img class="img-profile rounded-circle"
+                                src="{{ asset('storage/gambar_profil/' . Auth::user()->gambar) }}"
+                                style="width: 40px; height: 40px; object-fit: cover; border: 2px solid #dee2e6;">
+                    @else
+                        {{-- jika tidak ada gambar, tampilkan icon user --}}
+                        <div class="d-flex justify-content-center align-items-center rounded-circle"
+                                style="width: 40px; height: 40px; background-color: #e9ecef; border: 2px solid #dee2e6;">
+                            <i class="fas fa-user text-secondary"></i>
+                        </div>
+                    @endif
+
+                    </a>
                 <!-- Dropdown - User Information -->
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                     aria-labelledby="userDropdown">
