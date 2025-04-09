@@ -9,7 +9,6 @@
     <meta name="author" content="">
 
     <link href="{{ asset('landingpage/assets/img/logonavbar.png')}}" rel="icon">
-
     <title>Kauman Nganjuk - Login Admin</title>
 
     <!-- Custom fonts for this template-->
@@ -19,7 +18,6 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('dashboard/assets/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
-    <!-- Custom style override -->
     <style>
         .login {
             position: relative;
@@ -48,7 +46,6 @@
 </head>
 
 <body class="login">
-
     <div class="container">
         <!-- Outer Row -->
         <div class="row justify-content-center">
@@ -62,6 +59,13 @@
                                     <div class="text-center">
                                         <img src="{{ asset('dashboard/assets/img/balai.png') }}" alt="Logo" style="width: 210px; height: auto; margin-bottom: 20px;">
                                     </div>
+
+                                    <!-- pesan sukses setelah reset password -->
+                                    @if (session('status'))
+                                        <div class="alert alert-success text-center">
+                                            {{ session('status') }}
+                                        </div>
+                                    @endif
 
                                     <!-- Laravel login form -->
                                     <form class="user" method="POST" action="{{ route('login') }}">
@@ -86,7 +90,7 @@
                                         <div class="form-group position-relative">
                                             <input type="password" name="password" class="form-control form-control-user"
                                                 id="exampleInputPassword" placeholder="Password" required>
-                                            <span toggle="#exampleInputPassword" class="fa fa-fw fa-eye field-icon toggle-password" 
+                                            <span toggle="#exampleInputPassword" class="fa fa-fw fa-eye field-icon toggle-password"
                                                 style="position:absolute; top:50%; right:15px; transform:translateY(-50%); cursor:pointer;"></span>
                                             @error('password')
                                                 <small class="text-danger pl-2">{{ $message }}</small>
@@ -127,19 +131,18 @@
 
     <!-- Show/Hide Password Script -->
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const togglePassword = document.querySelector('.toggle-password');
-        const passwordInput = document.querySelector('#exampleInputPassword');
+        document.addEventListener('DOMContentLoaded', function () {
+            const togglePassword = document.querySelector('.toggle-password');
+            const passwordInput = document.querySelector('#exampleInputPassword');
 
-        togglePassword.addEventListener('click', function () {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            this.classList.toggle('fa-eye');
-            this.classList.toggle('fa-eye-slash');
+            togglePassword.addEventListener('click', function () {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
         });
-    });
     </script>
-
 </body>
 
 </html>
