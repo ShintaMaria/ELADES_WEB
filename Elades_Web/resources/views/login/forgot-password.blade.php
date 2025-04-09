@@ -60,13 +60,38 @@
                                 <h1 class="h4 text-gray-900 mb-2">Lupa Password?</h1>
                                 <p class="mb-4">Silakan masukkan alamat email Anda di bawah ini, dan kami akan mengirimkan tautan untuk mengatur ulang kata sandi Anda!</p>
                             </div>
+
+                            {{-- Pesan sukses --}}
+                            @if (session('status'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    {{ session('status') }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
+
+                            {{-- Pesan error --}}
+                            @if ($errors->any())
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <ul class="mb-0">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
+
                             <form class="user" method="POST" action="{{ route('password.email') }}">
                                 @csrf
                                 <div class="form-group">
                                     <input type="email" name="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Masukkan Alamat Email..." required>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-user btn-block">
-                                    Kirim Link Reset
+                                    Kirim Link ke Email
                                 </button>
                             </form>
                             <hr>
