@@ -20,41 +20,71 @@
             </div>
         @endif
 
-        <hr class="mt-0 mb-2">
+        <hr class="mt-0 mb-4">
+
         <div class="row">
+            {{-- FOTO PROFIL --}}
             <div class="col-xl-4">
-                <div class="card mb-4 mb-xl-0">
-                    <div class="card-header">Foto Profil</div>
-                    <div class="card-body text-center mb-2">
-                        <img class="img-account-profile img-fluid rounded-circle w-100"
-                             src="{{ $user->gambar ? asset('storage/gambar/' . $user->gambar) : asset('gambar/avatar_profile.jpg') }}"
-                             alt="Foto Profil" style="max-width: 200px; height: auto;">
-                        <div class="small font-italic text-muted mb-4">JPG atau PNG</div>
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header fw-bold">Foto Profil</div>
+                    <div class="card-body d-flex flex-column align-items-center">
+
+                        @if($user->gambar)
+                            {{-- tampilkan gambar profil jika ada --}}
+                            <img class="rounded-circle shadow-sm mb-3"
+                                 src="{{ asset('storage/gambar_profil/' . $user->gambar) }}"
+                                 alt="Foto Profil"
+                                 style="width: 180px; height: 180px; object-fit: cover; border: 3px solid #dee2e6;">
+                        @else
+                            {{-- tampilkan icon user jika tidak ada gambar --}}
+                            <div class="d-flex justify-content-center align-items-center rounded-circle shadow-sm mb-3"
+                                 style="width: 180px; height: 180px; background-color: #e9ecef; border: 3px solid #dee2e6;">
+                                <i class="fas fa-user fa-5x text-secondary"></i>
+                            </div>
+                        @endif
+
+                        <div class="small text-muted mb-3">Format JPG atau PNG</div>
+
+                        {{-- Form Upload Foto --}}
+                        <form method="POST" action="{{ route('profile.updatePhoto') }}" enctype="multipart/form-data" class="w-100 px-3 mb-2">
+                            @csrf
+                            @method('PUT')
+                            <div class="mb-3">
+                                <label class="form-label" for="foto">Upload Foto Baru</label>
+                                <input type="file" name="foto" class="form-control" accept="image/*" required>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-upload me-1"></i> Upload Foto
+                                </button>
+                            </div>
+                        </form>
+
+                        {{-- Form Hapus Foto (dipisah) --}}
+                        @if($user->gambar)
+                        <form method="POST" action="{{ route('profile.deletePhoto') }}" class="mt-2 px-3 w-100">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger w-100" type="submit" onclick="return confirm('Yakin ingin menghapus foto profil?')">
+                                <i class="fas fa-trash me-1"></i> Hapus Foto
+                            </button>
+                        </form>
+                        @endif
+
                     </div>
                 </div>
             </div>
 
+            {{-- PENGATURAN AKUN --}}
             <div class="col-xl-8">
-                <div class="card mb-4">
-                    <div class="card-header">Pengaturan Akun</div>
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header fw-bold">Pengaturan Akun</div>
                     <div class="card-body">
 
-                        {{-- Form Upload Foto --}}
-                        <form method="POST" action="{{ route('profile.updatePhoto') }}" enctype="multipart/form-data">
-                            @csrf
-                            @method('PUT')
-                            <div class="mb-3">
-                                <label class="small mb-1" for="foto">Upload Foto Baru</label>
-                                <input type="file" name="foto" class="form-control" accept="image/*" required>
-                            </div>
-                            <button class="btn btn-primary mb-3" type="submit">
-                                <i class="fas fa-upload"></i> Upload Foto
-                            </button>
-                        </form>
-
-                        {{-- Tampilkan Email (readonly) --}}
-                        <div class="mb-3">
-                            <label class="small mb-1" for="inputEmailAddress">Email</label>
+                        {{-- Email --}}
+                        <div class="mb-4">
+                            <label class="form-label" for="inputEmailAddress">Email</label>
                             <input class="form-control" id="inputEmailAddress" type="email" value="{{ $user->email }}" readonly>
                         </div>
 
@@ -63,27 +93,19 @@
                             @csrf
                             @method('PUT')
                             <div class="mb-3">
-                                <label class="small mb-1" for="current_password">Password Lama</label>
+                                <label class="form-label" for="current_password">Password Lama</label>
                                 <input type="password" name="current_password" class="form-control" required>
                             </div>
                             <div class="mb-3">
-                                <label class="small mb-1" for="new_password">Password Baru</label>
+                                <label class="form-label" for="new_password">Password Baru</label>
                                 <input type="password" name="new_password" class="form-control" required>
                             </div>
                             <div class="mb-3">
-                                <label class="small mb-1" for="new_password_confirmation">Konfirmasi Password Baru</label>
+                                <label class="form-label" for="new_password_confirmation">Konfirmasi Password Baru</label>
                                 <input type="password" name="new_password_confirmation" class="form-control" required>
                             </div>
                             <button class="btn btn-warning" type="submit">
-                                <i class="fas fa-key"></i> Ganti Password
-                            </button>
-                        </form>
-
-                        {{-- Tombol Logout --}}
-                        <form method="POST" action="{{ route('logout') }}" class="mt-3">
-                            @csrf
-                            <button class="btn btn-danger" type="submit">
-                                <i class="fas fa-sign-out-alt"></i> Logout
+                                <i class="fas fa-key me-1"></i> Ganti Password
                             </button>
                         </form>
 
@@ -91,6 +113,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 
