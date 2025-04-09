@@ -18,19 +18,25 @@ class ProfileController extends Controller
     {
         $request->validate([
             'foto' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+        ], [
+            'foto.required' => 'Foto profil wajib diunggah.',
+            'foto.image' => 'File yang diunggah harus berupa gambar.',
+            'foto.mimes' => 'Format gambar harus JPG, JPEG, atau PNG.',
+            'foto.max' => 'Ukuran gambar maksimal 2 MB.',
         ]);
 
         $user = Auth::user();
 
         // hapus foto lama jika ada
-        if ($user->gambar && Storage::exists('public/gambar_profil/' . $user->gambar)) {
-            Storage::delete('public/gambar_profil/' . $user->gambar);
+        if ($user->gambar && Storage::disk('public')->exists('gambar_profil/' . $user->gambar)) {
+            Storage::disk('public')->delete('gambar_profil/' . $user->gambar);
         }
 
-        // simpan foto baru
-        $fotoBaru = $request->file('foto')->store('public/gambar_profil');
-        $namaFile = basename($fotoBaru);
+        // simpan foto baru dengan nama unik
+        $namaFile = uniqid() . '.' . $request->file('foto')->getClientOriginalExtension();
+        $request->file('foto')->storeAs('gambar_profil', $namaFile, 'public');
 
+        // update nama file ke kolom 'gambar'
         $user->gambar = $namaFile;
         $user->save();
 
@@ -57,12 +63,13 @@ class ProfileController extends Controller
         return back()->with('profile_update', 'Password berhasil diperbarui.');
     }
 
+    // hapus foto profil
     public function deletePhoto(Request $request)
     {
         $user = Auth::user();
 
-        if ($user->gambar) {
-            Storage::delete('public/gambar_profil/' . $user->gambar);
+        if ($user->gambar && Storage::disk('public')->exists('gambar_profil/' . $user->gambar)) {
+            Storage::disk('public')->delete('gambar_profil/' . $user->gambar);
             $user->gambar = null;
             $user->save();
 
