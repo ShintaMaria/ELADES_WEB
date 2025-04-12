@@ -91,7 +91,7 @@
                                     <input type="email" name="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Masukkan Alamat Email..." required>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-user btn-block">
-                                    Kirim Link ke Email
+                                    Kirim Tautan ke Email
                                 </button>
                             </form>
                             <hr>
