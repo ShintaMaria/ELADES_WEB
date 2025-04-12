@@ -43,7 +43,7 @@
                             </div>
                         @endif
 
-                        <div class="small text-muted mb-3">Format JPG atau PNG</div>
+                        <div class="small text-muted mb-3">Format JPG, JPEG, atau PNG.(Maks:2MB)</div>
 
                         {{-- Form Upload Foto --}}
                         <form method="POST" action="{{ route('profile.updatePhoto') }}" enctype="multipart/form-data" class="w-100 px-3 mb-2">
