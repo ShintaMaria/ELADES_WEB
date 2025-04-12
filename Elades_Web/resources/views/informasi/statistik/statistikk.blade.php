@@ -85,7 +85,7 @@
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Luas Wilayah</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                        {{ number_format($statistik->luas_wilayah ?? 0, 2) }} km²
+                                        {{ number_format($statistik->luas_wilayah ?? 0) }} km²
                                     </div>
                                 </div>
                                 <div class="col-auto">
