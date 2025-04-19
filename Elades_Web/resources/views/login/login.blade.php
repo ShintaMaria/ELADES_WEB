@@ -108,7 +108,7 @@
 
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="{{ route('password.request') }}">Forgot Password?</a>
+                                        <a class="small" href="{{ route('password.request') }}">Lupa Password?</a>
                                     </div>
                                 </div>
                             </div>
