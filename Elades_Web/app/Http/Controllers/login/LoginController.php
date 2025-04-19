@@ -12,7 +12,7 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         // arahkan ke file resources/views/login/login.blade.php
-        return view('login.login');
+        return view ('login.login');
     }
 
     // proses login
@@ -32,7 +32,7 @@ class LoginController extends Controller
             $request->session()->regenerate(); // untuk keamanan session
 
             // arahkan ke dashboard setelah berhasil login
-            return redirect()->intended('dashboardd'); // ganti 'dashboardd' jika typo
+            return redirect()->intended('dashboardd'); 
         }
 
         // jika login gagal
