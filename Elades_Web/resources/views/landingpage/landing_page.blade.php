@@ -6,50 +6,43 @@
     <section id="hero" class="hero section">
 
 <div class="container" data-aos="fade-up" data-aos-delay="100">
-<!-- <img src="{{ asset('landingpage/assets/img/3.jpg') }}" alt="Gambar Desa"> -->
+
   <div class="row align-items-center">
     <div class="col-lg-6">
       <div class="hero-content" data-aos="fade-up" data-aos-delay="200">
-        
-
         <h1 class="mb-2">
           <span class="accent-text">Desa Kauman</span>
-          </h1>
-          <h3>
+        </h1>
+        <h3>
           <span class="accent-text">Kec.Nganjuk, Kab.Nganjuk, Provinsi Jawa Timur</span>
-          </h3>
-        
-
+        </h3>
         <p class="mb-4 mb-md-5 custom-text">
         Selamat datang di Website Resmi Desa Kauman. Temukan informasi terbaru, layanan administrasi, serta potensi Desa Kauman. Bersama, kita wujudkan desa yang maju, dan sejahtera!
         </p>
-
-       
       </div>
     </div>
 
     <div class="col-lg-6">
       <div class="hero-image" data-aos="zoom-out" data-aos-delay="300">
         <div class="customers-badge">
-        <h4 class="fw-bold mb-2">Jadwal Pelayanan</h4>
-  <h5 class="mb-3">Kantor Desa Kauman</h5>
-  <div class="schedule-box jadwal-box p-1  text-center">
-    <div class="row">
-      <div class="col">
-        <span class="fw-bold">Buka</span>
-        <div class="fs-7">08.00 WIB</div>
-      </div>
-      <div class="col">
-        <span class="fw-bold">Tutup</span>
-        <div class="fs-7">16.00 WIB</div>
-      </div>
-      <div class="col">
-        <span class="fw-bold">Libur</span>
-        <div class="fs-7">Sabtu-Minggu</div>
-      </div>
-    </div>
-  </div>
-  
+          <h4 class="fw-bold mb-2">Jadwal Pelayanan</h4>
+          <h5 class="mb-3">Kantor Desa Kauman</h5>
+          <div class="schedule-box jadwal-box p-1  text-center">
+            <div class="row">
+              <div class="col">
+                <span class="fw-bold">Buka</span>
+                <div class="fs-7">08.00 WIB</div>
+              </div>
+              <div class="col">
+                <span class="fw-bold">Tutup</span>
+                <div class="fs-7">16.00 WIB</div>
+              </div>
+              <div class="col">
+                <span class="fw-bold">Libur</span>
+                <div class="fs-7">Sabtu-Minggu</div>
+              </div>
+            </div>
+           </div>
         </div>
       </div>
     </div>
@@ -62,7 +55,6 @@
           <i class="bi bi-people"></i>
         </div>
         <div class="stat-content">
-          
           <p class="mb-2 fw-bold">Total Jiwa</p>
           <h2><span data-purecounter-start="0" data-purecounter-end="{{ $statistik->total_jiwa ?? 0 }}" data-purecounter-duration="2" class="purecounter"></span></h2>
         </div>
@@ -74,9 +66,8 @@
           <i class="bi bi-house-door"></i>
         </div>
         <div class="stat-content">
-        <p class="mb-2 fw-bold">Jumlah KK</p>
-        <h2><span data-purecounter-start="0" data-purecounter-end="{{ $statistik->jumlah_kk ?? 0 }}" data-purecounter-duration="2" class="purecounter"></span></h2>
-          
+          <p class="mb-2 fw-bold">Jumlah KK</p>
+          <h2><span data-purecounter-start="0" data-purecounter-end="{{ $statistik->jumlah_kk ?? 0 }}" data-purecounter-duration="2" class="purecounter"></span></h2>   
         </div>
       </div>
     </div>
@@ -88,7 +79,6 @@
         <div class="stat-content">
         <p class="mb-2 fw-bold">Jumlah Dusun</p>
         <h2><span data-purecounter-start="0" data-purecounter-end="{{ $statistik->jumlah_dusun ?? 0 }}" data-purecounter-duration="2" class="purecounter"></span></h2>
-          
         </div>
       </div>
     </div>
@@ -98,10 +88,8 @@
           <i class="bi bi-rulers"></i>
         </div>
         <div class="stat-content">
-        <p class="mb-2 fw-bold">Luas Wilayah</p>
-        <h2><span data-purecounter-start="0" data-purecounter-end="{{ $statistik->luas_wilayah ?? 0 }}" data-purecounter-duration="2" class="purecounter"></span> km²</h2>
-            </div>
-          
+          <p class="mb-2 fw-bold">Luas Wilayah/p>
+          <h2><span data-purecounter-start="0" data-purecounter-end="{{ $statistik->luas_wilayah ?? 0 }}" data-purecounter-duration="2" class="purecounter"></span> km²</h2>
         </div>
       </div>
     </div>
