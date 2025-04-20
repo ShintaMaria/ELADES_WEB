@@ -47,71 +47,45 @@
   
   </main>
 
-  <footer id="footer" class="footer">
+  <footer id="footer" class="footer bg-white text-dark py-4">
+  <div class="container">
+    <div class="row align-items-center">
 
-    <div class="container footer-top">
-      <div class="row gy-4">
-        <div class="col-lg-4 col-md-6 footer-about">
-          <a href="index.html" class="logo d-flex align-items-center">
-            <span class="sitename">iLanding</span>
-          </a>
-          <div class="footer-contact pt-3">
-            <p>A108 Adam Street</p>
-            <p>New York, NY 535022</p>
-            <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
-            <p><strong>Email:</strong> <span>info@example.com</span></p>
-          </div>
-          <div class="social-links d-flex mt-4">
-            <a href=""><i class="bi bi-twitter-x"></i></a>
-            <a href=""><i class="bi bi-facebook"></i></a>
-            <a href=""><i class="bi bi-instagram"></i></a>
-            <a href=""><i class="bi bi-linkedin"></i></a>
-          </div>
-        </div>
+      <!-- Kolom Kiri: Logo -->
+      <div class="col-md-4 d-flex align-items-center mb-3 mb-md-0">
+      <img src="landingpage/assets/img/logonavbar.png" alt="Logo Desa Kauman" style="width: 110px; height: auto; margin-right: 15px;">
+        <div>
+        <h2 class="mb-0 fw-bold text-uppercase" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+        DESA KAUMAN</h2>
 
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Useful Links</h4>
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About us</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Terms of service</a></li>
-            <li><a href="#">Privacy policy</a></li>
-          </ul>
+          <p class="fs-6 fw-bold mb-0">KECAMATAN NGANJUK</p>
         </div>
+      </div>
 
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Our Services</h4>
-          <ul>
-            <li><a href="#">Web Design</a></li>
-            <li><a href="#">Web Development</a></li>
-            <li><a href="#">Product Management</a></li>
-            <li><a href="#">Marketing</a></li>
-            <li><a href="#">Graphic Design</a></li>
-          </ul>
-        </div>
+      <!-- Kolom Tengah: Kosong / Bisa Tambahkan Tulisan Lain -->
+      <div class="col-md-4 text-center mb-3 mb-md-0">
+        <!-- Bisa diisi quote atau slogan desa -->
+        <!-- <p class="mb-0">Membangun desa menuju masyarakat sejahtera</p> -->
+      </div>
 
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Hic solutasetp</h4>
-          <ul>
-            <li><a href="#">Molestiae accusamus iure</a></li>
-            <li><a href="#">Excepturi dignissimos</a></li>
-            <li><a href="#">Suscipit distinctio</a></li>
-            <li><a href="#">Dilecta</a></li>
-            <li><a href="#">Sit quas consectetur</a></li>
-          </ul>
-        </div>
+      <!-- Kolom Kanan: Kontak -->
+      <div class="col-md-4 text-md-end">
+        <p class="mb-1">Desa Kauman, Kecamatan Nganjuk</p>
+        <p class="mb-1">Kabupaten Nganjuk, Jawa Timur</p>
+        <p class="mb-1"><i class="bi bi-telephone"></i> +62 123 4567 890</p>
+        <p class="mb-1"><i class="bi bi-envelope"></i> info@desakauman.nganjuk.id</p>
+      </div>
 
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Nobis illum</h4>
-          <ul>
-            <li><a href="#">Ipsam</a></li>
-            <li><a href="#">Laudantium dolorum</a></li>
-            <li><a href="#">Dinera</a></li>
-            <li><a href="#">Trodelas</a></li>
-            <li><a href="#">Flexo</a></li>
-          </ul>
-        </div>
+    </div>
+
+    <!-- Baris Sosial Media -->
+    <div class="row mt-3">
+      <div class="col text-center">
+      <div class="social-links d-flex justify-content-center mt-2">
+        <a href="#" class="me-3"><i class="bi bi-facebook fs-5"></i></a>
+        <a href="#" class="me-3"><i class="bi bi-instagram fs-5"></i></a>
+        <a href="#" class="me-3"><i class="bi bi-whatsapp fs-5"></i></a>
+    </div>
 
       </div>
     </div>
