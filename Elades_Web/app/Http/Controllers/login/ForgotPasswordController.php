@@ -15,7 +15,7 @@ class ForgotPasswordController extends Controller
 
     public function sendResetLinkEmail(Request $request)
     {
-        // validasi dengan custom pesan
+        // validasi dengan pesan
         $request->validate([
             'email' => ['required', 'email', 'exists:users,email'],
         ], [
@@ -27,9 +27,8 @@ class ForgotPasswordController extends Controller
             $request->only('email')
         );
 
-        // custom pesan sukses / gagal
         return $status === Password::RESET_LINK_SENT
-            ? back()->with('status', 'Kami telah mengirimkan Link ke email Anda.')
-            : back()->withErrors(['email' => 'Terjadi kesalahan saat mengirim Link. Silakan coba lagi.']);
+            ? back()->with('status', 'Kami telah mengirimkan tautan ke email Anda.')
+            : back()->withErrors(['email' => 'Terjadi kesalahan saat mengirim tautan. Silakan coba lagi.']);
     }
 }
