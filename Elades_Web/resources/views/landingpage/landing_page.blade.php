@@ -88,7 +88,7 @@
           <i class="bi bi-rulers"></i>
         </div>
         <div class="stat-content">
-          <p class="mb-2 fw-bold">Luas Wilayah/p>
+          <p class="mb-2 fw-bold">Luas Wilayah</p>
           <h2><span data-purecounter-start="0" data-purecounter-end="{{ $statistik->luas_wilayah ?? 0 }}" data-purecounter-duration="2" class="purecounter"></span> km²</h2>
         </div>
       </div>
@@ -297,12 +297,12 @@
 <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="200">
   <div class="phone-mockup text-center">
     <div class="hero-buttons">
-      <a href="LINK_UNDuhan_APLIKASI" class="btn btn-primary me-0 me-sm-2 mx-1">
-        <i class="fas fa-download"></i> Download Aplikasi
-      </a>
+    <a href="LINK_UNDuhan_APLIKASI" class="btn btn-success rounded me-0 me-sm-2 mx-1">
+  <i class="fas fa-download"></i> Download Aplikasi
+</a>
     </div>
     <div>
-      <img src="{{ asset('landingpage/assets/img/phone-app-screen.webp') }}" 
+      <img src="{{ asset('landingpage/assets/img/phone.png') }}" 
            alt="Phone Mockup" class="img-fluid">
     </div>
   </div><!-- End Phone Mockup -->
