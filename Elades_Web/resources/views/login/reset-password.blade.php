@@ -29,10 +29,23 @@
                 </div>
 
                 @if (session('status'))
-                    <div class="alert alert-success">
-                        {{ session('status') }}
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+                @endif
+
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
                     </div>
                 @endif
+
+                @if ($errors->has('email'))
+                    <div class="alert alert-danger">
+                        {{ $errors->first('email') }}
+                    </div>
+                @endif
+
 
                 <form method="POST" action="{{ route('password.update') }}">
                     @csrf
@@ -43,9 +56,6 @@
                         <label for="email">Email</label>
                         <input type="email" class="form-control" value="{{ $email }}" disabled>
                         <input type="hidden" name="email" value="{{ $email }}">
-                        @error('email')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
                     </div>
 
                     <div class="form-group">
