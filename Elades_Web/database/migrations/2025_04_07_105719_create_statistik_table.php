@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('total_jiwa');
             $table->integer('jumlah_kk');
             $table->integer('jumlah_dusun');
-            $table->float('luas_wilayah'); // misalnya luas dalam km²
+            $table->float('luas_wilayah'); 
             $table->timestamps();
         });
     }
