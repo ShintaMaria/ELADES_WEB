@@ -9,15 +9,12 @@ class StatistikController extends Controller
 {
     public function index()
     {
-         // Ambil data pertama dari tabel statistik
         $statistik = Statistik::first(); 
-
         return view('informasi.statistik.statistikk', compact('statistik'));
-        
     }
     public function edit()
     {
-        $statistik = Statistik::first(); // atau find($id) kalau berdasarkan ID
+        $statistik = Statistik::first(); 
         // ambil data dari database jika ada
         return view('informasi.statistik.statistik_edit', compact('statistik'));
     }
@@ -32,7 +29,7 @@ class StatistikController extends Controller
         ]);
 
         // update ke database (contoh 1 baris saja, kamu sesuaikan)
-        $statistik = Statistik::first(); // atau where('id', 1)
+        $statistik = Statistik::first(); 
         $statistik->update($request->all());
 
         return redirect()->route('statistik')->with('success', 'Data statistik berhasil diperbarui.');
