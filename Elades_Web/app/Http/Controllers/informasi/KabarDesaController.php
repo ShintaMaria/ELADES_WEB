@@ -5,7 +5,7 @@ namespace App\Http\Controllers\informasi;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\KabarDesa;
-use Illuminate\Support\Facades\Storage; // tambahkan ini!
+use Illuminate\Support\Facades\Storage;
 
 class KabarDesaController extends Controller
 {
