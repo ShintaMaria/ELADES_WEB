@@ -1,7 +1,7 @@
 @extends('dashboard/layouts.template')
 @section('content')
 
-       
+
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
@@ -144,7 +144,7 @@
                         <div class="col-xl-12 col-lg-7">
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
-                                
+
                                 <script>
                                 document.addEventListener("DOMContentLoaded", function () {
                                     var ctx = document.getElementById("myAreaChart").getContext("2d");
@@ -159,7 +159,7 @@
                                                     data: [12, 19, 3, 5, 2, 3, 10, 15, 8, 6, 9, 4], // Data surat masuk
                                                     borderColor: " #6a9f73",
                                                     backgroundColor: "rgba(81, 255, 0, 0.3)", // Warna merah transparan
-                                                    fill: true 
+                                                    fill: true
                                                 },
                                                 {
                                                     label: "Pengaduan Masuk",
@@ -199,7 +199,7 @@
 
                     </div>
 
-                    
+
 
 
 
@@ -230,7 +230,7 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    
+
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('dashboard/assets/vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{ asset('dashboard/assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
@@ -251,4 +251,4 @@
     </body>
 
 </html>
-@endsection 
+@endsection

@@ -35,7 +35,7 @@
     <div id="collapsePembuatanSurat" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Surat Pengantar</h6>
-            <a class="collapse-item" href="buttons.html">Pengantar SKCK</a>
+            <a class="collapse-item" href="{{ route('skck') }}">Pengantar SKCK</a>
             <a class="collapse-item" href="cards.html">Kehilangan Barang</a>
             <h6 class="collapse-header">Surat Keterangan</h6>
             <a class="collapse-item" href="buttons.html">SKTM</a>
@@ -57,7 +57,7 @@
     <div id="collapseLaporan" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Surat Pengantar</h6>
-            <a class="collapse-item" href="buttons.html">Pengantar SKCK</a>
+            <a class="collapse-item" href="butons.html">Pengantar SKCK</a>
             <a class="collapse-item" href="cards.html">Kehilangan Barang</a>
             <h6 class="collapse-header">Surat Keterangan</h6>
             <a class="collapse-item" href="buttons.html">SKTM</a>

@@ -13,6 +13,7 @@ use App\Http\Controllers\informasi\KabarDesaController;
 use App\Http\Controllers\informasi\ArtikelTerkiniController;
 use App\Http\Controllers\informasi\StatistikController;
 use App\Http\Controllers\dashboard\ProfileController;
+use App\Http\Controllers\surat\SkckController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -52,7 +53,7 @@ Route::get('/saran', [SaranController::class, 'index'])->name('saran');
 Route::get('/kabar_desa', [KabarDesaController::class, 'index'])->name('kabardesa');
 Route::resource('kabardesa', KabarDesaController::class);
 
-// Artikel Terkini 
+// Artikel Terkini
 Route::get('/artikel_terkini', [ArtikelTerkiniController::class, 'index'])->name('artikel');
 Route::resource('artikels', ArtikelTerkiniController::class);
 
@@ -69,4 +70,5 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/profile/photo', [ProfileController::class, 'deletePhoto'])->name('profile.deletePhoto');
 });
 
-//
+//Pengajuan Surat
+Route::get('/skck', [SkckController::class, 'index'])->name('skck');
