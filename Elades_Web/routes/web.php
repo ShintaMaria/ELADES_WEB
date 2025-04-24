@@ -72,3 +72,5 @@ Route::middleware(['auth'])->group(function () {
 
 //Pengajuan Surat
 Route::get('/skck', [SkckController::class, 'index'])->name('skck');
+
+//
