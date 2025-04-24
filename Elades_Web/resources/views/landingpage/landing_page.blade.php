@@ -302,7 +302,7 @@
 </a>
     </div>
     <div>
-      <img src="{{ asset('landingpage/assets/img/phone.png') }}" 
+      <img src="{{ asset('landingpage/assets/img/phone.png')}}" 
            alt="Phone Mockup" class="img-fluid">
     </div>
   </div><!-- End Phone Mockup -->
@@ -383,8 +383,6 @@
         </div>
     </div>
 </section><!-- /Services Section -->
-
-
 
 
 
