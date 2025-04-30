@@ -40,7 +40,7 @@
             <a class="collapse-item" href="{{ route('sktm') }}">Pengantar SKTM</a>
             <h6 class="collapse-header">Surat Keterangan</h6>
             <a class="collapse-item" href="buttons.html">SKTM</a>
-            <a class="collapse-item" href="cards.html">Penghasilan Orang Tua</a>
+            <a class="collapse-item" href="{{ route('penghasilan') }}">Keterangan Penghasilan</a>
             <h6 class="collapse-header">Surat Izin</h6>
             <a class="collapse-item" href="buttons.html">Izin Tidak Masuk Kerja</a>
             <a class="collapse-item" href="cards.html">Izin Tempat Usaha</a>

@@ -15,6 +15,7 @@ use App\Http\Controllers\informasi\StatistikController;
 use App\Http\Controllers\dashboard\ProfileController;
 use App\Http\Controllers\surat\SkckController;
 use App\Http\Controllers\surat\SktmController;
+use App\Http\Controllers\surat\PenghasilanController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -76,3 +77,6 @@ Route::get('/skck', [SkckController::class, 'index'])->name('skck');
 
 //pengajuan sktm
 Route::get('/sktm', [SktmController::class, 'index'])->name('sktm');
+
+//Keterangan Penghasilan
+Route::get('/penghasilan', [PenghasilanController::class, 'index'])->name('penghasilan');
