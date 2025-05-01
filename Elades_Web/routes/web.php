@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\landingpage\LandingPageController;
+use App\Http\Middleware\PreventBackHistory;
 use App\Http\Controllers\login\LoginController;
 use App\Http\Controllers\login\GoogleController;
 use App\Http\Controllers\login\ForgotPasswordController;
@@ -31,16 +32,26 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
+// Dashboard
+// Route::get('/dashboardd', function () {
+//     return view('dashboard.dashboardd');
+// })->name('dashboard');
+
+// Dashboard (hanya bisa diakses kalau sudah login)
+Route::middleware(['auth', PreventBackHistory::class])->group(function () {
+    Route::get('/dashboardd', function () {
+        return view('dashboard.dashboardd');
+    })->name('dashboard');
+});
+
+
 //forgot
 Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
 
-// Dashboard
-Route::get('/dashboardd', function () {
-    return view('dashboard.dashboardd');
-})->name('dashboard');
+
 
 // Pengaduan
 Route::get('/infrastruktur', [InfrastrukturController::class, 'index'])->name('infras');
