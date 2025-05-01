@@ -14,6 +14,7 @@ use App\Http\Controllers\informasi\KabarDesaController;
 use App\Http\Controllers\informasi\ArtikelTerkiniController;
 use App\Http\Controllers\informasi\StatistikController;
 use App\Http\Controllers\dashboard\ProfileController;
+use App\Http\Controllers\pengaduan\LaporanSKCKController;
 use App\Http\Controllers\surat\SkckController;
 use App\Http\Controllers\surat\SktmController;
 use App\Http\Controllers\surat\PenghasilanController;
@@ -86,8 +87,13 @@ Route::middleware(['auth'])->group(function () {
 //Pengajuan Surat
 Route::get('/skck', [SkckController::class, 'index'])->name('skck');
 
+HEAD
 //pengajuan sktm
 Route::get('/sktm', [SktmController::class, 'index'])->name('sktm');
 
 //Keterangan Penghasilan
 Route::get('/penghasilan', [PenghasilanController::class, 'index'])->name('penghasilan');
+
+//laporan pengajuan
+Route::get('/laporan-skck', [LaporanSKCKController::class, 'index'])->name('laporan-skck.index');
+Route::post('/laporan-skck/{id}/update-status', [LaporanSKCKController::class, 'updateStatus']);
