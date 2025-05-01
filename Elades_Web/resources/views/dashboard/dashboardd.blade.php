@@ -1,6 +1,11 @@
 @extends('dashboard/layouts.template')
 @section('content')
 
+@if (!Auth::check())
+    <script>window.location = "{{ route('login') }}";</script>
+@endif
+
+
 
 
                 <!-- Begin Page Content -->
