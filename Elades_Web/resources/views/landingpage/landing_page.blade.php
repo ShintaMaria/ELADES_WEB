@@ -102,7 +102,7 @@
 
 
     <!-- About Section -->
-<section id="struktur" class="about section text-center">
+<section id="struktur" class="about section text-center pt-0">
 <div class="container" data-aos="fade-up" data-aos-delay="100">
   <!-- Judul di tengah atas -->
   <div class="row justify-content-center">
