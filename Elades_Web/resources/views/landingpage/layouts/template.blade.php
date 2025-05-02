@@ -120,6 +120,14 @@
   <script src="https://cdn.jsdelivr.net/npm/purecounterjs@1.5.0/dist/purecounter_vanilla.js"></script>
 
 
+  //agar tidak bisa di back setelah logout
+  <script>
+    window.history.pushState(null, document.title, window.location.href);
+    window.history.back();
+    window.history.forward();
+</script>
+
+
 </body>
 
 </html>

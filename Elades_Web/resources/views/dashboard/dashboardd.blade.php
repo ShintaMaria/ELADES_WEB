@@ -1,9 +1,9 @@
 @extends('dashboard/layouts.template')
 @section('content')
 
-@if (!Auth::check())
+<!-- @if (!Auth::check())
     <script>window.location = "{{ route('login') }}";</script>
-@endif
+@endif -->
 
 
 

@@ -14,6 +14,7 @@ use App\Http\Controllers\informasi\KabarDesaController;
 use App\Http\Controllers\informasi\ArtikelTerkiniController;
 use App\Http\Controllers\informasi\StatistikController;
 use App\Http\Controllers\dashboard\ProfileController;
+use App\Http\Controllers\pengaduan\LaporanSKCKController;
 use App\Http\Controllers\surat\SkckController;
 use App\Http\Controllers\surat\SktmController;
 use App\Http\Controllers\surat\PenghasilanController;
@@ -34,28 +35,19 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
-// Dashboard
-// Route::get('/dashboardd', function () {
-//     return view('dashboard.dashboardd');
-// })->name('dashboard');
-
-// Dashboard (hanya bisa diakses kalau sudah login)
-Route::middleware(['auth', PreventBackHistory::class])->group(function () {
-    Route::get('/dashboardd', function () {
-        return view('dashboard.dashboardd');
-    })->name('dashboard');
-});
-
-
 //forgot
 Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
 
+// Dashboard (hanya bisa diakses kalau sudah login)
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboardd', function () {
+        return view('dashboard.dashboardd');
+    })->name('dashboard');
 
-
-// Pengaduan
+    // Pengaduan
 Route::get('/infrastruktur', [InfrastrukturController::class, 'index'])->name('infras');
 Route::post('/infrastruktur/{id}/update-status', [InfrastrukturController::class, 'updateStatus']);
 
@@ -86,8 +78,27 @@ Route::middleware(['auth'])->group(function () {
 //Pengajuan Surat
 Route::get('/skck', [SkckController::class, 'index'])->name('skck');
 
+HEAD
 //pengajuan sktm
 Route::get('/sktm', [SktmController::class, 'index'])->name('sktm');
 
 //Keterangan Penghasilan
 Route::get('/penghasilan', [PenghasilanController::class, 'index'])->name('penghasilan');
+<<<<<<< HEAD
+    
+
+
+});//lek nambah route di atase iki ya gaess, biar kebungkus sama midelware (bisa akses halaman saat sudah login saja)
+
+
+
+
+
+
+
+=======
+
+//laporan pengajuan
+Route::get('/laporan-skck', [LaporanSKCKController::class, 'index'])->name('laporan-skck.index');
+Route::post('/laporan-skck/{id}/update-status', [LaporanSKCKController::class, 'updateStatus']);
+>>>>>>> 547d2b52f4a575de5fb7fbbaf62b58113b04c0f4

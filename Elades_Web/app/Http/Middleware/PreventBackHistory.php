@@ -15,10 +15,10 @@ class PreventBackHistory
      */
     public function handle(Request $request, Closure $next): Response
     {
+        \Log::info('Masuk middleware PreventBackHistory');
         $response = $next($request);
-
-        return $response->header('Cache-Control','no-cache, no-store, must-revalidate')
+        return $response->header('Cache-Control','no-store, no-cache, must-revalidate, max-age=0')
                         ->header('Pragma','no-cache')
-                        ->header('Expires','0');
+                        ->header('Expires','Sat, 01 Jan 1990 00:00:00 GMT');
     }
 }
