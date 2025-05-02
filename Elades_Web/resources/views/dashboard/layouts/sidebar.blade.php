@@ -48,28 +48,12 @@
     </div>
 </li>
 
-<!-- Nav Item - Pages Collapse Menu -->
+<!-- Laporan Surat -->
 <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLaporan"
-        aria-expanded="true" aria-controls="collapseLaporan">
+    <a class="nav-link" href="cards.html">
         <i class="fas fa-clipboard-list"></i>
-        <span>Laporan</span>
-    </a>
-    <div id="collapseLaporan" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Surat Pengantar</h6>
-            <a class="collapse-item" href="butons.html">Pengantar SKCK</a>
-            <a class="collapse-item" href="cards.html">Kehilangan Barang</a>
-            <h6 class="collapse-header">Surat Keterangan</h6>
-            <a class="collapse-item" href="buttons.html">SKTM</a>
-            <a class="collapse-item" href="cards.html">Penghasilan Orang Tua</a>
-            <h6 class="collapse-header">Surat Izin</h6>
-            <a class="collapse-item" href="buttons.html">Izin Tidak Masuk Kerja</a>
-            <a class="collapse-item" href="cards.html">Izin Tempat Usaha</a>
-        </div>
-    </div>
+        <span>Laporan</span></a>
 </li>
-
 
 <!-- Divider -->
 <hr class="sidebar-divider">
@@ -93,20 +77,12 @@
         </div>
     </li>
     
+    <!-- Laporan Surat -->
     <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLaporan2"
-        aria-expanded="true" aria-controls="collapseLaporan2">
-        <i class="fas fa-clipboard-list"></i>
-        <span>Laporan</span>
-    </a>
-    <div id="collapseLaporan2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="buttons.html">Pengaduan Infrastruktur</a>
-            <a class="collapse-item" href="cards.html">Pengaduan Keamanan</a>
-            <a class="collapse-item" href="buttons.html">Saran</a>
-        </div>
-    </div>
-</li>
+        <a class="nav-link" href="cards.html">
+            <i class="fas fa-clipboard-list"></i>
+            <span>Laporan</span></a>
+    </li>
 
 <!-- Heading -->
 <hr class="sidebar-divider">
