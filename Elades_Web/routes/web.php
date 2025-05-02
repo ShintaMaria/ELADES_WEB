@@ -41,64 +41,47 @@ Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEm
 Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
 
-// Dashboard (hanya bisa diakses kalau sudah login)
+// route yang hanya bisa diakses saat sudah login
 Route::middleware('auth')->group(function () {
+    
+    // dashboard
     Route::get('/dashboardd', function () {
         return view('dashboard.dashboardd');
     })->name('dashboard');
 
-    // Pengaduan
-Route::get('/infrastruktur', [InfrastrukturController::class, 'index'])->name('infras');
-Route::post('/infrastruktur/{id}/update-status', [InfrastrukturController::class, 'updateStatus']);
+    // pengaduan
+    Route::get('/infrastruktur', [InfrastrukturController::class, 'index'])->name('infras');
+    Route::post('/infrastruktur/{id}/update-status', [InfrastrukturController::class, 'updateStatus']);
+    Route::get('/keamanan', [KeamananController::class, 'index'])->name('keamanan');
+    Route::get('/saran', [SaranController::class, 'index'])->name('saran');
 
-Route::get('/keamanan', [KeamananController::class, 'index'])->name('keamanan');
-Route::get('/saran', [SaranController::class, 'index'])->name('saran');
+    // kabar desa
+    Route::get('/kabar_desa', [KabarDesaController::class, 'index'])->name('kabardesa');
+    Route::resource('kabardesa', KabarDesaController::class);
 
-// Kabar Desa
-Route::get('/kabar_desa', [KabarDesaController::class, 'index'])->name('kabardesa');
-Route::resource('kabardesa', KabarDesaController::class);
+    // artikel terkini
+    Route::get('/artikel_terkini', [ArtikelTerkiniController::class, 'index'])->name('artikel');
+    Route::resource('artikels', ArtikelTerkiniController::class);
 
-// Artikel Terkini
-Route::get('/artikel_terkini', [ArtikelTerkiniController::class, 'index'])->name('artikel');
-Route::resource('artikels', ArtikelTerkiniController::class);
+    // data statistik
+    Route::get('/statistik', [StatistikController::class, 'index'])->name('statistik');
+    Route::get('/statistik/edit', [StatistikController::class, 'edit'])->name('statistik.edit');
+    Route::put('/statistik/update', [StatistikController::class, 'update'])->name('statistik.update');
 
-// Data Statistik
-Route::get('/statistik', [StatistikController::class, 'index'])->name('statistik');
-Route::get('/statistik/edit', [StatistikController::class, 'edit'])->name('statistik.edit');
-Route::put('/statistik/update', [StatistikController::class, 'update'])->name('statistik.update');
-
-// Profil
-Route::middleware(['auth'])->group(function () {
+    // profil pengguna
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::put('/profile/photo', [ProfileController::class, 'updatePhoto'])->name('profile.updatePhoto');
     Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
     Route::delete('/profile/photo', [ProfileController::class, 'deletePhoto'])->name('profile.deletePhoto');
-});
 
-//Pengajuan Surat
-Route::get('/skck', [SkckController::class, 'index'])->name('skck');
+    // pengajuan surat
+    Route::get('/skck', [SkckController::class, 'index'])->name('skck');
+    Route::get('/sktm', [SktmController::class, 'index'])->name('sktm');
+    Route::get('/penghasilan', [PenghasilanController::class, 'index'])->name('penghasilan');
 
-HEAD
-//pengajuan sktm
-Route::get('/sktm', [SktmController::class, 'index'])->name('sktm');
+    // laporan pengajuan
+    Route::get('/laporan-skck', [LaporanSKCKController::class, 'index'])->name('laporan-skck.index');
+    Route::post('/laporan-skck/{id}/update-status', [LaporanSKCKController::class, 'updateStatus']);
 
-//Keterangan Penghasilan
-Route::get('/penghasilan', [PenghasilanController::class, 'index'])->name('penghasilan');
-<<<<<<< HEAD
     
-
-
-});//lek nambah route di atase iki ya gaess, biar kebungkus sama midelware (bisa akses halaman saat sudah login saja)
-
-
-
-
-
-
-
-=======
-
-//laporan pengajuan
-Route::get('/laporan-skck', [LaporanSKCKController::class, 'index'])->name('laporan-skck.index');
-Route::post('/laporan-skck/{id}/update-status', [LaporanSKCKController::class, 'updateStatus']);
->>>>>>> 547d2b52f4a575de5fb7fbbaf62b58113b04c0f4
+});// lek nambah route, tambahin di atas ini ya gaes, biar ikut kebungkus middleware (cuma bisa diakses kalau sudah login)
