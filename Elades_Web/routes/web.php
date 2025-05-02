@@ -1,7 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\landingpage\LandingPageController;
-use App\Http\Middleware\PreventBackHistory;
 use App\Http\Controllers\login\LoginController;
 use App\Http\Controllers\login\GoogleController;
 use App\Http\Controllers\login\ForgotPasswordController;
