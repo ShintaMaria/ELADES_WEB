@@ -24,12 +24,15 @@ class LoginController extends Controller
             'password' => 'required|min:6',
         ]);
 
+        // ambil email dan password dari form
+        $credentials = $request->only('email', 'password');
 
         // cek apakah email dan password cocok
-        if (Auth::Login()) {
- 
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate(); // untuk keamanan session
+
             // arahkan ke dashboard setelah berhasil login
-            return redirect()->route('dashboardd'); 
+            return redirect()->intended('dashboardd'); 
         }
 
         // jika login gagal
