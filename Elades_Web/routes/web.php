@@ -19,6 +19,8 @@ use App\Http\Controllers\surat\SkckController;
 use App\Http\Controllers\surat\SktmController;
 use App\Http\Controllers\surat\PenghasilanController;
 use App\Http\Controllers\TampilanSuratController;
+use App\Http\Controllers\laporan\laporan_pengajuan\LaporanPengajuanController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -79,10 +81,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/sktm', [SktmController::class, 'index'])->name('sktm');
     Route::get('/penghasilan', [PenghasilanController::class, 'index'])->name('penghasilan');
 
-    // Laporan Pengajuan
-    Route::get('/laporan-skck', [LaporanSKCKController::class, 'index'])->name('laporan-skck.index');
-    Route::post('/laporan-skck/{id}/update-status', [LaporanSKCKController::class, 'updateStatus']);
-
     // Tampilan Pengajuan Surat
     Route::get('/keramaian', [TampilanSuratController::class, 'keramaian'])->name('keramaian');
     Route::get('/kehilangan-barang', [TampilanSuratController::class, 'kehilangan'])->name('kehilangan');
@@ -100,4 +98,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/kehilangan/{id}/tolak', [SkckController::class, 'tolak'])->name('kehilangan.tolak');
     Route::post('/keramaian/{id}/tolak', [SkckController::class, 'tolak'])->name('keramaian.tolak');
     
+    //Laporan pengajuan
+    Route::prefix('laporan_pengajuan')->group(function () {
+        Route::get('/kehilangan', [LaporanPengajuanController::class, 'kehilangan'])->name('laporan_pengajuan.kehilangan');
+        Route::get('/sktm', [LaporanPengajuanController::class, 'sktm'])->name('laporan_pengajuan.sktm');
+        Route::get('/skck', [LaporanPengajuanController::class, 'skck'])->name('laporan_pengajuan.skck');
+        Route::get('/penghasilan', [LaporanPengajuanController::class, 'penghasilan'])->name('laporan_pengajuan.penghasilan');
+        Route::get('/tidakMasuk', [LaporanPengajuanController::class, 'tidakMasuk'])->name('laporan_pengajuan.tidak_masuk_kerja');
+        Route::get('/keramaian', [LaporanPengajuanController::class, 'keramaian'])->name('laporan_pengajuan.keramaian');
+    });
 }); // Lek nambah route, tambahin di atas ini ya gaes, biar ikut kebungkus middleware (cuma bisa diakses kalau sudah login)
+// oke
