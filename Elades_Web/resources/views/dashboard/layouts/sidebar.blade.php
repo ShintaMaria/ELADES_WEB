@@ -36,13 +36,13 @@
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Surat Pengantar</h6>
             <a class="collapse-item" href="{{ route('skck') }}">Pengantar SKCK</a>
-            <a class="collapse-item" href="cards.html">Kehilangan Barang</a>
+            <a class="collapse-item" href="{{ route('kehilangan') }}">Kehilangan Barang</a>
             <h6 class="collapse-header">Surat Keterangan</h6>
             <a class="collapse-item" href="buttons.html">SKTM</a>
             <a class="collapse-item" href="cards.html">Penghasilan Orang Tua</a>
             <h6 class="collapse-header">Surat Izin</h6>
             <a class="collapse-item" href="buttons.html">Izin Tidak Masuk Kerja</a>
-            <a class="collapse-item" href="cards.html">Izin Tempat Usaha</a>
+            <a class="collapse-item" href="{{ route('keramaian') }}">Izin Keramaian</a>
         </div>
     </div>
 </li>
@@ -91,7 +91,7 @@
             </div>
         </div>
     </li>
-    
+
     <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLaporan2"
         aria-expanded="true" aria-controls="collapseLaporan2">
