@@ -7,10 +7,10 @@
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <h1 style="margin-top: 0px;">Layanan Surat Pengantar Kehilangan Barang</h1>
+        <h1 style="margin-top: 0px;">Layanan Surat Izin Keramaian</h1>
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active">Pengantar Kehilangan Barang</li>
+            <li class="breadcrumb-item active">Izin Keramaian</li>
         </ol>
 
         <!-- DataTales Example -->
@@ -38,37 +38,37 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @isset($kehilangan)
-                            @foreach($kehilangan as $h)
+                            @isset($keramaian)
+                            @foreach($keramaian as $k)
                             <tr>
-                                <td>{{ $h->id }}</td>
-                                <td>{{ $h->nik }}</td>
-                                <td>{{ $h->nama }}</td>
-                                <td>{{ $h->tanggal }}</td>
-                                <td>{{ $h->kode_surat }}</td>
-                                <td>{{ $h->aksi }}
-                                    <a href="{{ route('kehilangan.show', $h->id) }}" class="btn btn-primary btn-sm mb-1">Detail</a>
+                                <td>{{ $k->id }}</td>
+                                <td>{{ $k->nik }}</td>
+                                <td>{{ $k->nama }}</td>
+                                <td>{{ $k->tanggal }}</td>
+                                <td>{{ $k->kode_surat }}</td>
+                                <td>{{ $k->aksi }}
+                                    <a href="{{ route('keramaian.show', $k->id) }}" class="btn btn-primary btn-sm mb-1">Detail</a>
 
-                                    <form action="{{ route('kehilangan.selesai', $h->id) }}" method="POST" style="display: inline;">
+                                    <form action="{{ route('keramaian.selesai', $k->id) }}" method="POST" style="display: inline;">
                                         @csrf
                                         <button type="submit" class="btn btn-success btn-sm mb-1">Selesai</button>
                                     </form>
 
                                     <!-- Tombol yang membuka modal -->
-                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#tolakModal{{ $h->id }}">Tolak
+                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#tolakModal{{ $k->id }}">Tolak
                                     </button>
 
                                 </td>
                             </tr>
                             <!-- Modal Tolak -->
-                            <div class="modal fade" id="tolakModal{{ $h->id }}" tabindex="-1" role="dialog" aria-labelledby="tolakModalLabel{{ $h->id }}" aria-hidden="true">
+                            <div class="modal fade" id="tolakModal{{ $k->id }}" tabindex="-1" role="dialog" aria-labelledby="tolakModalLabel{{ $k->id }}" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
-                                <form method="POST" action="{{ route('kehilangan.tolak', $h->id) }}">
+                                <form method="POST" action="{{ route('keramaian.tolak', $k->id) }}">
                                     @csrf
                                     @method('PUT')
                                     <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="tolakModalLabel{{ $h->id }}">Tolak Pesan Untuk Id Surat : {{ $h->id }}</h5>
+                                        <h5 class="modal-title" id="tolakModalLabel{{ $k->id }}">Tolak Pesan Untuk Id Surat : {{ $k->id }}</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
                                         <span aria-hidden="true">&times;</span>
                                         </button>
@@ -120,7 +120,7 @@
 <script src="{{ asset('dashboard/assets/vendor/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{ asset('dashboard/assets/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 
-<!-- Page level java scripts -->
+<!-- Page level custom scripts -->
 <script>
     $(document).ready(function () {
       $('#dataTable').DataTable({
