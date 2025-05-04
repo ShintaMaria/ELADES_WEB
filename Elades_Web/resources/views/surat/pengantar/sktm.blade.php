@@ -7,10 +7,10 @@
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <h1 style="margin-top: 0px;">Layanan Surat Keterangan Penghasilan</h1>
+        <h1 style="margin-top: 0px;">Layanan Surat Pengantar SKTM</h1>
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active">Keterangan Penghasilan</li>
+            <li class="breadcrumb-item active">Pengantar SKTM</li>
         </ol>
 
         <!-- DataTales Example -->
@@ -30,7 +30,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Waktu</th>
-                                <th>Keterangan</th>
+                                <th>Pengajuan</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>

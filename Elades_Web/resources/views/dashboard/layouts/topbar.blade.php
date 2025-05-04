@@ -119,9 +119,11 @@
                 </div>
                 <div class="modal-body">Pilih "LogOut" Jika Anda Yakin Untuk Keluar</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <!-- <a class="btn btn-primary" href="landingpage/landing_page.blade.php">Logout</a> -->
-                    <a class="btn btn-primary" href="{{ route('landingpage') }}">Logout</a>
+                    <form action="{{ Route('logout') }}" method="POST">
+                        @csrf
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary" >Logout</b>
+                    </form>
                 </div>
             </div>
         </div>
