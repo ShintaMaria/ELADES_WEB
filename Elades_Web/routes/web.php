@@ -14,6 +14,7 @@ use App\Http\Controllers\informasi\ArtikelTerkiniController;
 use App\Http\Controllers\informasi\StatistikController;
 use App\Http\Controllers\dashboard\ProfileController;
 use App\Http\Controllers\surat\SkckController;
+use App\Http\Controllers\TampilanSuratController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -71,6 +72,22 @@ Route::middleware(['auth'])->group(function () {
 });
 
 //Pengajuan Surat
-Route::get('/skck', [SkckController::class, 'index'])->name('skck');
+Route::get('/skck', [TampilanSuratController::class, 'skck'])->name('skck');
+Route::get('/keramaian', [TampilanSuratController::class, 'keramaian'])->name('keramaian');
+Route::get('/kehilangan-barang', [TampilanSuratController::class, 'kehilangan'])->name('kehilangan');
+
+//Detail Pengajuan Surat
+Route::get('/skck/{id}', [SkckController::class, 'show'])->name('skck.show');
+Route::get('/kehilangan/{id}', [SkckController::class, 'show'])->name('kehilangan.show');
+Route::get('/keramaian/{id}', [SkckController::class, 'show'])->name('keramaian.show');
+
+
+Route::post('/skck/{id}/selesai', [SkckController::class, 'selesai'])->name('skck.selesai');
+Route::post('/kehilangan/{id}/selesai', [SkckController::class, 'selesai'])->name('kehilangan.selesai');
+Route::post('/keramaian/{id}/selesai', [SkckController::class, 'selesai'])->name('keramaian.selesai');
+
+Route::post('/skck/{id}/tolak', [SkckController::class, 'tolak'])->name('skck.tolak');
+Route::post('/kehilangan/{id}/tolak', [SkckController::class, 'tolak'])->name('kehilangan.tolak');
+Route::post('/keramaian/{id}/tolak', [SkckController::class, 'tolak'])->name('keramaian.tolak');
 
 //
