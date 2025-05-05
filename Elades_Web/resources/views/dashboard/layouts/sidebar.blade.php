@@ -50,11 +50,28 @@
     </li>
 
     <!-- Laporan Surat -->
+    {{-- Donnz --}}
     <li class="nav-item">
-        <a class="nav-link" href="cards.html">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLaporanSurat"
+        aria-expanded="true" aria-controls="collapseLaporanSurat">
             <i class="fas fa-clipboard-list"></i>
-            <span>Laporan</span>
+            <span>Laporan Pengajuan</span>
         </a>
+        <div id="collapseLaporanSurat" class="collapse" aria-labelledby="headingLaporan" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Surat Pengantar</h6>
+                <a class="collapse-item" href="{{ route('laporan_pengajuan.skck') }}">SKCK</a>
+                <a class="collapse-item" href="{{ route('laporan_pengajuan.kehilangan') }}">Kehilangan Barang</a>
+
+                <h6 class="collapse-header">Surat Keterangan</h6>
+                <a class="collapse-item" href="{{ route('laporan_pengajuan.sktm') }}">SKTM</a>
+                <a class="collapse-item" href="{{ route('laporan_pengajuan.penghasilan') }}">Penghasilan Orang Tua</a>
+
+                <h6 class="collapse-header">Surat Izin</h6>
+                <a class="collapse-item" href="{{ route('laporan_pengajuan.tidak_masuk_kerja') }}">Tidak Masuk Kerja</a>
+                <a class="collapse-item" href="{{ route('laporan_pengajuan.keramaian') }}">Keramaian</a>
+            </div>
+        </div>
     </li>
 
     <!-- Divider -->
@@ -83,7 +100,7 @@
     <li class="nav-item">
         <a class="nav-link" href="cards.html">
             <i class="fas fa-clipboard-list"></i>
-            <span>Laporan</span>
+            <span>Laporan Pengaduan</span>
         </a>
     </li>
 
