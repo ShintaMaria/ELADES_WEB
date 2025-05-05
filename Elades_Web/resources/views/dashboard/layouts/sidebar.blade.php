@@ -6,7 +6,22 @@
         <img src="{{ asset('landingpage/assets/img/logonavbar.png')}}" alt="" width="70" height="auto">
         <div class="sidebar-brand-text mx-3">Kauman <br> Nganjuk</div>
     </a>
-    <!-- Missing closing tag for the "Pembuatan Surat" section -->
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ route('dashboard') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">Layanan Administrasi</div>
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePembuatanSurat"
             aria-expanded="true" aria-controls="collapsePembuatanSurat">
