@@ -14,6 +14,7 @@ use App\Http\Controllers\informasi\KabarDesaController;
 use App\Http\Controllers\informasi\ArtikelTerkiniController;
 use App\Http\Controllers\informasi\StatistikController;
 use App\Http\Controllers\dashboard\ProfileController;
+use App\Http\Controllers\DetailPengajuanController;
 use App\Http\Controllers\pengaduan\LaporanSKCKController;
 use App\Http\Controllers\surat\SkckController;
 use App\Http\Controllers\surat\Sktmcontroller;
@@ -84,6 +85,7 @@ Route::get('/skck/{id}', [SkckController::class, 'show'])->name('skck.show');
 Route::get('/kehilangan/{id}', [SkckController::class, 'show'])->name('kehilangan.show');
 Route::get('/keramaian/{id}', [SkckController::class, 'show'])->name('keramaian.show');
 
+Route::post('detail-pengajuan', [DetailPengajuanController::class, 'detailpengajuan'])->name('detailpengajuan');
 
 Route::post('/skck/{id}/selesai', [SkckController::class, 'selesai'])->name('skck.selesai');
 Route::post('/kehilangan/{id}/selesai', [SkckController::class, 'selesai'])->name('kehilangan.selesai');

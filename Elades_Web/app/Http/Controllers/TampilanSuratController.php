@@ -12,6 +12,11 @@ class TampilanSuratController extends Controller
         $kehilangan =PengajuanSurat::where('kode_surat', 'kehilangan')->get();
         return view('surat.pengantar.barang', compact('kehilangan'));
     }
+    public function penghasilan()
+    {
+        $kehilangan =PengajuanSurat::where('kode_surat', 'penghasilan')->get();
+        return view('surat.pengantar.penghasilan', compact('penghasilan'));
+    }
     //menampilkan view pengajuan surat izin keramaian
     public function keramaian()
     {
