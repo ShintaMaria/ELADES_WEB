@@ -9,7 +9,7 @@ class SkckController extends Controller
 {
     public function show($id) {
         $skck = PengajuanSurat::findOrFail($id);
-        return view('surat.pengantar.detailskck', compact('skck'));
+        return view('surat.pengantar.skck', compact('skck'));
     }
 
     public function selesai($id) {

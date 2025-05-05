@@ -6,29 +6,11 @@
         <img src="{{ asset('landingpage/assets/img/logonavbar.png')}}" alt="" width="70" height="auto">
         <div class="sidebar-brand-text mx-3">Kauman <br> Nganjuk</div>
     </a>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0">
-
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="{{ route('dashboard') }}">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span>
-        </a>
-    </li>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-
-    <!-- Heading -->
-    <div class="sidebar-heading">Layanan Administrasi</div>
-
-    <!-- Pembuatan Surat -->
+    <!-- Missing closing tag for the "Pembuatan Surat" section -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePembuatanSurat"
             aria-expanded="true" aria-controls="collapsePembuatanSurat">
-            <i class="fas fa-file-alt"></i>
+            <i class="fas fa-envelope"></i>
             <span>Pembuatan Surat</span>
         </a>
         <div id="collapsePembuatanSurat" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -36,25 +18,39 @@
                 <h6 class="collapse-header">Surat Pengantar</h6>
                 <a class="collapse-item" href="{{ route('skck') }}">Pengantar SKCK</a>
                 <a class="collapse-item" href="{{ route('kehilangan') }}">Kehilangan Barang</a>
-                <a class="collapse-item" href="{{ route('sktm') }}">Pengantar SKTM</a>
-
                 <h6 class="collapse-header">Surat Keterangan</h6>
-                <a class="collapse-item" href="#">SKTM</a> <!-- Belum ada route? -->
+                <a class="collapse-item" href="{{ route('sktm') }}">Pengantar SKTM</a>
                 <a class="collapse-item" href="{{ route('penghasilan') }}">Keterangan Penghasilan</a>
-
                 <h6 class="collapse-header">Surat Izin</h6>
-                <a class="collapse-item" href="#">Izin Tidak Masuk Kerja</a> <!-- Belum ada route? -->
+                <a class="collapse-item" href="buttons.html">Izin Tidak Masuk Kerja</a>
                 <a class="collapse-item" href="{{ route('keramaian') }}">Izin Keramaian</a>
             </div>
         </div>
-    </li>
+    </li> <!-- Added missing closing tag -->
 
     <!-- Laporan Surat -->
+    {{-- Donnz --}}
     <li class="nav-item">
-        <a class="nav-link" href="cards.html">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLaporanSurat"
+        aria-expanded="true" aria-controls="collapseLaporanSurat">
             <i class="fas fa-clipboard-list"></i>
-            <span>Laporan</span>
+            <span>Laporan Pengajuan</span>
         </a>
+        <div id="collapseLaporanSurat" class="collapse" aria-labelledby="headingLaporan" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Surat Pengantar</h6>
+                <a class="collapse-item" href="{{ route('laporan_pengajuan.skck') }}">SKCK</a>
+                <a class="collapse-item" href="{{ route('laporan_pengajuan.kehilangan') }}">Kehilangan Barang</a>
+
+                <h6 class="collapse-header">Surat Keterangan</h6>
+                <a class="collapse-item" href="{{ route('laporan_pengajuan.sktm') }}">SKTM</a>
+                <a class="collapse-item" href="{{ route('laporan_pengajuan.penghasilan') }}">Penghasilan Orang Tua</a>
+
+                <h6 class="collapse-header">Surat Izin</h6>
+                <a class="collapse-item" href="{{ route('laporan_pengajuan.tidak_masuk_kerja') }}">Tidak Masuk Kerja</a>
+                <a class="collapse-item" href="{{ route('laporan_pengajuan.keramaian') }}">Keramaian</a>
+            </div>
+        </div>
     </li>
 
     <!-- Divider -->
@@ -78,12 +74,10 @@
             </div>
         </div>
     </li>
-
-    <!-- Laporan Pengaduan (jika perlu pisah dari laporan surat) -->
     <li class="nav-item">
         <a class="nav-link" href="cards.html">
             <i class="fas fa-clipboard-list"></i>
-            <span>Laporan</span>
+            <span>Laporan Pengaduan</span>
         </a>
     </li>
 
