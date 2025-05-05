@@ -27,67 +27,69 @@
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
+                            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"/>
                             <tr>
-                                <th>No</th>
-                                <th>Waktu</th>
-                                <th>Pengajuan</th>
+                                <th>ID</th>
+                                <th>NIK</th>
+                                <th>Nama Pemohon</th>
+                                <th>Tanggal Pengajuan</th>
+                                <th>Tipe Surat</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @isset($infrastruktur)
-                            @foreach($infrastruktur as $infra)
-                            <tr id="row-{{ $infra->id }}">
-                                <td>{{ $loop->iteration }}</td>
-                                <td id="status-{{ $infra->id }}">{{ $infra->status ?? 'Baru' }}</td>
-                                <td>{{ $infra->media }}</td>
-                                <td>{{ \Illuminate\Support\Str::limit($infra->deskripsi, 50) }}</td>
-                                <td>{{ $infra->alamat }}</td>
-                                <td>
-                                    <button onclick="tolak({{ $infra->id }})" class="btn btn-danger btn-sm">Tolak</button><br>
-                                    <button onclick="ubahStatus({{ $infra->id }}, 'Sedang Diproses')" class="btn btn-primary btn-sm">Review</button><br>
-                                    <button onclick="ubahStatus({{ $infra->id }}, 'Selesai')" class="btn btn-success btn-sm">Selesai</button>
+                            @isset($skck)
+                            @foreach($skck as $s)
+                            <tr>
+                                <td>{{ $s->id }}</td>
+                                <td>{{ $s->nik }}</td>
+                                <td>{{ $s->nama }}</td>
+                                <td>{{ $s->tanggal }}</td>
+                                <td>{{ $s->kode_surat }}</td>
+                                <td>{{ $s->aksi }}
+                                    <a href="{{ route('skck.show', $s->id) }}" class="btn btn-primary btn-sm mb-1">Detail</a>
+
+                                    <form action="{{ route('skck.selesai', $s->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        <button type="submit" class="btn btn-success btn-sm mb-1">Selesai</button>
+                                    </form>
+
+                                    <!-- Tombol yang membuka modal -->
+                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#tolakModal{{ $s->id }}">Tolak
+                                    </button>
+
                                 </td>
                             </tr>
+                            <!-- Modal Tolak -->
+                            <div class="modal fade" id="tolakModal{{ $s->id }}" tabindex="-1" role="dialog" aria-labelledby="tolakModalLabel{{ $s->id }}" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                <form method="POST" action="{{ route('skck.tolak', $s->id) }}">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="tolakModalLabel{{ $s->id }}">Tolak Pesan Untuk Id Surat : {{ $s->id }}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <label for="alasan">Alasan:</label>
+                                        <textarea name="alasan" class="form-control" required placeholder="Masukkan alasan penolakan"></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-danger">Ya, Tolak</button>
+                                    </div>
+                                    </div>
+                                </form>
+                                </div>
+                            </div>
+
                             @endforeach
                             @endisset
                         </tbody>
                     </table>
 
-<script>
-    function ubahStatus(id, statusBaru) {
-        fetch(`/infrastruktur/${id}/update-status`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: JSON.stringify({ status: statusBaru })
-        }).then(response => response.json()).then(data => {
-            if (data.success) {
-                document.getElementById(`status-${id}`).innerText = statusBaru;
-            }
-        }).catch(error => console.error('Error:', error));
-    }
-
-    function tolak(id) {
-        let alasan = prompt("Masukkan alasan penolakan:");
-        if (alasan) {
-            fetch(`/infrastruktur/${id}/update-status`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({ status: 'Ditolak - ' + alasan })
-            }).then(response => response.json()).then(data => {
-                if (data.success) {
-                    document.getElementById(`status-${id}`).innerText = "Ditolak - " + alasan;
-                }
-            }).catch(error => console.error('Error:', error));
-        }
-    }
-</script>
                 </div>
             </div>
         </div>
@@ -105,6 +107,8 @@
 <!-- Bootstrap core JavaScript-->
 <script src="{{ asset('dashboard/assets/vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{ asset('dashboard/assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
 <!-- Core plugin JavaScript-->
 <script src="{{ asset('dashboard/assets/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
@@ -116,19 +120,23 @@
 <script src="{{ asset('dashboard/assets/vendor/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{ asset('dashboard/assets/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 
-<!-- Page level custom scripts -->
+<!-- Page level untuk java scripts -->
 <script>
     $(document).ready(function () {
-        var table = $('#dataTable').DataTable({
-            lengthChange: false
-        });
-
-        $('#dataTable_filter').appendTo("#customSearchContainer");
-        $('#customSearchContainer input').addClass('form-control').attr('placeholder', 'Cari data...');
-        $('#customSearchContainer label').contents().filter(function () {
-            return this.nodeType === 3;
-        }).remove();
+      $('#dataTable').DataTable({
+        "lengthMenu": [5, 10, 15, 20, 25],  // Dropdown: pilihan jumlah entri
+        "pageLength": 5, // Default jumlah yang ditampilkan saat pertama kali
+        "language": {
+          "lengthMenu": "Tampilkan _MENU_",
+          "search": "Cari:",
+          "zeroRecords": "Data tidak ditemukan",
+          "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
+          "infoEmpty": "Tidak ada data tersedia",
+          "infoFiltered": "(disaring dari total _MAX_ entri)"
+        }
+      });
     });
-</script>
+  </script>
+
 
 @endsection

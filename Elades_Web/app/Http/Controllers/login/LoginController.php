@@ -44,11 +44,6 @@ class LoginController extends Controller
     {
         Auth::logout(); // logout user
 
-        // invalidate session
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        // arahkan ke halaman login
         return redirect('/landing_page');
     }
 }
