@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class DetailSKCK extends Model
 {
     protected $table = 'skck';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'no_pengajuan';
     protected $fillable = [
         'kode_surat',
         'nama',
@@ -22,4 +22,9 @@ class DetailSKCK extends Model
         'username',
         'file',
     ];
+//     public function pengajuan()
+// {
+//     return $this->belongsTo(PengajuanSurat::class, 'no_pengajuan');
+// }
+
 }

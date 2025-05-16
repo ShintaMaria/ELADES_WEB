@@ -11,17 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('izin_keramaian', function (Blueprint $table) {
-            $table->id('no_pengajuan')->primary();
-            $table->string('kode_surat', 50)->default('keramaian');
-            $table->string('nik', 16);
-            $table->string('nama', 100);
-            $table->string('hari', 20);
-            $table->date('tanggal');
-            $table->time('waktu');
-            $table->string('tempat', 100);
-            $table->string('acara', 100);
-            $table->string('username', 100);
+       Schema::create('surat_izin_keramaian', function (Blueprint $table) {
+            $table->integer('no_pengajuan')->primary();
+            $table->string('username', 20);
+            $table->string('kode_surat', 20);
+            $table->string('nama', 255);
+            $table->string('alamat', 255);
+            $table->string('nik', 255);
+            $table->string('kegiatan', 255);
+            $table->string('tanggal', 50);
+            $table->string('waktu', 50);
+            $table->string('tempat', 255);
+            $table->string('file', 255);
         });
     }
 

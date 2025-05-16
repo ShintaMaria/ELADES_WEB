@@ -16,5 +16,9 @@ class PengajuanSurat extends Model
         'username',
 
     ];
+    public function skck()
+{
+    return $this->hasOne(DetailSKCK::class, 'no_pengajuan');
+}
 
 }

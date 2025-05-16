@@ -6,19 +6,42 @@
         <img src="{{ asset('landingpage/assets/img/logonavbar.png')}}" alt="" width="70" height="auto">
         <div class="sidebar-brand-text mx-3">Kauman <br> Nganjuk</div>
     </a>
-    <div id="collapsePembuatanSurat" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Surat Pengantar</h6>
-            <a class="collapse-item" href="{{ route('skck') }}">Pengantar SKCK</a>
-            <a class="collapse-item" href="{{ route('kehilangan') }}">Kehilangan Barang</a>
-            <h6 class="collapse-header">Surat Keterangan</h6>
-            <a class="collapse-item" href="{{ route('sktm') }}">Pengantar SKTM</a>
-            <a class="collapse-item" href="{{ route('penghasilan') }}">Keterangan Penghasilan</a>
-            <h6 class="collapse-header">Surat Izin</h6>
-            <a class="collapse-item" href="buttons.html">Izin Tidak Masuk Kerja</a>
-            <a class="collapse-item" href="{{ route('keramaian') }}">Izin Keramaian</a>
-        </div>
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ route('dashboard') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
     </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">Layanan Administrasi</div>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePembuatanSurat"
+            aria-expanded="true" aria-controls="collapsePembuatanSurat">
+            <i class="fas fa-envelope"></i>
+            <span>Pembuatan Surat</span>
+        </a>
+        <div id="collapsePembuatanSurat" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Surat Pengantar</h6>
+                <a class="collapse-item" href="{{ route('skck') }}">Pengantar SKCK</a>
+                <a class="collapse-item" href="{{ route('kehilangan') }}">Kehilangan Barang</a>
+                <h6 class="collapse-header">Surat Keterangan</h6>
+                <a class="collapse-item" href="{{ route('sktm') }}">Pengantar SKTM</a>
+                <a class="collapse-item" href="{{ route('penghasilan') }}">Keterangan Penghasilan</a>
+                <h6 class="collapse-header">Surat Izin</h6>
+                <a class="collapse-item" href="buttons.html">Izin Tidak Masuk Kerja</a>
+                <a class="collapse-item" href="{{ route('keramaian') }}">Izin Keramaian</a>
+            </div>
+        </div>
+    </li> <!-- Added missing closing tag -->
 
     <!-- Laporan Surat -->
     {{-- Donnz --}}

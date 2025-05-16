@@ -43,13 +43,13 @@ class DetailPengajuanController extends Controller
                     break;
             }
 
-            if ($detail_surat) {
-                // Jika ditemukan, arahkan ke halaman detail surat dengan data surat yang ditemukan
-                return view('Admin.detail-pengajuan', compact('detail_surat'));
-            } else {
-                // Jika pengajuan tidak ditemukan, arahkan kembali ke halaman sebelumnya atau berikan respons yang sesuai
-                return back()->with('error', 'Pengajuan not found');
-            }
+            // if ($detail_surat) {
+            //     // Jika ditemukan, arahkan ke halaman detail surat dengan data surat yang ditemukan
+            //     return view('Admin.detail-pengajuan', compact('detail_surat'));
+            // } else {
+            //     // Jika pengajuan tidak ditemukan, arahkan kembali ke halaman sebelumnya atau berikan respons yang sesuai
+            //     return back()->with('error', 'Pengajuan not found');
+            // }
         }
     }
 }
