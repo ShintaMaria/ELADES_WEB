@@ -30,11 +30,12 @@ class ProfileController extends Controller
         $extension = $file->getClientOriginalExtension();
         $filename = 'profile_' . $request->id_user . '_' . time() . '.' . $extension;
 
-        // Simpan file di storage/app/public/foto_profile
-        $path = $file->storeAs('public/uploads/uploads/foto_profile', $filename);
+        // Simpan file di public/uploads/foto_profile
+        $destinationPath = public_path('uploads/foto_profile');
+        $file->move($destinationPath, $filename);
 
         // Buat URL yang bisa diakses
-        $url = asset('storage/uploads/foto_profile/' . $filename);
+        $url = asset('uploads/foto_profile/' . $filename);
 
         // Simpan ke database
         try {

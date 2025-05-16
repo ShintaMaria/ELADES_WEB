@@ -38,7 +38,7 @@ class KeteranganController extends Controller
 
             // Lainnya
             'username' => 'required|string|max:255',
-            'file.*' => 'file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'file.*' => 'file|mimes:jpg,jpeg,png,pdf|max:10240',
         ]);
 
         if ($validator->fails()) {
@@ -48,13 +48,21 @@ class KeteranganController extends Controller
         // Upload file
         $fileNames = [];
         if ($request->hasFile('file')) {
+            $destinationPath = public_path('uploads/pengajuan');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+
             foreach ($request->file('file') as $file) {
                 if ($file->isValid()) {
-                    $path = $file->store('public/uploads/pengajuan');
-                    $fileNames[] = basename($path);
+                    $extension = $file->getClientOriginalExtension();
+                    $fileName = 'sktm_' . time() . '_' . uniqid() . '.' . $extension;
+                    $file->move($destinationPath, $fileName);
+                    $fileNames[] = $fileName;
                 }
             }
         }
+
 
         try {
             DB::table('sktm')->insert([
@@ -86,7 +94,6 @@ class KeteranganController extends Controller
             ]);
 
             return response()->json(['status' => 'success'], 201);
-
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
@@ -116,7 +123,7 @@ class KeteranganController extends Controller
 
             // Lainnya
             'username' => 'required|string|max:255',
-            'file.*' => 'file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'file.*' => 'file|mimes:jpg,jpeg,png,pdf|max:10240',
         ]);
 
         if ($validator->fails()) {
@@ -129,13 +136,21 @@ class KeteranganController extends Controller
         // Proses upload file
         $fileNames = [];
         if ($request->hasFile('file')) {
+            $destinationPath = public_path('uploads/pengajuan');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+        
             foreach ($request->file('file') as $file) {
                 if ($file->isValid()) {
-                    $path = $file->store('public/uploads/pengajuan');
-                    $fileNames[] = basename($path);
+                    $extension = $file->getClientOriginalExtension();
+                    $fileName = 'penghasilan_' . time() . '_' . uniqid() . '.' . $extension;
+                    $file->move($destinationPath, $fileName);
+                    $fileNames[] = $fileName;
                 }
             }
         }
+        
 
         try {
             DB::table('penghasilan_ortu')->insert([
@@ -155,7 +170,6 @@ class KeteranganController extends Controller
             ]);
 
             return response()->json(['status' => 'success'], 201);
-
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',

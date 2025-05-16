@@ -19,10 +19,10 @@ class PengaduanController extends Controller
             'alamat' => 'required|string|max:500',
             'jenis_infrastruktur' => 'required|string|max:100',
             'deskripsi' => 'required|string|max:1000',
-            'tanggal_kejadian' => 'required|date',
+            'tanggal_kejadian' => 'required|string|max:20',
             'lokasi' => 'required|string|max:255',
             'username' => 'required|string|max:255',
-            'file.*' => 'file|mimes:jpg,jpeg,png,pdf,doc,docx|max:2048'
+            'file.*' => 'file|mimes:jpg,jpeg,png,pdf,doc,docx|max:10240'
         ]);
 
         if ($validator->fails()) {
@@ -35,10 +35,17 @@ class PengaduanController extends Controller
         // Upload files
         $fileNames = [];
         if ($request->hasFile('file')) {
+            $destinationPath = public_path('uploads/pengaduan');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+        
             foreach ($request->file('file') as $file) {
                 if ($file->isValid()) {
-                    $path = $file->store('public/uploads/pengaduan');
-                    $fileNames[] = basename($path);
+                    $extension = $file->getClientOriginalExtension();
+                    $fileName = 'infrastruktur_' . time() . '_' . uniqid() . '.' . $extension;
+                    $file->move($destinationPath, $fileName);
+                    $fileNames[] = $fileName;
                 }
             }
         }
@@ -76,11 +83,11 @@ class PengaduanController extends Controller
             'nik' => 'required|string|max:20',
             'jenis_kasus' => 'required|string|max:255',
             'lokasi_kejadian' => 'required|string|max:255',
-            'tanggal' => 'required|date',
+            'tanggal' => 'required|string|max:20',
             'waktu' => 'required|string|max:20',
             'deskripsi' => 'required|string|max:1000',
             'username' => 'required|string|max:255',
-            'file.*' => 'file|mimes:jpg,jpeg,png,pdf,doc,docx|max:2048'
+            'file.*' => 'file|mimes:jpg,jpeg,png,pdf,doc,docx|max:10240'
         ]);
 
         if ($validator->fails()) {
@@ -93,10 +100,17 @@ class PengaduanController extends Controller
         // Handle multiple file uploads
         $fileNames = [];
         if ($request->hasFile('file')) {
+            $destinationPath = public_path('uploads/pengaduan');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+        
             foreach ($request->file('file') as $file) {
                 if ($file->isValid()) {
-                    $path = $file->store('public/uploads/pengaduan');
-                    $fileNames[] = basename($path);
+                    $extension = $file->getClientOriginalExtension();
+                    $fileName = 'keamanan_' . time() . '_' . uniqid() . '.' . $extension;
+                    $file->move($destinationPath, $fileName);
+                    $fileNames[] = $fileName;
                 }
             }
         }
@@ -129,14 +143,14 @@ class PengaduanController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'kode_pengaduan' => 'required|string|max:255',
-            'alamat' => 'required|string|max:255',
+            'alamat' => 'nullable|string|max:255',
             'topik' => 'required|string|max:255',
             'judul_saran' => 'required|string|max:255',
             'deskripsi' => 'required|string|max:1000',
-            'tanggal' => 'required|date',
+            'tanggal' => 'required|string|max:20',
             'nama' => 'nullable|string|max:255',
-            'username' => 'nullable|string|max:255',
-            'file.*' => 'file|mimes:jpg,jpeg,png,pdf,doc,docx|max:2048',
+            'username' => 'required|string|max:255',
+            'file.*' => 'file|mimes:jpg,jpeg,png,pdf,doc,docx|max:10240',
         ]);
 
         if ($validator->fails()) {
@@ -148,10 +162,17 @@ class PengaduanController extends Controller
 
         $fileNames = [];
         if ($request->hasFile('file')) {
+            $destinationPath = public_path('uploads/pengaduan');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+        
             foreach ($request->file('file') as $file) {
                 if ($file->isValid()) {
-                    $path = $file->store('public/uploads/pengaduan');
-                    $fileNames[] = basename($path);
+                    $extension = $file->getClientOriginalExtension();
+                    $fileName = 'saran_' . time() . '_' . uniqid() . '.' . $extension;
+                    $file->move($destinationPath, $fileName);
+                    $fileNames[] = $fileName;
                 }
             }
         }

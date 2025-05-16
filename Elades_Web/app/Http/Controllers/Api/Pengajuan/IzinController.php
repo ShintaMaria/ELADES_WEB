@@ -18,11 +18,11 @@ class IzinController extends Controller
             'nama' => 'required|string|max:255',
             'tempat_tanggal_lahir' => 'required|string|max:255',
             'alamat' => 'required|string|max:500',
-            'tanggal_izin' => 'required|date',
+            'tanggal_izin' => 'required|string|max:255',
             'alasan' => 'required|string|max:1000',
             'instansi' => 'required|string|max:255',
             'username' => 'required|string|max:255',
-            'file.*' => 'file|mimes:jpg,jpeg,png,pdf,doc,docx|max:2048',
+            'file.*' => 'file|mimes:jpg,jpeg,png,pdf,doc,docx|max:10240',
         ]);
 
         if ($validator->fails()) {
@@ -35,13 +35,21 @@ class IzinController extends Controller
         // Handle upload file
         $fileNames = [];
         if ($request->hasFile('file')) {
+            $destinationPath = public_path('uploads/pengajuan');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+
             foreach ($request->file('file') as $file) {
                 if ($file->isValid()) {
-                    $path = $file->store('public/uploads/pengajuan');
-                    $fileNames[] = basename($path);
+                    $extension = $file->getClientOriginalExtension();
+                    $fileName = 'TidakMasukKerja_' . time() . '_' . uniqid() . '.' . $extension;
+                    $file->move($destinationPath, $fileName);
+                    $fileNames[] = $fileName;
                 }
             }
         }
+
 
         try {
             DB::table('surat_izin_tidak_masuk_kerja')->insert([
@@ -57,7 +65,6 @@ class IzinController extends Controller
             ]);
 
             return response()->json(['status' => 'success'], 201);
-
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
@@ -65,7 +72,7 @@ class IzinController extends Controller
             ], 500);
         }
     }
-    
+
     //pengajuan_keramaian
     public function keramaian(Request $request)
     {
@@ -76,11 +83,11 @@ class IzinController extends Controller
             'alamat' => 'required|string|max:500',
             'nik' => 'required|string|max:20',
             'kegiatan' => 'required|string|max:255',
-            'tanggal' => 'required|date',
+            'tanggal' => 'required|string|max:255',
             'waktu' => 'required|string|max:50',
             'tempat' => 'required|string|max:255',
             'username' => 'required|string|max:255',
-            'file.*' => 'file|mimes:jpg,jpeg,png,pdf,doc,docx|max:2048',
+            'file.*' => 'file|mimes:jpg,jpeg,png,pdf,doc,docx|max:10240',
         ]);
 
         if ($validator->fails()) {
@@ -93,13 +100,21 @@ class IzinController extends Controller
         // Upload file
         $fileNames = [];
         if ($request->hasFile('file')) {
+            $destinationPath = public_path('uploads/pengajuan');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+
             foreach ($request->file('file') as $file) {
                 if ($file->isValid()) {
-                    $path = $file->store('public/uploads/pengajuan');
-                    $fileNames[] = basename($path);
+                    $extension = $file->getClientOriginalExtension();
+                    $fileName = 'keramaian_' . time() . '_' . uniqid() . '.' . $extension;
+                    $file->move($destinationPath, $fileName);
+                    $fileNames[] = $fileName;
                 }
             }
         }
+
 
         try {
             DB::table('surat_izin_keramaian')->insert([
@@ -116,7 +131,6 @@ class IzinController extends Controller
             ]);
 
             return response()->json(['status' => 'success'], 201);
-
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
