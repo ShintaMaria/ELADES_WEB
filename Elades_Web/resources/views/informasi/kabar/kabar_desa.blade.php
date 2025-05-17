@@ -43,8 +43,9 @@
                     <td>{{ $kabar->tanggal }}</td>
                     <td>
                         @if($kabar->gambar)
-                            <img src="{{ asset('storage/'.$kabar->gambar) }}" width="100"><br>
+                            <img src="{{ asset($kabar->gambar) }}" alt="Gambar Kabar Desa" width="200">
                         @endif
+
                     </td>
                     <td>
                         
