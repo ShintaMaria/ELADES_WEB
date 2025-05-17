@@ -62,30 +62,31 @@
         </div>
       </div>
 
-      <!-- Kolom Tengah: Kosong / Bisa Tambahkan Tulisan Lain -->
+      <!-- Kolom Tengah Kosong -->
       <div class="col-md-4 text-center mb-3 mb-md-0">
-        <!-- Bisa diisi quote atau slogan desa -->
-        <!-- <p class="mb-0">Membangun desa menuju masyarakat sejahtera</p> -->
+        <!-- <p> Membangun desa menuju masyarakat sejahtera</p> -->
       </div>
 
       <!-- Kolom Kanan: Kontak -->
       <div class="col-md-4 text-md-end">
-        <p class="mb-1">Desa Kauman, Kecamatan Nganjuk</p>
-        <p class="mb-1">Kabupaten Nganjuk, Jawa Timur</p>
-        <p class="mb-1"><i class="bi bi-telephone"></i> +62 123 4567 890</p>
-        <p class="mb-1"><i class="bi bi-envelope"></i> info@desakauman.nganjuk.id</p>
-      </div>
+          <p class="mb-1">Jalan Gatot Subroto No. 100</p>
+          <p class="mb-1">Kabupaten Nganjuk, Jawa Timur</p>
+          <p class="mb-1"><i class="bi bi-telephone"></i> 0812-3595-3512</p>
+          <p class="mb-1"><i class="bi bi-envelope"></i> kelurahankaumannganjuk@gmail.com</p>
+        </div>
 
     </div>
 
     <!-- Baris Sosial Media -->
     <div class="row mt-3">
-      <div class="col text-center">
-      <div class="social-links d-flex justify-content-center mt-2">
-        <a href="#" class="me-3"><i class="bi bi-facebook fs-5"></i></a>
-        <a href="#" class="me-3"><i class="bi bi-instagram fs-5"></i></a>
-        <a href="#" class="me-3"><i class="bi bi-whatsapp fs-5"></i></a>
-    </div>
+        <div class="col text-center">
+          <div class="social-links d-flex justify-content-center mt-2">
+            <a href="mailto:kelurahankaumannganjuk@gmail.com" class="me-3"><i class="bi bi-envelope fs-5"></i></a>
+            <a href="https://www.instagram.com/kelurahankaumannganjuk?igsh=azdqZzN3NnBleDl4" class="me-3"><i class="bi bi-instagram fs-5"></i></a>
+            <a href="https://wa.me/6281235953512" class="me-3"><i class="bi bi-whatsapp fs-5"></i></a>
+          </div>
+        </div>
+      </div>
 
       </div>
     </div>
