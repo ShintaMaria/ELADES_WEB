@@ -53,7 +53,7 @@
                     <form action="{{ route('kabardesa.destroy', $kabar->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus artikel ini?');">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus kabar desa ini?');">
                             <i class="fas fa-trash-alt"></i>
                             </button>
                         </form>
