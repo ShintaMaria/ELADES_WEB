@@ -721,13 +721,12 @@ section,
 # Hero Section
 --------------------------------------------------------------*/
 .hero {
-  /* position: relative; */
-  height: 600px;
-  padding-top: 250px;
-  margin-top: 0;
-  /* padding-top: 0; */
-
-  /* background: linear-gradient(135deg, color-mix(in srgb, var(--accent-color), transparent 50%) 50%, color-mix(in srgb, var(--accent-color), transparent 98%) 25%, transparent 50%); */
+  position: relative;
+  padding-top: 160px;
+  background-image: url("/landingpage/assets/img/nganjuk.jpg"); /* ganti path sesuai lokasi file kamu */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .hero::before {
@@ -737,19 +736,13 @@ section,
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("/landingpage/assets/img/nganjuk.jpg") no-repeat center center/cover;
-  /* opacity: 0.8; */
-  /* backdrop-filter: blur(1000px); 
-  border-radius: 10px;
-  padding: 15px; */
-  filter: brightness(70%);
+  background: rgba(0, 0, 0, 0.3); /* overlay gelap transparan */
   pointer-events: none;
 }
 
 .hero .hero-content {
   position: relative;
   z-index: 1;
-  top: -200px;
 }
 
 .hero .hero-content h1 {
@@ -760,15 +753,12 @@ section,
 }
 
 .hero .hero-content h1 .accent-text {
-  
   color: #ffffff;
   -webkit-text-stroke: 2px #6a9f73;
   text-shadow: 2px 2px 4px rgb(0, 0, 0);
-  font-size: 75px; /* Atur ukuran sesuai kebutuhan */
+  font-size: 75px; 
   font-weight: bold;
 }
-
-
 
 .hero .hero-content h3 .accent-text {
   
@@ -781,8 +771,6 @@ section,
   color: #ffffff; /* Warna teks (contoh: merah-oranye) */
 }
 
-
-
 @media (max-width: 992px) {
   .hero .hero-content {
     text-align: center;
@@ -793,29 +781,10 @@ section,
     font-size: 2.5rem;
   }
 
-  .hero .hero-content  {
+  .hero .hero-content .hero-buttons {
     justify-content: center;
   }
 }
-.hero-buttons .btn {
-  padding: 12px 24px; /* Ukuran tombol */
-  font-size: 18px; /* Ukuran teks */
-  font-weight: bold; /* Buat teks lebih tebal */
-  border-radius: 8px; /* Membuat sudut agak melengkung */
-  box-shadow: 4px 4px 10px rgba(238, 236, 236, 0.2); /* Efek bayangan */
-  transition: all 0.3s ease-in-out; /* Animasi efek */
-}
-
-.hero-buttons .btn:hover {
-  box-shadow: 6px 6px 15px rgba(255, 255, 255, 0.514); /* Bayangan lebih besar saat hover */
-  transform: translateY(-3px); /* Tombol naik sedikit */
-}
-
-.hero-buttons .btn:active {
-  box-shadow: 2px 2px 5px rgba(255, 255, 255, 0.3); /* Saat ditekan, bayangan lebih kecil */
-  transform: translateY(2px); /* Tombol turun sedikit */
-}
-
 
 @media (max-width: 575px) {
   .hero .hero-content h1 {
@@ -881,7 +850,7 @@ section,
 
 .hero .customers-badge {
   position: absolute;
-  bottom: 120px;
+  bottom: 10px;
   right: 30px;
   background-color: var(--surface-color);
   padding: 1rem;
@@ -936,7 +905,6 @@ section,
 .hero .stats-row {
   position: relative;
   z-index: 1;
-  top: -185px;
   margin-top: 5rem;
   background-color: var(--surface-color);
   border-radius: 20px;
