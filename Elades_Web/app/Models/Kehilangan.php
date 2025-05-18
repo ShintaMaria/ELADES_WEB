@@ -7,19 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Kehilangan extends Model
 {
     protected $table = 'surat_kehilangan_barang';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'no_pengajuan';
+    public $timestamps = false;
+
     protected $fillable = [
-        'kode_surat',
-        'nama',
-        'nik',
-        'jenis_kelamin',
-        'tempat_tgl_lahir',
-        'agama',
-        'pekerjaan',
-        'alamat',
-        'barang',
-        'hilang_tgl',
-        'tempat_hilang',
-        'username',
+        'kode_surat', 'username', 'nama', 'tempat_lahir', 'tanggal_lahir',
+        'agama', 'jenis_kelamin', 'pekerjaan', 'alamat', 'barang_yang_hilang',
+        'hilang_pada_tanggal', 'tempat_kehilangan', 'file', 'status', 'alasan'
     ];
 }

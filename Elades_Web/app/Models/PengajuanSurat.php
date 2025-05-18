@@ -10,11 +10,14 @@ class PengajuanSurat extends Model
     protected $primaryKey = 'id';
     protected $fillable = [
         'kode_surat',
-        'nama',
         'nik',
         'tanggal',
+        'nama',
         'username',
-
+        'no_pengajuan',
+        'ktp_file',
+        'status',
+        'alasan',
     ];
     public function skck()
 {
