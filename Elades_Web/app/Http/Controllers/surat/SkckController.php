@@ -5,9 +5,10 @@ namespace App\Http\Controllers\surat;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\DetailSKCK;
-use App\Models\PengajuanSurat;
+use App\Models\pejabat;
 use Illuminate\Support\Facades\DB;
-use PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
+// use PDF;
 class SkckController extends Controller
 {
     public function index()
@@ -66,39 +67,35 @@ class SkckController extends Controller
     }
         }
 
+public function preview($id)
+{
+    $skck = DetailSKCK::findOrFail($id);
+    $pejabat = pejabat::first();
 
-    public function preview($id)
-    {
-        $skck = DetailSKCK::findOrFail($id);
+    // Ambil path TTD dari pengajuan (sesuaikan dengan struktur database Anda)
+    $ttdPath = $pejabat->ttd_image ? 'uploads/ttd/'.$pejabat->ttd_image : null;
 
-        // Data tambahan yang mungkin diperlukan untuk format surat
-        $data = [
-            'skck' => $skck,
-            'tanggal_surat' => now()->format('d F Y'),
-            'nomor_surat' => 'SKCK-' . str_pad($skck->no_pengajuan, 4, '0', STR_PAD_LEFT) . '/' . now()->format('Y')
-        ];
+    return view('templatesurat.Skck', [
+        'mode' => 'preview',
+        'skck' => $skck,
+        'pejabat' => $pejabat,
+        'ttdPath' => $ttdPath
+    ]);
+}
 
-        return view('surat.pengantar.preview-skck', $data);
-    }
+public function cetak($id)
+{
+    $skck = DetailSKCK::findOrFail($id);
+    $pejabat = pejabat::first();
+    $ttdPath = $pejabat->ttd_image ? 'uploads/ttd/'.$pejabat->ttd_image : null;
 
-    public function cetak($id)
-    {
-        $skck = DetailSKCK::findOrFail($id);
+    $pdf = Pdf::loadView('templatesurat.Skck', [
+        'mode' => 'cetak',
+        'skck' => $skck,
+        'pejabat' => $pejabat,
+        'ttdPath' => $ttdPath
+    ]);
 
-        // Data tambahan yang mungkin diperlukan untuk format surat
-        $data = [
-            'skck' => $skck,
-            'tanggal_surat' => now()->format('d F Y'),
-            'nomor_surat' => 'SKCK-' . str_pad($skck->no_pengajuan, 4, '0', STR_PAD_LEFT) . '/' . now()->format('Y')
-        ];
-
-        // Generate PDF
-        // $pdf = PDF::loadView('surat.pengantar.cetak-skck', $data);
-
-        // Set paper size (A4)
-        // $pdf->setPaper('a4', 'portrait');
-
-        // // Return PDF sebagai download dengan nama file
-        // return $pdf->stream('Surat_Pengantar_SKCK_'.$skck->nama.'.pdf');
-    }
+    return $pdf->download('SKCK-'.$skck->nama.'-'.date('Ymd').'.pdf');
+}
 }

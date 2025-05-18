@@ -9,6 +9,6 @@ class pejabat extends Model
     protected $table = 'pejabat';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'nama', 'nip', 'jabatan'
+        'nama', 'nip', 'jabatan', 'ttd_image'
     ];
 }

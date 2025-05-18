@@ -1,0 +1,160 @@
+/* skck.css */
+
+/* Gaya umum */
+body {
+    font-family: "Times New Roman", Times, serif;
+    /* font-size: 20; */
+    margin: 0;
+}
+
+.page-container {
+    position: relative;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.kop-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    padding-left: 20px;
+    padding-right: 20px;
+    border-collapse: collapse;
+    border-bottom: 5px double #000; 
+}
+
+/* Container untuk logo di sebelah kiri */
+.logo-container {
+    position: absolute;
+    left: 1cm;
+}
+
+/* Gaya untuk alamat */
+.kop-surat {
+    text-align: center;
+    line-height: 0.3;
+}
+
+.kop-container p {
+    font-size: large;
+    font-weight: bold;
+}
+
+.kop-container p:nth-child(3){
+    font-size: larger;
+}
+
+.kop-container p:nth-child(4) {
+    font-style: italic;
+    font-weight: 400;
+    font-size: small;
+}
+
+/* Gaya untuk isi surat */
+.isi-surat {
+    margin-top: 40px;
+    text-align: justify;
+    line-height: 1.5;
+        }
+
+.nomer-surat{
+    /* display:flex; */
+    justify-content: center;
+    line-height:0 ;
+    text-align: center;
+    align-items: center;
+    line-height: 0.3;
+}
+.nomer-surat p:nth-child(1){
+    /* font-size: 17px; */
+    text-decoration: underline;
+    font-weight: bold;
+}
+.nomer-surat p:nth-child(2){
+    font-style: italic;
+}
+
+.isi-surat1{
+    margin-top: 40px;
+    /* line-height: 0.5; */
+    text-indent: 1cm;
+    
+}
+
+/* Gaya untuk tabel */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    /* line-height: 0.5; */
+}   
+
+td {
+/* vertical-align: bottom; */
+word-wrap: break-word;
+white-space: nowarp;
+line-height: 0.8;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    vertical-align: top;
+}
+
+/* Gaya untuk judul-judul yang diminta */
+
+
+.keterangan{
+    text-align: justify;
+    text-indent: 1cm;
+}
+.keteerangan::first-line{
+    text-indent: 10px;
+}
+
+.ttd td {
+    text-align: center; /* Teks di tengah secara horizontal */
+    vertical-align: middle;
+}
+/* Gaya cetak: Menghilangkan header dan footer */
+/* Gaya cetak: Menghilangkan header dan footer */
+@media print {
+    body {
+        padding-top: 1cm;
+        padding-left: 2cm;
+        padding-bottom: 1cm;
+        padding-right: 2cm;
+    }
+
+    .kop-container {
+    }
+
+    .kop-surat {
+        /* text-align: center; */
+    }
+
+    .isi-surat {
+        /* margin: 0;
+        padding: 10px; */
+        /* page-break-before: always; */
+    }
+
+    h1 {
+        /* text-align: center; */
+    }
+
+    p {
+        /* text-align: justify; */
+    }
+
+    @page {
+        size: F4;
+        margin: 0;
+    }
+    html {
+        size: F4;
+    }
+}

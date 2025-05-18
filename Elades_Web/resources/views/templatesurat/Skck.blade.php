@@ -1,198 +1,204 @@
-@php
-$detail_surat = session('detail_surat');
-$ttd = session('ttd');
-$laporan = session('laporan');
-@endphp
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SKCK</title>
-<link rel="stylesheet" href="{{ asset('assets/css/surat.css') }}">
-<script>
-    function printPage() {
-        window.print();
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $mode === 'cetak' ? 'Cetak SKCK' : 'Preview SKCK' }}</title>
 
-    window.onload = function() {
-        if ({{ $ttd->print ?? 'false' }}) {
-            printPage();
+    @if($mode === 'cetak')
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
         }
-    };
-</script>
-<style>
-    /* Gaya tambahan, jika diperlukan */
-</style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+    </style>
+    @else
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .surat-container {
+            background-color: white;
+            padding: 30px;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    </style>
+    @endif
+
+    <style>
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header img {
+            height: 80px;
+            float: left;
+        }
+        .header-text {
+            margin: 0 auto;
+            width: 70%;
+        }
+        .header-text p {
+            margin: 0;
+            line-height: 1.5;
+        }
+        .title {
+            text-align: center;
+            margin: 20px 0;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        .content {
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table td {
+            padding: 5px;
+            vertical-align: top;
+        }
+        .signature {
+            margin-top: 50px;
+            text-align: right;
+        }
+        .signature-name {
+            margin-top: 20px;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+        .ttd-image {
+            height: 100px;
+            margin-bottom: 10px;
+        }
+        .footer-actions {
+            margin-top: 30px;
+            text-align: center;
+        }
+        @media print {
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
 </head>
-
 <body>
-<div class="page-container">
-    <div class="kop-container">
-        <div class="logo-container">
-            <img src="{{ asset('assets/img/surat/logo_surat.png') }}" alt="Logo" style="width: 2.02cm;">
+    <div class="{{ $mode === 'preview' ? 'surat-container' : '' }}">
+        <div class="header">
+            <div class="header-text">
+                <img src="{{ asset('uploads/ttd/NganjukLogo.png') }}" alt="Logo Desa" width="100" style="position: absolute; left: 80px; top: 40px;"/>
+                <p>PEMERINTAH KABUPATEN NGANJUK</p>
+                <p>KECAMATAN NGANJUK</p>
+                <p>KELURAHAN KAUMAN</p>
+                <p>Jalan Gatot Subroto Nomor: 100 Telpon: 0358-321294 Kodepos 64411</p>
+            </div>
         </div>
-        <div class="kop-surat">
-            <p>PEMERINTAH KABUPATEN NGANJUK</p>
-            <p>KECAMATAN NGANJUK</p>
-            <p>KELURAHAN KAUMAN</p>
-            <p>Jalan Gatot Subroto Nomor: 01 Telpon: - Kodepos 64411</p>
+
+        <div class="title">
+            <p>SURAT KETERANGAN CATATAN KEPOLISIAN (SKCK)</p>
+            <p>Nomor: {{ $skck->no_pengajuan }}/SKCK/{{ date('Y') }}</p>
         </div>
-    </div>
-    <div class="isi-surat">
-        <div class="nomer-surat">
-            <p>SURAT KETERANGAN ADAT ISTIADAT</p>
-            <p>Nomor : 730 / .... / 411.501.03 /
-                @php
-                    $tahun_sekarang = date('Y');
-                    echo $tahun_sekarang;
-                @endphp.
 
-            </p>
-        </div>
-        <p class="isi-surat1">Kami Kepala Desa Kauman Kecamatan Nganjuk Kabupaten Nganjuk menerangkan dengan
-            sebenarnya bahwa :</p>
-        <table>
-            <tr>
+        <div class="content">
+            <p>Yang bertanda tangan di bawah ini, menerangkan dengan sebenarnya bahwa:</p>
 
-            <tr>
-                <td style="width: 5%;"></td>
-                <td style="width: 33%;">1. Nama</td>
-                <td style="width: 1%;">:</td>
-                <td style="width: auto;">
-                    {{ $detail_surat->nama }}
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>2. NIK</td>
-                <td>:</td>
-                <td>
-                    {{ $detail_surat->nik }}
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>3. Tempat/Tanggal Lahir</td>
-                <td>:</td>
-                <td>
-                    {{ $detail_surat->tempat_tgl_lahir }}
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>4. Kebangsaan</td>
-                <td>:</td>
-                <td>
-                    {{ $detail_surat->kebangsaan }}
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>5. Agama</td>
-                <td>:</td>
-                <td>
-                    {{ $detail_surat->agama }}
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>6. Jenis Kelamin</td>
-                <td>:</td>
-                <td>
-                    {{ $detail_surat->jenis_kelamin }}
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>7. Status Perkawinan</td>
-                <td>:</td>
-                <td>
-                    {{ $detail_surat->status_perkawinan }}
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>8. Pekerjaan</td>
-                <td>:</td>
-                <td>
-                    {{ $detail_surat->pekerjaan }}
-                </td>
-            </tr>
-            <tr style="vertical-align: top;">
-                <td></td>
-                <td>9. Tempat Tinggal</td>
-                <td>:</td>
-                <td>
-                    {{ $detail_surat->tempat_tinggal }}
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>Kecamatan Nganjuk Kabupaten Nganjuk</td>
-            </tr>
-            <!-- Tambahkan baris untuk informasi lainnya -->
-        </table>
-        <p class="keterangan">Sepanjang pengetahuan kami orang tersebut diatas selama bertempat tinggal di Desa
-            Pesudukuh, Kecamatan Bagor Kabupaten Nganjuk berkelakuan baik, tidak pernah tersangkut perkara
-            polisi.
-        <p>Surat keterangan ini berlaku sejak dikeluarkan sampai dengan Tanggal
-            @if ($laporan && isset($laporan[0]->tanggal))
-                {{ \Carbon\Carbon::parse($laporan[0]->tanggal)->locale('id')->translatedFormat('d F Y') }}
-            @else
-                {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('d F Y') }}
-            @endif
-
-            (tiga bulan sejak dikeluarkan)
-        </p>
-        <div class="tanda-tangan">
-            <table class="ttd">
+            <table>
                 <tr>
-                    <td style="width: 55%;"></td>
-                    <td>Kauman,
-                        @if ($laporan && isset($laporan[0]->tanggal))
-                            {{ \Carbon\Carbon::parse($laporan[0]->tanggal)->locale('id')->translatedFormat('d F Y') }}
-                        @else
-                            {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('d F Y') }}
-                        @endif
-
-                    </td>
+                    <td width="30%"> Nama</td>
+                    <td width="5%">:</td>
+                    <td>{{ $skck->nama }}</td>
                 </tr>
                 <tr>
-                    <td></td>
-                    <td>
-                        {{ $ttd->pangkat }}
-                    </td>
+                    <td> NIK</td>
+                    <td>:</td>
+                    <td>{{ $skck->nik }}</td>
                 </tr>
                 <tr>
-                    <td></td>
-                    <td></td>
+                    <td> Tempat/Tanggal Lahir</td>
+                    <td>:</td>
+                    <td>{{ $skck->tempat_lahir }}, {{ \Carbon\Carbon::parse($skck->tanggal_lahir)->format('d-m-Y') }}</td>
                 </tr>
                 <tr>
-                    <td></td>
-                    <td></td>
+                    <td> Kebangsaan</td>
+                    <td>:</td>
+                    <td>{{ $skck->kebangsaan }}</td>
                 </tr>
                 <tr>
-                    <td></td>
-                    <td></td>
+                    <td> Agama</td>
+                    <td>:</td>
+                    <td>{{ $skck->agama }}</td>
                 </tr>
                 <tr>
-                    <td></td>
-                    <td></td>
+                    <td> Jenis Kelamin</td>
+                    <td>:</td>
+                    <td>{{ $skck->jenis_kelamin }}</td>
                 </tr>
                 <tr>
-                    <td></td>
-                    <td style="font-weight: bold;">
-                        {{ $ttd->nama }}
-                    </td>
+                    <td> Status Perkawinan</td>
+                    <td>:</td>
+                    <td>{{ $skck->status_perkawinan }}</td>
+                </tr>
+                <tr>
+                    <td> Pekerjaan</td>
+                    <td>:</td>
+                    <td>{{ $skck->pekerjaan }}</td>
+                </tr>
+                <tr>
+                    <td> Alamat</td>
+                    <td>:</td>
+                    <td>{{ $skck->alamat }}</td>
                 </tr>
             </table>
-        </div>
-    </div>
-</div>
-</body>
 
+            <p style="margin-top: 20px; text-align: justify;">
+                Sepanjang pengetahuan kami, orang tersebut di atas selama bertempat tinggal di Kelurahan Kauman, Kecamatan Nganjuk, Kabupaten Nganjuk berkelakuan baik dan tidak pernah tersangkut perkara pidana.
+            </p>
+            <p style="text-align: justify;">
+                Surat keterangan ini dibuat untuk keperluan {{ $skck->pekerjaan }} dan berlaku sejak tanggal diterbitkan sampai dengan {{ \Carbon\Carbon::now()->addMonths(3)->format('d-m-Y') }} (tiga bulan sejak diterbitkan).
+            </p>
+        </div>
+
+        <div class="signature">
+            <p>Nganjuk, {{ \Carbon\Carbon::now()->format('d-m-Y') }}</p>
+            <p>{{ $pejabat->jabatan }}</p>
+
+            <!-- TTD dari Upload -->
+            @if($ttdPath)
+                <div>
+                    <img src="{{ asset($ttdPath) }}" alt="Tanda Tangan" class="ttd-image">
+                </div>
+            @endif
+
+            <div class="signature-name">
+                <p>{{ $pejabat->nama }}</p>
+                <p>NIP. {{ $pejabat->nip }}</p>
+            </div>
+        </div>
+
+
+        @if($mode === 'preview')
+        <div class="footer-actions no-print">
+            <a href="{{ route('skck', $skck->no_pengajuan) }}" class="btn btn-secondary">Kembali</a>
+            @if($skck->status == 'Selesai')
+                <a href="{{ route('skck.cetak', $skck->no_pengajuan) }}" class="btn btn-primary ml-2">
+                    <i class="fas fa-file-pdf"></i> Cetak/Unduh PDF
+                </a>
+                <button onclick="window.print()" class="btn btn-info ml-2">
+                    <i class="fas fa-print"></i> Print Langsung
+                </button>
+            @endif
+        </div>
+        @endif
+    </div>
+</body>
 </html>

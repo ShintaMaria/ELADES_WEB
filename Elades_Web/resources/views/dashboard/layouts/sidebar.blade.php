@@ -22,7 +22,7 @@
 
     <!-- Heading -->
     <div class="sidebar-heading">Layanan Administrasi</div>
-    
+
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePembuatanSurat"
             aria-expanded="true" aria-controls="collapsePembuatanSurat">
@@ -39,7 +39,7 @@
                 <a class="collapse-item" href="{{ route('penghasilan') }}">Keterangan Penghasilan</a>
                 <h6 class="collapse-header">Surat Izin</h6>
                 <a class="collapse-item" href="buttons.html">Izin Tidak Masuk Kerja</a>
-                <a class="collapse-item" href="{{ route('izin-keramaian') }}">Izin Keramaian</a>
+                <a class="collapse-item" href="{{ route('keramaian') }}">Izin Keramaian</a>
             </div>
         </div>
     </li> <!-- Added missing closing tag -->
