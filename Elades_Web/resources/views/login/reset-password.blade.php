@@ -17,6 +17,16 @@
             max-width: 500px;
             margin: auto;
         }
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 35px;
+            cursor: pointer;
+            color: #6c757d;
+        }
+        .password-wrapper {
+            position: relative;
+        }
     </style>
 </head>
 <body>
@@ -58,17 +68,19 @@
                         <input type="hidden" name="email" value="{{ $email }}">
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group password-wrapper">
                         <label for="password">Password Baru</label>
-                        <input type="password" name="password" class="form-control" required>
+                        <input type="password" name="password" id="password" class="form-control" required>
+                        <i class="fas fa-eye password-toggle" onclick="togglePassword('password')"></i>
                         @error('password')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group password-wrapper">
                         <label for="password-confirm">Konfirmasi Password</label>
-                        <input type="password" name="password_confirmation" class="form-control" required>
+                        <input type="password" name="password_confirmation" id="password-confirm" class="form-control" required>
+                        <i class="fas fa-eye password-toggle" onclick="togglePassword('password-confirm')"></i>
                     </div>
 
                     <button type="submit" class="btn btn-primary btn-block">
@@ -87,5 +99,21 @@
     <script src="{{ asset('dashboard/assets/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('dashboard/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('dashboard/assets/js/sb-admin-2.min.js') }}"></script>
+    <script>
+        function togglePassword(id) {
+            const passwordInput = document.getElementById(id);
+            const icon = passwordInput.nextElementSibling;
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+    </script>
 </body>
 </html>
