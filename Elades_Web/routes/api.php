@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\Pengajuan\KeteranganController;
 use App\Http\Controllers\Api\Pengajuan\PengantarController;
 use App\Http\Controllers\Api\Profile\ProfileController;
 use App\Http\Controllers\Api\RegisterController;
+use App\Http\Controllers\Api\Riwayat\RiwayatController;
 
 Route::controller(LoginController::class)->group(function () {
     Route::post('/login', 'login');
@@ -62,4 +63,10 @@ Route::controller(ProfileController::class)->group(function () {
     Route::post('/upload_profile_image', 'upload_profile_image');
     Route::post('/update_profile', 'update_profile');
     Route::post('/update_password', 'update_password');
+});
+
+//riwayat
+Route::controller(RiwayatController::class)->group(function () {
+    Route::post('/riwayat_pengajuan', 'getPengajuanMasuk');
+    Route::post('/riwayat_pengaduan', 'getPengaduanMasuk');
 });
