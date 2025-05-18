@@ -1,33 +1,62 @@
 @extends('dashboard/layouts.template')
 @section('content')
 
-<!-- Page Wrapper -->
 <div id="wrapper">
-    <!-- Begin Page Content -->
     <div class="container-fluid">
-
-        <!-- Page Heading -->
         <h1 style="margin-top: 0px;">Laporan Pengajuan Surat</h1>
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item active">Laporan Pengajuan</li>
         </ol>
 
-        <!-- DataTales Example -->
+        <!-- Filter Form -->
+        <form action="{{ route('laporan_pengajuan.download') }}" method="GET" class="form-inline mb-4">
+            <div class="form-group mr-2">
+                <label for="bulan" class="mr-2">Bulan</label>
+                <select name="bulan" id="bulan" class="form-control" required>
+                    @foreach(range(1, 12) as $b)
+                        <option value="{{ sprintf('%02d', $b) }}" {{ request('bulan') == sprintf('%02d', $b) ? 'selected' : '' }}>
+                            {{ DateTime::createFromFormat('!m', $b)->format('F') }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group mr-2">
+                <label for="tahun" class="mr-2">Tahun</label>
+                <select name="tahun" id="tahun" class="form-control" required>
+                    @php $now = date('Y'); @endphp
+                    @for($t = $now; $t >= $now - 5; $t--)
+                        <option value="{{ $t }}" {{ request('tahun') == $t ? 'selected' : '' }}>{{ $t }}</option>
+                    @endfor
+                </select>
+            </div>
+            <div class="form-group mr-2">
+                <label for="tipe" class="mr-2">Tipe Surat</label>
+                <select name="tipe" id="tipe" class="form-control">
+                    <option value="">Semua</option>
+                    @php
+                        $tipeList = \App\Models\PengajuanSurat::distinct()->pluck('kode_surat');
+                    @endphp
+                    @foreach ($tipeList as $tipe)
+                        <option value="{{ $tipe }}" {{ request('tipe') == $tipe ? 'selected' : '' }}>{{ $tipe }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-download fa-sm text-white-50"></i> Unduh Laporan
+            </button>
+        </form>
+
+        <!-- Tabel -->
         <div class="card shadow mb-4">
-            <!-- Header dengan judul dan search box -->
             <div class="card-header py-3 d-flex justify-content-between align-items-center">
                 <h6 class="m-0 font-weight-bold text-primary"></h6>
-
-                <!-- Tempat baru untuk search box -->
                 <div id="customSearchContainer"></div>
             </div>
-
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
-                            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"/>
                             <tr>
                                 <th>ID</th>
                                 <th>Nama Pemohon</th>
@@ -64,7 +93,6 @@
             </div>
         </div>
     </div>
-    <!-- /.container-fluid -->
 </div>
 <!-- End of Page Wrapper -->
 <!-- Scroll to Top Button-->
@@ -87,7 +115,13 @@
 <!-- Page level plugins -->
 <script src="{{ asset('dashboard/assets/vendor/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{ asset('dashboard/assets/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-
+<style>
+    /* Atur posisi pencarian ke kanan */
+    div.dataTables_filter {
+        float: right;
+        text-align: right;
+    }
+</style>
 <!-- Page level untuk java scripts -->
 <script>
     $(document).ready(function () {
@@ -106,5 +140,4 @@
     });
 
 </script>
-
 @endsection

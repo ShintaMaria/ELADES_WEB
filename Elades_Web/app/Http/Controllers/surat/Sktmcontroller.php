@@ -9,6 +9,6 @@ class SktmController extends Controller
 {
     public function index()
     {
-        return view('surat.pengantar.sktm');
+        return view('surat.keterangan.sktm');
     }
 }
