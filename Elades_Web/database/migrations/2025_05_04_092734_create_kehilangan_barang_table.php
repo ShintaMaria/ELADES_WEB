@@ -11,21 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kehilangan_barang', function (Blueprint $table) {
-            $table->id('no_pengajuan')->primary();
-            $table->string('kode_surat', 50)->default('kehilangan');
-            $table->string('nik', 16);
-            $table->string('nama', 100);
-            $table->date('ttl');
-            $table->string('agama', 50);
-            $table->string('jenis_kelamin', 20);
-            $table->string('pekerjaan', 100);
-            $table->string('alamat', 100);
-            $table->string('barang', 100);
-            $table->date('hilang_tgl');
-            $table->string('tempat_hilang', 100);
-            $table->string('username', 100);
-        });
+    Schema::create('surat_kehilangan_barang', function (Blueprint $table) {
+    $table->integer('no_pengajuan')->primary();
+    $table->string('kode_surat', 100)->nullable();
+    $table->string('username', 255);
+    $table->string('nama', 255);
+    $table->string('tempat_lahir', 100)->nullable();
+    $table->date('tanggal_lahir')->nullable();
+    $table->string('agama', 100)->nullable();
+    $table->string('jenis_kelamin', 100)->nullable();
+    $table->string('pekerjaan', 100)->nullable();
+    $table->string('alamat', 255)->nullable();
+    $table->string('barang_yang_hilang', 255)->nullable();
+    $table->date('hilang_pada_tanggal')->nullable();
+    $table->string('tempat_kehilangan', 255)->nullable();
+    $table->text('file')->nullable();
+});
     }
 
     /**

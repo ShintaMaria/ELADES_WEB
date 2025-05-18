@@ -14,13 +14,15 @@ use App\Http\Controllers\informasi\KabarDesaController;
 use App\Http\Controllers\informasi\ArtikelTerkiniController;
 use App\Http\Controllers\informasi\StatistikController;
 use App\Http\Controllers\dashboard\ProfileController;
-use App\Http\Controllers\DetailPengajuanController;
-use App\Http\Controllers\pengaduan\LaporanSKCKController;
 use App\Http\Controllers\surat\SkckController;
 use App\Http\Controllers\surat\SktmController;
 use App\Http\Controllers\surat\PenghasilanController;
+use App\Http\Controllers\surat\KehilanganBarangController;
+use App\Http\Controllers\surat\IzinKerjaController;
+use App\Http\Controllers\surat\IzinKeramaianController;
 use App\Http\Controllers\TampilanSuratController;
-use App\Http\Controllers\laporan\laporan_pengajuan\LaporanPengajuanController;
+use App\Http\Controllers\laporan\LaporanPengajuanController;
+use App\Http\Controllers\laporan\LaporanPengaduanController;
 
 
 Route::get('/', function () {
@@ -78,56 +80,74 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile/photo', [ProfileController::class, 'deletePhoto'])->name('profile.deletePhoto');
 
     //Pengajuan Surat
-    Route::get('/skck', [TampilanSuratController::class, 'skck'])->name('skck');
-    Route::get('/keramaian', [TampilanSuratController::class, 'keramaian'])->name('keramaian');
-    Route::get('/kehilangan-barang', [TampilanSuratController::class, 'kehilangan'])->name('kehilangan');
+    //PENGANTAR SKCK
+    Route::get('/skck', [SkckController::class, 'index'])->name('skck');
+    Route::put('/skck/{id}/selesai', [SkckController::class, 'selesai'])->name('skck.selesai');
+    Route::put('/skck/{id}/tolak', [SkckController::class, 'tolak'])->name('skck.tolak');
+    Route::get('/skck/{id}/preview', [SkckController::class, 'preview'])->name('skck.preview');
+    Route::get('/skck/{id}/cetak', [SkckController::class, 'cetak'])->name('skck.cetak');
 
-    //Detail Pengajuan Surat
-    Route::get('/skck/{id}', [SkckController::class, 'show'])->name('skck.show');
-    Route::get('/kehilangan/{id}', [SkckController::class, 'show'])->name('kehilangan.show');
-    Route::get('/keramaian/{id}', [SkckController::class, 'show'])->name('keramaian.show');
+    //Kehilangan Barang
+    Route::get('/kehilangan-barang', [KehilanganBarangController::class, 'index'])->name('kehilangan');
+    Route::put('/kehilangan/{id}/selesai', [KehilanganBarangController::class, 'selesai'])->name('kehilangan.selesai');
+    Route::put('/kehilangan/{id}/tolak', [KehilanganBarangController::class, 'tolak'])->name('kehilangan.tolak');
+    Route::get('/kehilangan/{id}/preview', [KehilanganBarangController::class, 'preview'])->name('kehilangan.preview');
+    Route::get('/kehilangan/{id}/cetak', [KehilanganBarangController::class, 'cetak'])->name('kehilangan.cetak');
 
-    Route::post('detail-pengajuan', [DetailPengajuanController::class, 'detailpengajuan'])->name('detailpengajuan');
+    //SKTM
+    Route::get('/sktm', [SktmController::class, 'index'])->name('sktm');
+    Route::put('/sktm/{id}/selesai', [SktmController::class, 'selesai'])->name('sktm.selesai');
+    Route::put('/sktm/{id}/tolak', [SktmController::class, 'tolak'])->name('sktm.tolak');
+    Route::get('/sktm/{id}/preview', [SktmController::class, 'preview'])->name('sktm.preview');
+    Route::get('/sktm/{id}/cetak', [SktmController::class, 'cetak'])->name('sktm.cetak');
 
-    Route::post('/skck/{id}/selesai', [SkckController::class, 'selesai'])->name('skck.selesai');
-    Route::post('/kehilangan/{id}/selesai', [SkckController::class, 'selesai'])->name('kehilangan.selesai');
-    Route::post('/keramaian/{id}/selesai', [SkckController::class, 'selesai'])->name('keramaian.selesai');
-
-    Route::post('/skck/{id}/tolak', [SkckController::class, 'tolak'])->name('skck.tolak');
-    Route::post('/kehilangan/{id}/tolak', [SkckController::class, 'tolak'])->name('kehilangan.tolak');
-    Route::post('/keramaian/{id}/tolak', [SkckController::class, 'tolak'])->name('keramaian.tolak');
-
-    // pengajuan surat
-    Route::get('/sktm', [Sktmcontroller::class, 'index'])->name('sktm');
+    //Penghasilan Ortu
     Route::get('/penghasilan', [PenghasilanController::class, 'index'])->name('penghasilan');
+    Route::put('/penghasilan/{id}/selesai', [PenghasilanController::class, 'selesai'])->name('penghasilan.selesai');
+    Route::put('/penghasilan/{id}/tolak', [PenghasilanController::class, 'tolak'])->name('penghasilan.tolak');
+    Route::get('/penghasilan/{id}/preview', [PenghasilanController::class, 'preview'])->name('penghasilan.preview');
+    Route::get('/penghasilan/{id}/cetak', [PenghasilanController::class, 'cetak'])->name('penghasilan.cetak');
 
-    // Tampilan Pengajuan Surat
-    Route::get('/keramaian', [TampilanSuratController::class, 'keramaian'])->name('keramaian');
-    Route::get('/kehilangan-barang', [TampilanSuratController::class, 'kehilangan'])->name('kehilangan');
+    //Izin Kerja
+    Route::get('/izin-kerja', [IzinKerjaController::class, 'index'])->name('izin-kerja');
+    Route::put('/izin-kerja/{id}/selesai', [IzinKerjaController::class, 'selesai'])->name('izin-kerja.selesai');
+    Route::put('/izin-kerja/{id}/tolak', [IzinKerjaController::class, 'tolak'])->name('izin-kerja.tolak');
+    Route::get('/izin-kerja/{id}/preview', [IzinKerjaController::class, 'preview'])->name('izin-kerja.preview');
+    Route::get('/izin-kerja/{id}/cetak', [IzinKerjaController::class, 'cetak'])->name('izin-kerja.cetak');
 
-    //Detail Pengajuan Surat
-    Route::get('/skck/{id}', [SkckController::class, 'show'])->name('skck.show');
-    Route::get('/kehilangan/{id}', [SkckController::class, 'show'])->name('kehilangan.show');
-    Route::get('/keramaian/{id}', [SkckController::class, 'show'])->name('keramaian.show');
-
-    Route::post('detail-pengajuan', [DetailPengajuanController::class, 'detailpengajuan'])->name('detailpengajuan');
-
-    Route::post('/skck/{id}/selesai', [SkckController::class, 'selesai'])->name('skck.selesai');
-    Route::post('/kehilangan/{id}/selesai', [SkckController::class, 'selesai'])->name('kehilangan.selesai');
-    Route::post('/keramaian/{id}/selesai', [SkckController::class, 'selesai'])->name('keramaian.selesai');
-
-    Route::post('/skck/{id}/tolak', [SkckController::class, 'tolak'])->name('skck.tolak');
-    Route::post('/kehilangan/{id}/tolak', [SkckController::class, 'tolak'])->name('kehilangan.tolak');
-    Route::post('/keramaian/{id}/tolak', [SkckController::class, 'tolak'])->name('keramaian.tolak');
+    //Izin Keramaian
+    Route::get('/izin-keramaian', [IzinKeramaianController::class, 'index'])->name('izin-keramaian');
+    Route::put('/izin-keramaian/{id}/selesai', [IzinKeramaianController::class, 'selesai'])->name('izin-keramaian.selesai');
+    Route::put('/izin-keramaian/{id}/tolak', [IzinKeramaianController::class, 'tolak'])->name('izin-keramaian.tolak');
+    Route::get('/izin-keramaian/{id}/preview', [IzinKeramaianController::class, 'preview'])->name('izin-keramaian.preview');
+    Route::get('/izin-keramaian/{id}/cetak', [IzinKeramaianController::class, 'cetak'])->name('izin-keramaian.cetak');
 
     //Laporan pengajuan
-    Route::prefix('laporan_pengajuan')->group(function () {
-        Route::get('/kehilangan', [LaporanPengajuanController::class, 'kehilangan'])->name('laporan_pengajuan.kehilangan');
-        Route::get('/sktm', [LaporanPengajuanController::class, 'sktm'])->name('laporan_pengajuan.sktm');
-        Route::get('/skck', [LaporanPengajuanController::class, 'skck'])->name('laporan_pengajuan.skck');
-        Route::get('/penghasilan', [LaporanPengajuanController::class, 'penghasilan'])->name('laporan_pengajuan.penghasilan');
-        Route::get('/tidakMasuk', [LaporanPengajuanController::class, 'tidakMasuk'])->name('laporan_pengajuan.tidak_masuk_kerja');
-        Route::get('/keramaian', [LaporanPengajuanController::class, 'keramaian'])->name('laporan_pengajuan.keramaian');
-    });
-}); // Lek nambah route, tambahin di atas ini ya gaes, biar ikut kebungkus middleware (cuma bisa diakses kalau sudah login)
+    Route::get('/laporan', [LaporanPengajuanController::class, 'show'])->name('laporan_pengajuan');
+
+    //Pengaduan
+    //Pengaduan Infrastruktur
+    Route::get('/infrastruktur', [InfrastrukturController::class, 'index'])->name('infrastruktur');
+    Route::put('/infrastruktur/{id}/selesai', [InfrastrukturController::class, 'selesai'])->name('infrastruktur.selesai');
+    Route::put('/infrastruktur/{id}/tolak', [InfrastrukturController::class, 'tolak'])->name('infrastruktur.tolak');
+
+    //Pengaduan Keamanan
+    Route::get('/keamanan', [KeamananController::class, 'index'])->name('keamanan');
+    Route::put('/keamanan/{id}/selesai', [KeamananController::class, 'selesai'])->name('keamanan.selesai');
+    Route::put('/keamanan/{id}/tolak', [KeamananController::class, 'tolak'])->name('keamanan.tolak');
+
+    //Pengaduan Saran
+    Route::get('/saran', [SaranController::class, 'index'])->name('saran');
+    Route::put('/saran/{id}/selesai', [SaranController::class, 'selesai'])->name('saran.selesai');
+    Route::put('/saran/{id}/tolak', [SaranController::class, 'tolak'])->name('saran.tolak');
+
+    //Laporan Pengaduan
+    Route::get('/laporan-pengaduan', [LaporanPengaduanController::class, 'show'])->name('laporan_pengaduan');
+
+
+    //Detail Pengajuan Surat
+
+
+
+    }); // Lek nambah route, tambahin di atas ini ya gaes, biar ikut kebungkus middleware (cuma bisa diakses kalau sudah login)
 // oke

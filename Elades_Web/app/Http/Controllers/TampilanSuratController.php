@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PengajuanSurat;
+use App\Models\DetailSKCK;
 class TampilanSuratController extends Controller
 {
     //menampilkan view pengajuan surat kehilangan barang
@@ -26,7 +27,7 @@ class TampilanSuratController extends Controller
     //menampilkan view pengajuan surat skck
     public function skck()
     {
-        $skck =PengajuanSurat::where('kode_surat', 'skck')->get();
+        $skck = DetailSKCK::all();
         return view('surat.pengantar.skck', compact('skck'));
 }
 }

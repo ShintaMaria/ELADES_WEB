@@ -30,74 +30,223 @@
                             <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"/>
                             <tr>
                                 <th>ID</th>
-                                <th>NIK</th>
-                                <th>Nama Pemohon</th>
-                                <th>Tanggal Pengajuan</th>
                                 <th>Tipe Surat</th>
+                                <th>Nama Pemohon</th>
+                                <th>Barang Hilang</th>
+                                <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @isset($kehilangan)
-                            @foreach($kehilangan as $h)
+                            @foreach($kehilangan as $k)
                             <tr>
-                                <td>{{ $h->id }}</td>
-                                <td>{{ $h->nik }}</td>
-                                <td>{{ $h->nama }}</td>
-                                <td>{{ $h->tanggal }}</td>
-                                <td>{{ $h->kode_surat }}</td>
-                                <td>{{ $h->aksi }}
-                                    <a href="{{ route('kehilangan.show', $h->id) }}" class="btn btn-primary btn-sm mb-1">Detail</a>
-
-                                    <form action="{{ route('kehilangan.selesai', $h->id) }}" method="POST" style="display: inline;">
-                                        @csrf
-                                        <button type="submit" class="btn btn-success btn-sm mb-1">Selesai</button>
-                                    </form>
-
-                                    <!-- Tombol yang membuka modal -->
-                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#tolakModal{{ $h->id }}">Tolak
-                                    </button>
-
+                                <td>{{ $k->no_pengajuan }}</td>
+                                <td>{{ $k->kode_surat }}</td>
+                                <td>{{ $k->nama }}</td>
+                                <td>{{ $k->barang_yang_hilang }}</td>
+                                 <td> <span class="badge badge-warning">{{ $k->status }}</span> </td>
+                                <td>
+                                    <!-- Tombol yang membuka modal detail -->
+                                    <button class="btn btn-primary btn-sm mb-1" data-toggle="modal" data-target="#detailModal{{ $k->no_pengajuan }}">Detail</button>
+                                     <button class="btn btn-success btn-sm mb-1" data-toggle="modal" data-target="#selesaiModal{{ $k->no_pengajuan }}">Selesai</button>
+                                    <button class="btn btn-danger btn-sm mb-1" data-toggle="modal" data-target="#tolakModal{{ $k->no_pengajuan }}">Tolak</button>
                                 </td>
                             </tr>
-                            <!-- Modal Tolak -->
-                            <div class="modal fade" id="tolakModal{{ $h->id }}" tabindex="-1" role="dialog" aria-labelledby="tolakModalLabel{{ $h->id }}" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                <form method="POST" action="{{ route('kehilangan.tolak', $h->id) }}">
-                                    @csrf
-                                    @method('PUT')
-                                    <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="tolakModalLabel{{ $h->id }}">Tolak Pesan Untuk Id Surat : {{ $h->id }}</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
-                                        <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <label for="alasan">Alasan:</label>
-                                        <textarea name="alasan" class="form-control" required placeholder="Masukkan alasan penolakan"></textarea>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-danger">Ya, Tolak</button>
-                                    </div>
-                                    </div>
-                                </form>
-                                </div>
-                            </div>
-
                             @endforeach
                             @endisset
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>
-
     </div>
     <!-- /.container-fluid -->
 </div>
 <!-- End of Page Wrapper -->
+
+<!-- Modal Detail untuk setiap pengajuan -->
+@isset($kehilangan)
+@foreach($kehilangan as $k)
+<div class="modal fade" id="detailModal{{ $k->no_pengajuan }}" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel{{ $k->no_pengajuan }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailModalLabel{{ $k->no_pengajuan }}">Detail Pengajuan Kehilangan Barang #{{ $k->no_pengajuan }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>No Pengajuan</th>
+                                <td>{{ $k->no_pengajuan }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nama Pemohon</th>
+                                <td>{{ $k->nama }}</td>
+                            </tr>
+                            <tr>
+                                <th>Tipe Surat</th>
+                                <td>{{ $k->kode_surat }}</td>
+                            </tr>
+                            <tr>
+                                <th>Jenis Kelamin</th>
+                                <td>{{ $k->jenis_kelamin ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Alamat</th>
+                                <td>{{ $k->alamat ?? '-' }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Barang Yang Hilang</th>
+                                <td>{{ $k->barang_yang_hilang ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Tanggal Hilang</th>
+                                <td>{{ $k->hilang_pada_tanggal ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Tempat Kehilangan</th>
+                                <td>{{ $k->tempat_kehilangan ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Status</th>
+                                <td>
+                                    @if($k->status == 'Diproses')
+                                        <span class="badge badge-warning">Diproses</span>
+                                    @elseif($k->status == 'selesai')
+                                        <span class="badge badge-success">Selesai</span>
+                                    @elseif($k->status == 'ditolak')
+                                        <span class="badge badge-danger">Ditolak</span>
+                                    @else
+                                        <span class="badge badge-secondary">{{ $k->status }}</span>
+                                    @endif
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <h6 class="font-weight-bold">Dokumen Pendukung:</h6>
+                        <div class="row">
+                            @if(isset($k->file) && !empty($k->file))
+                            <div class="col-md-4 mb-3">
+                                <div class="card">
+                                    <div class="card-header">Dokumen Kehilangan</div>
+                                    <div class="card-body text-center">
+                                        <img src="{{ asset('uploads/pengajuan/'.$k->file) }}"
+                                             class="img-thumbnail" style="max-height: 150px;"
+                                             alt="Dokumen Kehilangan"
+                                             data-toggle="modal"
+                                             data-target="#imageModal{{ $k->no_pengajuan }}_file"
+                                             style="cursor: pointer;">
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                </div>
+                {{-- <div>
+                    <button type="button" class="btn btn-info" onclick="previewSurat({{ $k->no_pengajuan }})">Preview</button>
+                    <button type="button" class="btn btn-primary" onclick="cetakSurat({{ $k->no_pengajuan }})">Cetak</button>
+                </div> --}}
+                <div>
+                    <a href="{{ route('kehilangan.preview', $k->no_pengajuan) }}" target="_blank" class="btn btn-info">Preview</a>
+                    <a href="{{ route('kehilangan.cetak', $k->no_pengajuan) }}" target="_blank" class="btn btn-primary">Cetak</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Preview Gambar -->
+@if(isset($k->file) && !empty($k->file))
+<div class="modal fade" id="imageModal{{ $k->no_pengajuan }}_file" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Preview Dokumen Kehilangan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="{{ asset('uploads/pengajuan/'.$k->file) }}" class="img-fluid" alt="Dokumen Kehilangan">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+{{-- Modal Selesai --}}
+<div class="modal fade" id="selesaiModal{{ $k->no_pengajuan }}" tabindex="-1" role="dialog" aria-labelledby="selesaiModalLabel{{ $k->no_pengajuan }}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="POST" action="{{ route('kehilangan.selesai', $k->no_pengajuan) }}">
+            @csrf
+            @method('PUT')
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="selesaiModalLabel{{ $k->no_pengajuan }}">Selesai Pesan Untuk Id Surat : {{ $k->no_pengajuan }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label for="alasan">Apakah anda yakin ingin mengonfirmasi surat ini?</label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success">Ya, Selesai</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Modal Tolak -->
+<div class="modal fade" id="tolakModal{{ $k->no_pengajuan }}" tabindex="-1" role="dialog" aria-labelledby="tolakModalLabel{{ $k->no_pengajuan }}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="POST" action="{{ route('kehilangan.tolak', $k->no_pengajuan) }}">
+            @csrf
+            @method('PUT')
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tolakModalLabel{{ $k->no_pengajuan }}">Tolak Pesan Untuk Id Surat : {{ $k->no_pengajuan }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label for="alasan">Alasan:</label>
+                    <textarea name="alasan" class="form-control" required placeholder="Masukkan alasan penolakan"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-danger">Ya, Tolak</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@endforeach
+@endisset
 
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">
@@ -109,7 +258,7 @@
 <script src="{{ asset('dashboard/assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Core plugin JavaScript-->
 <script src="{{ asset('dashboard/assets/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
@@ -120,7 +269,7 @@
 <script src="{{ asset('dashboard/assets/vendor/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{ asset('dashboard/assets/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 
-<!-- Page level java scripts -->
+<!-- Page level untuk java scripts -->
 <script>
     $(document).ready(function () {
       $('#dataTable').DataTable({
@@ -136,6 +285,39 @@
         }
       });
     });
-  </script>
+
+    // Fungsi untuk preview surat
+    function previewSurat(id) {
+        // Buka halaman preview di tab baru
+        window.open('{{ url("kehilangan/preview") }}/' + id, '_blank');
+    }
+
+    // Fungsi untuk cetak surat
+    function cetakSurat(id) {
+        // Buka halaman cetak di tab baru
+        window.open('{{ url("kehilangan/cetak") }}/' + id, '_blank');
+    }
+
+    @if(session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: '{{ session('success') }}',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+        });
+    @endif
+
+    @if(session('error'))
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal!',
+            text: '{{ session('error') }}',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Tutup'
+        });
+    @endif
+
+</script>
 
 @endsection

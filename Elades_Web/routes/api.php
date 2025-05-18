@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\Api\dashboardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -65,8 +64,10 @@ Route::controller(ProfileController::class)->group(function () {
     Route::post('/update_password', 'update_password');
 });
 
+
 //riwayat
 Route::controller(RiwayatController::class)->group(function () {
     Route::post('/riwayat_pengajuan', 'getPengajuanMasuk');
     Route::post('/riwayat_pengaduan', 'getPengaduanMasuk');
 });
+

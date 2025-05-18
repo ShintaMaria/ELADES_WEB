@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('skck', function (Blueprint $table) {
-            $table->id('no_pengajuan')->primary();
+       Schema::create('skck', function (Blueprint $table) {
+            $table->increments('no_pengajuan');
             $table->string('kode_surat', 100)->default('skck');
             $table->string('nama', 100);
             $table->string('nik', 100);
-            $table->string('tempat_tgl_lahir', 100);
+            $table->string('tempat_lahir', 100);
+            $table->date('tanggal_lahir');
             $table->string('kebangsaan', 100);
             $table->string('agama', 100);
             $table->string('jenis_kelamin', 10);
@@ -24,11 +25,11 @@ return new class extends Migration
             $table->string('pekerjaan', 100);
             $table->string('alamat', 100);
             $table->string('username', 20);
-            $table->string('file', 255)->nullable();
-
-            $table->index(['kode_surat', 'nik']);
-            $table->index('username');
+            $table->string('file')->nullable();
         });
+        //     $table->index(['kode_surat', 'nik']);
+        //     $table->index('username');
+        // });
     }
 
     /**

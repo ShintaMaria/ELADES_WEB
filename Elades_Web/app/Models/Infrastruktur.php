@@ -7,7 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Infrastruktur extends Model
 {
     use HasFactory;
-    
-    protected $table = 'infrastruktur'; // Nama tabel
-    protected $fillable = ['status', 'media', 'deskripsi', 'alamat']; // Kolom yang bisa diisi
+
+    protected $table = 'pengaduan_infrastruktur';
+    protected $primaryKey = 'no_pengaduan';
+    public $timestamps = false;
+
+    protected $fillable = [
+        'username', 'kode_pengaduan', 'nama', 'nik', 'alamat',
+        'jenis_infrastruktur', 'deskripsi', 'tanggal_kejadian',
+        'file', 'lokasi'
+    ];
 }

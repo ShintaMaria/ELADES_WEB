@@ -11,18 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-       Schema::create('surat_izin_keramaian', function (Blueprint $table) {
-            $table->integer('no_pengajuan')->primary();
+        Schema::create('pengaduan_keamanan', function (Blueprint $table) {
+            $table->increments('no_pengaduan');
             $table->string('username', 20);
-            $table->string('kode_surat', 20);
-            $table->string('nama', 255);
-            $table->string('alamat', 255);
-            $table->string('nik', 255);
-            $table->string('kegiatan', 255);
+            $table->string('kode_pengaduan', 20);
+            $table->string('nama');
+            $table->string('nik', 16);
+            $table->string('jenis_kasus');
+            $table->string('lokasi_kejadian');
             $table->string('tanggal', 50);
             $table->string('waktu', 50);
-            $table->string('tempat', 255);
-            $table->string('file', 255);
+            $table->string('deskripsi');
+            $table->string('file');
         });
     }
 
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('izin_keramaian');
+        Schema::dropIfExists('keamanan');
     }
 };
