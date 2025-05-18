@@ -1,0 +1,34 @@
+@keyframes badge-pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.3);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.badge-animation {
+    animation: badge-pulse 0.5s ease;
+}
+
+.dropdown-list {
+    max-height: 400px;
+    overflow-y: auto;
+    width: 350px;
+}
+
+.notification-icon {
+    position: relative;
+}
+
+.badge-counter {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    transition: all 0.3s;
+}
