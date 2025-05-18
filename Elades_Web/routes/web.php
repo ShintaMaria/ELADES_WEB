@@ -15,7 +15,7 @@ use App\Http\Controllers\informasi\ArtikelTerkiniController;
 use App\Http\Controllers\informasi\StatistikController;
 use App\Http\Controllers\dashboard\ProfileController;
 use App\Http\Controllers\surat\SkckController;
-use App\Http\Controllers\surat\Sktmcontroller;
+use App\Http\Controllers\surat\SktmController;
 use App\Http\Controllers\surat\PenghasilanController;
 use App\Http\Controllers\surat\KehilanganBarangController;
 use App\Http\Controllers\surat\IzinKerjaController;
@@ -23,6 +23,7 @@ use App\Http\Controllers\surat\IzinKeramaianController;
 use App\Http\Controllers\TampilanSuratController;
 use App\Http\Controllers\laporan\LaporanPengajuanController;
 use App\Http\Controllers\laporan\LaporanPengaduanController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -48,7 +49,7 @@ Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name(
 // Route yang hanya bisa diakses saat sudah login
 Route::middleware('auth')->group(function () {
 
-    // dashboard
+    // Dashboard
     Route::get('/dashboardd', function () {
         return view('dashboard.dashboardd');
     })->name('dashboard');
@@ -143,7 +144,9 @@ Route::middleware('auth')->group(function () {
     //Laporan Pengaduan
     Route::get('/laporan-pengaduan', [LaporanPengaduanController::class, 'show'])->name('laporan_pengaduan');
 
+
     //Detail Pengajuan Surat
+
 
 
     }); // Lek nambah route, tambahin di atas ini ya gaes, biar ikut kebungkus middleware (cuma bisa diakses kalau sudah login)

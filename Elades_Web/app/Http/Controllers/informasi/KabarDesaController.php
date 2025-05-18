@@ -5,7 +5,6 @@ namespace App\Http\Controllers\informasi;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\KabarDesa;
-use Illuminate\Support\Facades\Storage;
 
 class KabarDesaController extends Controller
 {
@@ -19,6 +18,7 @@ class KabarDesaController extends Controller
     {
         return view('informasi.kabar.create');
     }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -30,7 +30,10 @@ class KabarDesaController extends Controller
 
         $gambar = null;
         if ($request->hasFile('gambar')) {
-            $gambar = $request->file('gambar')->store('gambar_kabar', 'public');
+            $file = $request->file('gambar');
+            $namaFile = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/gambar_kabar_desa'), $namaFile);
+            $gambar = 'uploads/gambar_kabar_desa/' . $namaFile;
         }
 
         KabarDesa::create([
@@ -58,10 +61,14 @@ class KabarDesaController extends Controller
         ]);
 
         if ($request->hasFile('gambar')) {
-            if ($kabardesa->gambar) {
-                Storage::disk('public')->delete($kabardesa->gambar);
+            if ($kabardesa->gambar && file_exists(public_path($kabardesa->gambar))) {
+                unlink(public_path($kabardesa->gambar));
             }
-            $kabardesa->gambar = $request->file('gambar')->store('gambar_kabar', 'public');
+
+            $file = $request->file('gambar');
+            $namaFile = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/gambar_kabar_desa'), $namaFile);
+            $kabardesa->gambar = 'uploads/gambar_kabar_desa/' . $namaFile;
         }
 
         $kabardesa->update([
@@ -76,9 +83,10 @@ class KabarDesaController extends Controller
 
     public function destroy(KabarDesa $kabardesa)
     {
-        if ($kabardesa->gambar) {
-            Storage::disk('public')->delete($kabardesa->gambar);
+        if ($kabardesa->gambar && file_exists(public_path($kabardesa->gambar))) {
+            unlink(public_path($kabardesa->gambar));
         }
+
         $kabardesa->delete();
 
         return redirect()->route('kabardesa.index')->with('success', 'Data berhasil dihapus.');

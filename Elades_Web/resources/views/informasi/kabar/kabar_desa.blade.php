@@ -43,8 +43,9 @@
                     <td>{{ $kabar->tanggal }}</td>
                     <td>
                         @if($kabar->gambar)
-                            <img src="{{ asset('storage/'.$kabar->gambar) }}" width="100"><br>
+                            <img src="{{ asset($kabar->gambar) }}" alt="Gambar Kabar Desa" width="200">
                         @endif
+
                     </td>
                     <td>
                         
@@ -52,7 +53,7 @@
                     <form action="{{ route('kabardesa.destroy', $kabar->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus artikel ini?');">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus kabar desa ini?');">
                             <i class="fas fa-trash-alt"></i>
                             </button>
                         </form>

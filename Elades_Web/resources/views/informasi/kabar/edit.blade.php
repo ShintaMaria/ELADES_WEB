@@ -18,8 +18,8 @@
         </div>
         <div class="mb-3">
             <label>Gambar Saat Ini</label><br>
-            @if($kabardesa->gambar)
-                <img src="{{ asset('storage/'.$kabardesa->gambar) }}" width="100"><br>
+            @if($kabardesa->gambar && file_exists(public_path($kabardesa->gambar)))
+                <img src="{{ asset($kabardesa->gambar) }}" alt="Gambar Kabar Desa" width="200"><br>
             @endif
             <input type="file" name="gambar" class="form-control mt-2">
         </div>
