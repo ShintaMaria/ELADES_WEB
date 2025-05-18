@@ -15,9 +15,11 @@
 
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
-            <!-- Header dengan judul dan search box -->
+           <!-- Header dengan judul dan search box -->
             <div class="card-header py-3 d-flex justify-content-between align-items-center">
                 <h6 class="m-0 font-weight-bold text-primary"></h6>
+
+                <!-- Tempat baru untuk search box -->
                 <div id="customSearchContainer"></div>
             </div>
 
@@ -30,45 +32,25 @@
                                 <th>ID</th>
                                 <th>NIK</th>
                                 <th>Nama Pemohon</th>
-                                {{-- <th>Tanggal Pengajuan</th> --}}
                                 <th>Tipe Surat</th>
+                                <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @isset($skck)
                             @foreach($skck as $s)
-                            <tr id="row-{{ $s->id }}">
+                            <tr>
                                 <td>{{ $s->no_pengajuan }}</td>
                                 <td>{{ $s->nik }}</td>
                                 <td>{{ $s->nama }}</td>
-                                {{-- <td>{{ $s->tanggal }}</td> --}}
                                 <td>{{ $s->kode_surat }}</td>
+                                 <td> <span class="badge badge-warning">{{ $s->status }}</span> </td>
                                 <td>
-                                    <!-- Button Detail -->
-                                    <button class="btn btn-primary btn-sm mb-1 btn-detail"
-                                            data-id="{{ $s->id }}"
-                                            data-toggle="modal"
-                                            data-target="#detailModal">
-                                        Detail
-                                    </button>
-
-
-                                    <!-- Button Selesai (memicu modal konfirmasi) -->
-                                    <button class="btn btn-success btn-sm mb-1"
-                                            data-toggle="modal"
-                                            data-target="#selesaiModal"
-                                            data-id="{{ $s->id }}">
-                                        Selesai
-                                    </button>
-
-                                    <!-- Button Tolak -->
-                                    <button class="btn btn-danger btn-sm"
-                                            data-toggle="modal"
-                                            data-target="#tolakModal"
-                                            data-id="{{ $s->id }}">
-                                        Tolak
-                                    </button>
+                                    <!-- Tombol yang membuka modal detail -->
+                                    <button class="btn btn-primary btn-sm mb-1" data-toggle="modal" data-target="#detailModal{{ $s->no_pengajuan }}">Detail</button>
+                                     <button class="btn btn-success btn-sm mb-1" data-toggle="modal" data-target="#selesaiModal{{ $s->no_pengajuan }}">Selesai</button>
+                                    <button class="btn btn-danger btn-sm mb-1" data-toggle="modal" data-target="#tolakModal{{ $s->no_pengajuan }}">Tolak</button>
                                 </td>
                             </tr>
                             @endforeach
@@ -83,12 +65,14 @@
 </div>
 <!-- End of Page Wrapper -->
 
-<!-- Modal Detail -->
-<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
+<!-- Modal Detail untuk setiap pengajuan -->
+@isset($skck)
+@foreach($skck as $s)
+<div class="modal fade" id="detailModal{{ $s->no_pengajuan }}" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel{{ $s->no_pengajuan }}" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="detailModalLabel">Detail Pengajuan SKCK</h5>
+                <h5 class="modal-title" id="detailModalLabel{{ $s->no_pengajuan }}">Detail Pengajuan SKCK #{{ $s->no_pengajuan }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -96,114 +80,194 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <p><strong>ID Pengajuan:</strong> <span id="detailId"></span></p>
-                        <p><strong>Kode Surat:</strong> <span id="detailKodeSurat"></span></p>
-                        <p><strong>Nama:</strong> <span id="detailNama"></span></p>
-                        <p><strong>NIK:</strong> <span id="detailNik"></span></p>
-                        <p><strong>Tempat Tanggal Lahir:</strong> <span id="detailTempatTglLahir"></span></p>
-                        <p><strong>Kebangsaan</strong> <span id="detailKebangsaan"></span></p>
-                        <p><strong>Agama:</strong> <span id="detailAgama"></span></p>
-                        <p><strong>Jenis Kelamin:</strong> <span id="detailJenisKelamin"></span></p>
-                        <p><strong>Status Perkawinan:</strong> <span id="detailStatusPerkawinan"></span></p>
-                        <p><strong>Pekerjaan:</strong> <span id="detailPekerjaan"></span></p>
-                        <p><strong>Alamat:</strong> <span id="detailAlamat"></span></p>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>No Pengajuan</th>
+                                <td>{{ $s->no_pengajuan }}</td>
+                            </tr>
+                            <tr>
+                                <th>NIK</th>
+                                <td>{{ $s->nik }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nama Pemohon</th>
+                                <td>{{ $s->nama }}</td>
+                            </tr>
+                            <tr>
+                                <th>Tipe Surat</th>
+                                <td>{{ $s->kode_surat }}</td>
+                            </tr>
+                            <tr>
+                                <th>Tempat Lahir</th>
+                                <td>{{ $s->tempat_lahir ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Tanggal Lahir</th>
+                                <td>{{ $s->tanggal_lahir ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Jenis Kelamin</th>
+                                <td>{{ $s->jenis_kelamin ?? '-' }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Alamat</th>
+                                <td>{{ $s->alamat ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Agama</th>
+                                <td>{{ $s->agama ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Status Perkawinan</th>
+                                <td>{{ $s->status_perkawinan ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Pekerjaan</th>
+                                <td>{{ $s->pekerjaan ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Kebangsaan</th>
+                                <td>{{ $s->kebangsaan ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Username</th>
+                                <td>{{ $s->username ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Status</th>
+                                <td>
+                                    @if($s->status == 'Diproses')
+                                        <span class="badge badge-warning">Diproses</span>
+                                    @elseif($s->status == 'selesai')
+                                        <span class="badge badge-success">Selesai</span>
+                                    @elseif($s->status == 'ditolak')
+                                        <span class="badge badge-danger">Ditolak</span>
+                                    @else
+                                        <span class="badge badge-secondary">{{ $s->status }}</span>
+                                    @endif
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
 
-                <div class="file-attachments">
-                    <h5>Dokumen Lampiran</h5>
-                    <div class="row" id="fileList">
-                        <!-- File akan ditampilkan di sini -->
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <h6 class="font-weight-bold">Dokumen Pendukung:</h6>
+                        <div class="row">
+                            @if(isset($s->file) && !empty($s->file))
+                            <div class="col-md-4 mb-3">
+                                <div class="card">
+                                    <div class="card-header">Dokumen SKCK</div>
+                                    <div class="card-body text-center">
+                                        <img src="{{ asset('uploads/pengajuan/'.$s->file) }}"
+                                             class="img-thumbnail" style="max-height: 150px;"
+                                             alt="Dokumen SKCK"
+                                             data-toggle="modal"
+                                             data-target="#imageModal{{ $s->no_pengajuan }}_file"
+                                             style="cursor: pointer;">
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                <a id="btnCetak" class="btn btn-success" target="_blank">Cetak Surat</a>
+            <div class="modal-footer d-flex justify-content-between">
+                <div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                </div>
+                {{-- <div>
+                    <button type="button" class="btn btn-info" onclick="previewSurat({{ $s->no_pengajuan }})">Preview</button>
+                    <button type="button" class="btn btn-primary" onclick="cetakSurat({{ $s->no_pengajuan }})">Cetak</button>
+                </div> --}}
+                <div>
+                    <a href="{{ route('skck.preview', $s->no_pengajuan) }}" target="_blank" class="btn btn-info">Preview</a>
+                    <a href="{{ route('skck.cetak', $s->no_pengajuan) }}" target="_blank" class="btn btn-primary">Cetak</a>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal Preview File -->
-<div class="modal fade" id="filePreviewModal" tabindex="-1" role="dialog" aria-labelledby="filePreviewModalLabel">
-    <div class="modal-dialog modal-xl" role="document">
+<!-- Modal Preview Gambar -->
+@if(isset($s->file) && !empty($s->file))
+<div class="modal fade" id="imageModal{{ $s->no_pengajuan }}_file" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="filePreviewModalLabel">Preview Dokumen</h5>
+                <h5 class="modal-title">Preview Dokumen SKCK</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body text-center">
-                <iframe id="filePreviewFrame" src="" style="width:100%; height:80vh; border:none;"></iframe>
-                <div id="unsupportedFile" class="d-none">
-                    <p>File tidak dapat dipreview. Silahkan download untuk melihat.</p>
-                    <a id="downloadFileBtn" class="btn btn-primary" download>Download File</a>
-                </div>
+                <img src="{{ asset('uploads/pengajuan/'.$s->file) }}" class="img-fluid" alt="Dokumen SKCK">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                <a id="downloadFileBtnFooter" class="btn btn-primary" download>Download</a>
             </div>
         </div>
     </div>
 </div>
-
-
-<!-- Modal Konfirmasi Selesai -->
-<div class="modal fade" id="selesaiModal" tabindex="-1" role="dialog" aria-labelledby="selesaiModalLabel">
+@endif
+{{-- Modal Selesai --}}
+<div class="modal fade" id="selesaiModal{{ $s->no_pengajuan }}" tabindex="-1" role="dialog" aria-labelledby="selesaiModalLabel{{ $s->no_pengajuan }}" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="selesaiModalLabel">Konfirmasi</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Apakah Anda yakin ingin menerima surat tersebut?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                <form id="formSelesai" method="POST" action="">
-                    @csrf
-                    @method('PUT')
-                    <button type="submit" class="btn btn-success">Konfirmasi</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Tolak -->
-<div class="modal fade" id="tolakModal" tabindex="-1" role="dialog" aria-labelledby="tolakModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="tolakModalLabel">Tolak Pengajuan</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form id="formTolak" method="POST" action="">
-                @csrf
-                @method('PUT')
+        <form method="POST" action="{{ route('skck.selesai', $s->no_pengajuan) }}">
+            @csrf
+            @method('PUT')
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="selesaiModalLabel{{ $s->no_pengajuan }}">Selesai Pesan Untuk Id Surat : {{ $s->no_pengajuan }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="alasan">Alasan Penolakan:</label>
-                        <textarea name="alasan" class="form-control" required placeholder="Masukkan alasan penolakan"></textarea>
-                    </div>
+                    <label for="alasan">Apakah anda yakin ingin mengonfirmasi surat ini?</label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success">Ya, Selesai</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Modal Tolak -->
+<div class="modal fade" id="tolakModal{{ $s->no_pengajuan }}" tabindex="-1" role="dialog" aria-labelledby="tolakModalLabel{{ $s->no_pengajuan }}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="POST" action="{{ route('skck.tolak', $s->no_pengajuan) }}">
+            @csrf
+            @method('PUT')
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tolakModalLabel{{ $s->no_pengajuan }}">Tolak Pesan Untuk Id Surat : {{ $s->no_pengajuan }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label for="alasan">Alasan:</label>
+                    <textarea name="alasan" class="form-control" required placeholder="Masukkan alasan penolakan"></textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-danger">Ya, Tolak</button>
                 </div>
-            </form>
-        </div>
+
+            </div>
+        </form>
     </div>
 </div>
-
+@endforeach
+@endisset
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
@@ -213,6 +277,9 @@
 <script src="{{ asset('dashboard/assets/vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{ asset('dashboard/assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- Core plugin JavaScript-->
 <script src="{{ asset('dashboard/assets/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
@@ -227,224 +294,52 @@
 <!-- Page level untuk java scripts -->
 <script>
     $(document).ready(function () {
-        $('#dataTable').DataTable({
-            "lengthMenu": [5, 10, 15, 20, 25],
-            "pageLength": 5,
-            "language": {
-                "lengthMenu": "Tampilkan _MENU_",
-                "search": "Cari:",
-                "zeroRecords": "Data tidak ditemukan",
-                "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
-                "infoEmpty": "Tidak ada data tersedia",
-                "infoFiltered": "(disaring dari total _MAX_ entri)"
-            }
-        });
-
-        // Handle untuk tombol detail
-       // Handle untuk tombol detail
-    $(document).on('click', '.btn-detail', function() {
-    var id = $(this).data('id'); // Ambil ID dari data-id
-    var modal = $('#detailModal');
-
-    // Tampilkan loading state
-    modal.find('.modal-body').html('<div class="text-center py-4"><i class="fas fa-spinner fa-spin fa-3x"></i><p>Memuat data...</p></div>');
-
-    $.ajax({
-        url: '/skck/' + id, // Pastikan URL ini sesuai dengan route Laravel
-        method: 'GET',
-        dataType: 'json',
-        success: function(response) {
-        console.log(response);
-            if (response.success) {
-                var data = response.data;
-
-                // Isi data dasar
-                $('#detailId').text(data.no_pengajuan);
-                $('#detailKodeSurat').text(data.kode_surat);
-                $('#detailNama').text(data.nama);
-                $('#detailNik').text(data.nik);
-                $('#detailTempatTglLahir').text(data.tempat_tgl_lahir);
-                $('#detailKebangsaan').text(data.kebangsaan);
-                $('#detailAgama').text(data.agama);
-                $('#detailJenisKelamin').text(data.jenis_kelamin);
-                $('#detailStatusPerkawinan').text(data.status_perkawinan);
-                $('#detailPekerjaan').text(data.pekerjaan);
-                $('#detailAlamat').text(data.alamat);
-
-                // Isi file lampiran
-                var fileHtml = '';
-                if (data.file && data.file.length > 0) {
-                    data.file.forEach(function(file) {
-                        var fileUrl = '/storage/' + file.path; // Pastikan path ini sesuai
-                        var fileIcon = getFileIcon(file.mime_type);
-
-                        fileHtml += `
-                            <div class="col-md-4 mb-3">
-                                <div class="card file-card">
-                                    <div class="card-body text-center">
-                                        <i class="${fileIcon} fa-3x mb-2"></i>
-                                        <p class="file-name">${file.original_name}</p>
-                                        <button class="btn btn-sm btn-primary preview-file"
-                                                data-url="${fileUrl}"
-                                                data-type="${file.mime_type}">
-                                            Preview
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                    });
-                } else {
-                    fileHtml = '<div class="col-12"><p>Tidak ada dokumen lampiran</p></div>';
-                }
-                $('#fileList').html(fileHtml);
-
-                // Set URL untuk cetak
-                $('#btnCetak').attr('href', '/skck/' + id + '/cetak');
-            } else {
-                modal.find('.modal-body').html('<div class="alert alert-danger">'+response.message+'</div>');
-            }
-        },
-        error: function(xhr) {
-         console.log(xhr);
-            var errorMessage = 'Terjadi kesalahan saat memuat data';
-            if (xhr.responseJSON && xhr.responseJSON.message) {
-                errorMessage = xhr.responseJSON.message;
-            }
-            modal.find('.modal-body').html('<div class="alert alert-danger">'+errorMessage+'</div>');
+      $('#dataTable').DataTable({
+        "lengthMenu": [5, 10, 15, 20, 25],  // Dropdown: pilihan jumlah entri
+        "pageLength": 5, // Default jumlah yang ditampilkan saat pertama kali
+        "language": {
+          "lengthMenu": "Tampilkan _MENU_",
+          "search": "Cari:",
+          "zeroRecords": "Data tidak ditemukan",
+          "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
+          "infoEmpty": "Tidak ada data tersedia",
+          "infoFiltered": "(disaring dari total _MAX_ entri)"
         }
+      });
     });
-});
 
-        // Handle preview file
-        $(document).on('click', '.preview-file', function() {
-            var fileUrl = $(this).data('url');
-            var fileType = $(this).data('type');
-            var previewable = isFilePreviewable(fileType);
+    // Fungsi untuk preview surat
+    function previewSurat(id) {
+        // Buka halaman preview di tab baru
+        window.open('{{ url("skck/preview") }}/' + id, '_blank');
+    }
 
-            if (previewable) {
-                $('#filePreviewFrame').attr('src', fileUrl).removeClass('d-none');
-                $('#unsupportedFile').addClass('d-none');
-            } else {
-                $('#filePreviewFrame').addClass('d-none');
-                $('#unsupportedFile').removeClass('d-none');
-                $('#downloadFileBtn').attr('href', fileUrl);
-            }
+    // Fungsi untuk cetak surat
+    function cetakSurat(id) {
+        // Buka halaman cetak di tab baru
+        window.open('{{ url("skck/cetak") }}/' + id, '_blank');
+    }
 
-            $('#downloadFileBtnFooter').attr('href', fileUrl);
-            $('#filePreviewModalLabel').text('Preview: ' + $(this).siblings('.file-name').text());
-            $('#filePreviewModal').modal('show');
+    @if(session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: '{{ session('success') }}',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
         });
-        // Fungsi untuk menentukan icon berdasarkan tipe file
-        function getFileIcon(mimeType) {
-            if (mimeType.includes('image/')) return 'fas fa-file-image';
-            if (mimeType.includes('pdf')) return 'fas fa-file-pdf';
-            if (mimeType.includes('word')) return 'fas fa-file-word';
-            if (mimeType.includes('excel') || mimeType.includes('spreadsheet')) return 'fas fa-file-excel';
-            if (mimeType.includes('powerpoint') || mimeType.includes('presentation')) return 'fas fa-file-powerpoint';
-            return 'fas fa-file';
-        }
+    @endif
 
-        // Fungsi untuk menentukan apakah file bisa dipreview
-        function isFilePreviewable(mimeType) {
-            return mimeType.includes('pdf') ||
-                   mimeType.includes('image/') ||
-                   mimeType.includes('text/') ||
-                   mimeType.includes('word') ||
-                   mimeType.includes('excel') ||
-                   mimeType.includes('powerpoint');
-        }
-    });
-        // Handle tombol selesai (set action form sebelum modal muncul)
-        $('#selesaiModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            var id = button.data('id');
-            var form = $(this).find('form');
-            form.attr('action', '/skck/' + id + '/selesai');
+    @if(session('error'))
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal!',
+            text: '{{ session('error') }}',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Tutup'
         });
+    @endif
 
-        // Handle tombol tolak (set action form sebelum modal muncul)
-        $('#tolakModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            var id = button.data('id');
-            var form = $(this).find('form');
-            form.attr('action', '/skck/' + id + '/tolak');
-        });
-
-        // Handle submit form selesai (AJAX)
-        $('#formSelesai').on('submit', function(e) {
-            e.preventDefault();
-            var form = $(this);
-            var url = form.attr('action');
-            var id = url.split('/')[2]; // Ambil ID dari URL
-
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: form.serialize(),
-                success: function(response) {
-                    $('#selesaiModal').modal('hide');
-                    $('#row-' + id).remove(); // Hapus baris dari tabel
-                    showAlert('success', 'Surat berhasil diselesaikan');
-                },
-                error: function() {
-                    showAlert('danger', 'Terjadi kesalahan');
-                }
-            });
-        });
-
-        // Handle submit form tolak (AJAX)
-        $('#formTolak').on('submit', function(e) {
-            e.preventDefault();
-            var form = $(this);
-            var url = form.attr('action');
-            var id = url.split('/')[2]; // Ambil ID dari URL
-
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: form.serialize(),
-                success: function(response) {
-                    $('#tolakModal').modal('hide');
-                    $('#row-' + id).remove(); // Hapus baris dari tabel
-                    showAlert('success', 'Surat berhasil ditolak');
-                },
-                error: function() {
-                    showAlert('danger', 'Terjadi kesalahan');
-                }
-            });
-        });
-
-        // Fungsi untuk menampilkan alert
-        function showAlert(type, message) {
-            var alertHtml = '<div class="alert alert-' + type + ' alert-dismissible fade show" role="alert">' +
-                           message +
-                           '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                           '<span aria-hidden="true">&times;</span>' +
-                           '</button></div>';
-
-            $('.card-body').prepend(alertHtml);
-
-            // Hilangkan alert setelah 5 detik
-            setTimeout(function() {
-                $('.alert').alert('close');
-            }, 5000);
-        }
-    });
 </script>
-<style>
-    .file-card {
-        transition: transform 0.2s;
-        height: 100%;
-    }
-    .file-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    .file-name {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-</style>
+
 @endsection

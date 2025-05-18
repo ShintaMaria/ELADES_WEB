@@ -38,34 +38,18 @@
                 <a class="collapse-item" href="{{ route('penghasilan') }}">Keterangan Penghasilan</a>
                 <h6 class="collapse-header">Surat Izin</h6>
                 <a class="collapse-item" href="buttons.html">Izin Tidak Masuk Kerja</a>
-                <a class="collapse-item" href="{{ route('keramaian') }}">Izin Keramaian</a>
+                <a class="collapse-item" href="{{ route('izin-keramaian') }}">Izin Keramaian</a>
             </div>
         </div>
     </li> <!-- Added missing closing tag -->
 
     <!-- Laporan Surat -->
     {{-- Donnz --}}
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLaporanSurat"
-        aria-expanded="true" aria-controls="collapseLaporanSurat">
+   <li class="nav-item">
+        <a class="nav-link" href="{{ route('laporan_pengajuan') }}">
             <i class="fas fa-clipboard-list"></i>
-            <span>Laporan Pengajuan</span>
+            <span>Laporan Pengajuan Surat</span>
         </a>
-        <div id="collapseLaporanSurat" class="collapse" aria-labelledby="headingLaporan" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Surat Pengantar</h6>
-                <a class="collapse-item" href="{{ route('laporan_pengajuan.skck') }}">SKCK</a>
-                <a class="collapse-item" href="{{ route('laporan_pengajuan.kehilangan') }}">Kehilangan Barang</a>
-
-                <h6 class="collapse-header">Surat Keterangan</h6>
-                <a class="collapse-item" href="{{ route('laporan_pengajuan.sktm') }}">SKTM</a>
-                <a class="collapse-item" href="{{ route('laporan_pengajuan.penghasilan') }}">Penghasilan Orang Tua</a>
-
-                <h6 class="collapse-header">Surat Izin</h6>
-                <a class="collapse-item" href="{{ route('laporan_pengajuan.tidak_masuk_kerja') }}">Tidak Masuk Kerja</a>
-                <a class="collapse-item" href="{{ route('laporan_pengajuan.keramaian') }}">Keramaian</a>
-            </div>
-        </div>
     </li>
 
     <!-- Divider -->
@@ -83,14 +67,14 @@
         </a>
         <div id="collapseInsfrastruktur" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('infras') }}">Pengaduan Infrastruktur</a>
+                <a class="collapse-item" href="{{ route('infrastruktur') }}">Pengaduan Infrastruktur</a>
                 <a class="collapse-item" href="{{ route('keamanan') }}">Pengaduan Keamanan</a>
                 <a class="collapse-item" href="{{ route('saran') }}">Saran</a>
             </div>
         </div>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="cards.html">
+        <a class="nav-link" href="{{ route('laporan_pengaduan') }}">
             <i class="fas fa-clipboard-list"></i>
             <span>Laporan Pengaduan</span>
         </a>

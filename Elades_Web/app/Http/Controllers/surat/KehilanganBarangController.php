@@ -3,29 +3,28 @@
 namespace App\Http\Controllers\surat;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\DetailSKCK;
+use App\Models\Kehilangan;
 use App\Models\PengajuanSurat;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-use PDF;
-class SkckController extends Controller
+class KehilanganBarangController extends Controller
 {
-    public function index()
+     public function index()
     {
-        $skck = DetailSKCK::where('status', 'Diproses')->get();
-        return view('surat.pengantar.skck', compact('skck'));
+        $kehilangan = Kehilangan::where('status', 'Diproses')->get();
+        return view('surat.pengantar.barang', compact('kehilangan'));
     }
 
-    public function selesai(Request $request, $id)
+    public function selesai( $id)
 {
     DB::beginTransaction();
     try {
-        $skck = DetailSKCK::findOrFail($id);
-        $skck->update(['status' => 'Selesai']); // Ini yang akan memicu trigger
+        $kehilangan = Kehilangan::findOrFail($id);
+        $kehilangan->update(['status' => 'Selesai']); // Ini yang akan memicu trigger
 
         DB::commit();
 
-        return redirect()->route('skck')
+        return redirect()->route('kehilangan')
             ->with('success', 'Status berhasil diupdate');
 
     } catch (\Exception $e) {
@@ -39,57 +38,55 @@ class SkckController extends Controller
     {
    DB::beginTransaction();
 
-    try {
+        try {
         // Validasi alasan harus diisi
         $request->validate([
             'alasan' => 'required|string|max:255'
         ]);
 
         // Ambil data SKCK berdasarkan ID
-        $skck = DetailSKCK::findOrFail($id);
+        $kehilangan = Kehilangan::findOrFail($id);
 
         // Simpan alasan ke tabel skck (trigger akan handle pengajuan_surat)
-        $skck->update([
+        $kehilangan->update([
             'status' => 'Tolak',
             'alasan' => $request->input('alasan')
         ]);
 
         DB::commit();
 
-        return redirect()->route('skck')
-            ->with('success', 'Pengajuan SKCK berhasil ditolak.');
+        return redirect()->route('kehilangan')
+            ->with('success', 'Pengajuan Kehilangan berhasil ditolak.');
 
-    } catch (\Exception $e) {
-        DB::rollBack();
-        return redirect()->back()
-            ->with('error', 'Gagal menolak SKCK: ' . $e->getMessage());
-    }
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return redirect()->back()
+                    ->with('error', 'Gagal menolak Surat Kehilangan Barang: ' . $e->getMessage());
+            }
         }
-
-
-    public function preview($id)
+     public function preview($id)
     {
-        $skck = DetailSKCK::findOrFail($id);
+        $kehilangan = Kehilangan::findOrFail($id);
 
         // Data tambahan yang mungkin diperlukan untuk format surat
         $data = [
-            'skck' => $skck,
+            'skck' => $kehilangan,
             'tanggal_surat' => now()->format('d F Y'),
-            'nomor_surat' => 'SKCK-' . str_pad($skck->no_pengajuan, 4, '0', STR_PAD_LEFT) . '/' . now()->format('Y')
+            'nomor_surat' => 'Kehilangan Barang-' . str_pad($kehilangan->no_pengajuan, 4, '0', STR_PAD_LEFT) . '/' . now()->format('Y')
         ];
 
-        return view('surat.pengantar.preview-skck', $data);
+        return view('surat.preview', $data);
     }
 
     public function cetak($id)
     {
-        $skck = DetailSKCK::findOrFail($id);
+        $kehilangan = Kehilangan::findOrFail($id);
 
         // Data tambahan yang mungkin diperlukan untuk format surat
         $data = [
-            'skck' => $skck,
+            'skck' => $kehilangan,
             'tanggal_surat' => now()->format('d F Y'),
-            'nomor_surat' => 'SKCK-' . str_pad($skck->no_pengajuan, 4, '0', STR_PAD_LEFT) . '/' . now()->format('Y')
+            'nomor_surat' => 'Kehilangan Barang-' . str_pad($kehilangan->no_pengajuan, 4, '0', STR_PAD_LEFT) . '/' . now()->format('Y')
         ];
 
         // Generate PDF
@@ -101,4 +98,6 @@ class SkckController extends Controller
         // // Return PDF sebagai download dengan nama file
         // return $pdf->stream('Surat_Pengantar_SKCK_'.$skck->nama.'.pdf');
     }
+
+
 }
