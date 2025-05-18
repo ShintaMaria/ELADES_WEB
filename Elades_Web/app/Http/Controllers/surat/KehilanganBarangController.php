@@ -44,10 +44,10 @@ class KehilanganBarangController extends Controller
             'alasan' => 'required|string|max:255'
         ]);
 
-        // Ambil data SKCK berdasarkan ID
+        // Ambil data kehilangan berdasarkan ID
         $kehilangan = Kehilangan::findOrFail($id);
 
-        // Simpan alasan ke tabel skck (trigger akan handle pengajuan_surat)
+        // Simpan alasan ke tabel kehilangan (trigger akan handle pengajuan_surat)
         $kehilangan->update([
             'status' => 'Tolak',
             'alasan' => $request->input('alasan')

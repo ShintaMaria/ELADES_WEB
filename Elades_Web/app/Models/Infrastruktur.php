@@ -15,6 +15,6 @@ class Infrastruktur extends Model
     protected $fillable = [
         'username', 'kode_pengaduan', 'nama', 'nik', 'alamat',
         'jenis_infrastruktur', 'deskripsi', 'tanggal_kejadian',
-        'file', 'lokasi'
+        'file', 'lokasi', 'alasan', 'status'
     ];
 }

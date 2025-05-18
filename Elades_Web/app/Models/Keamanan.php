@@ -12,6 +12,6 @@ class Keamanan extends Model
 
     protected $fillable = [
         'username', 'kode_pengaduan', 'nama', 'nik', 'jenis_kasus',
-        'lokasi_kejadian', 'tanggal', 'waktu', 'deskripsi', 'file'
+        'lokasi_kejadian', 'tanggal', 'waktu', 'deskripsi', 'file', 'status', 'alasan'
     ];
 }

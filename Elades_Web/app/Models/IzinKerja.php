@@ -12,6 +12,6 @@ class IzinKerja extends Model
 
     protected $fillable = [
         'username', 'kode_surat', 'nama', 'tempat_tanggal_lahir',
-        'alamat', 'tanggal_izin', 'alasan', 'file', 'instansi'
+        'alamat', 'tanggal_izin', 'alasan', 'file', 'instansi', 'status', 'alasan_tolak'
     ];
 }

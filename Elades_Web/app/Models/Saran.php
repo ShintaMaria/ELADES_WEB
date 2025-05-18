@@ -12,6 +12,6 @@ class Saran extends Model
 
     protected $fillable = [
         'kode_pengaduan', 'nama', 'alamat', 'topik',
-        'judul_saran', 'deskripsi', 'tanggal', 'file', 'username'
+        'judul_saran', 'deskripsi', 'tanggal', 'file', 'username', 'alasan', 'status'
     ];
 }

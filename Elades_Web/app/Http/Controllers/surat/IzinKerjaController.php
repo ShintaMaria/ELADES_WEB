@@ -1,29 +1,30 @@
 <?php
 
 namespace App\Http\Controllers\surat;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\Sktm;
-use Illuminate\Support\Facades\DB;
 
-class SktmController extends Controller
+use Illuminate\Http\Request;
+use App\Models\IzinKerja;
+use App\Models\PengajuanSurat;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+class IzinKerjaController extends Controller
 {
      public function index()
     {
-        $sktm = Sktm::where('status', 'Diproses')->get();
-        return view('surat.keterangan.sktm', compact('sktm'));
+        $izinkerja = IzinKerja::where('status', 'Diproses')->get();
+        return view('surat.izin.kerja', compact('izinkerja'));
     }
 
     public function selesai( $id)
 {
     DB::beginTransaction();
     try {
-        $Sktm = Sktm::findOrFail($id);
-        $Sktm->update(['status' => 'Selesai']); // Ini yang akan memicu trigger
+        $izinkerja = IzinKerja::findOrFail($id);
+        $izinkerja->update(['status' => 'Selesai']); // Ini yang akan memicu trigger
 
         DB::commit();
 
-        return redirect()->route('Sktm')
+        return redirect()->route('izinkerja')
             ->with('success', 'Status berhasil diupdate');
 
     } catch (\Exception $e) {
@@ -43,35 +44,35 @@ class SktmController extends Controller
             'alasan' => 'required|string|max:255'
         ]);
 
-        // Ambil data Sktm berdasarkan ID
-        $sktm = Sktm::findOrFail($id);
+        // Ambil data IzinKerja berdasarkan ID
+        $izinkerja = IzinKerja::findOrFail($id);
 
-        // Simpan alasan ke tabel Sktm (trigger akan handle pengajuan_surat)
-        $sktm->update([
+        // Simpan alasan ke tabel kehilangan (trigger akan handle pengajuan_surat)
+        $izinkerja->update([
             'status' => 'Tolak',
-            'alasan' => $request->input('alasan')
+            'alasan' => $request->input('alasan_tolak')
         ]);
 
         DB::commit();
 
-        return redirect()->route('sktm')
-            ->with('success', 'Pengajuan Sktm berhasil ditolak.');
+        return redirect()->route('izinkerja')
+            ->with('success', 'Pengajuan izinkerja berhasil ditolak.');
 
             } catch (\Exception $e) {
                 DB::rollBack();
                 return redirect()->back()
-                    ->with('error', 'Gagal menolak Surat sktm Barang: ' . $e->getMessage());
+                    ->with('error', 'Gagal menolak Surat izinkerja Barang: ' . $e->getMessage());
             }
         }
      public function preview($id)
     {
-        $sktm = Sktm::findOrFail($id);
+        $izinkerja = IzinKerja::findOrFail($id);
 
         // Data tambahan yang mungkin diperlukan untuk format surat
         $data = [
-            'skck' => $sktm,
+            'skck' => $izinkerja,
             'tanggal_surat' => now()->format('d F Y'),
-            'nomor_surat' => 'Sktm Barang-' . str_pad($sktm->no_pengajuan, 4, '0', STR_PAD_LEFT) . '/' . now()->format('Y')
+            'nomor_surat' => 'Izin Kerja -' . str_pad($izinkerja->no_pengajuan, 4, '0', STR_PAD_LEFT) . '/' . now()->format('Y')
         ];
 
         return view('surat.preview', $data);
@@ -79,13 +80,13 @@ class SktmController extends Controller
 
     public function cetak($id)
     {
-        $sktm = Sktm::findOrFail($id);
+        $izinkerja = IzinKerja::findOrFail($id);
 
         // Data tambahan yang mungkin diperlukan untuk format surat
         $data = [
-            'skck' => $sktm,
+            'skck' => $izinkerja,
             'tanggal_surat' => now()->format('d F Y'),
-            'nomor_surat' => 'sktm-' . str_pad($sktm->no_pengajuan, 4, '0', STR_PAD_LEFT) . '/' . now()->format('Y')
+            'nomor_surat' => 'izinkerja-' . str_pad($izinkerja->no_pengajuan, 4, '0', STR_PAD_LEFT) . '/' . now()->format('Y')
         ];
 
         // Generate PDF

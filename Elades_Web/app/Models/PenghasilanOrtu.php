@@ -13,6 +13,6 @@ class PenghasilanOrtu extends Model
     protected $fillable = [
         'username', 'kode_surat', 'nama_ortu', 'tempat_tanggal_lahir_ortu',
         'pekerjaan_ortu', 'alamat_ortu', 'nama_anak', 'tempat_tanggal_lahir_anak',
-        'alamat_anak', 'keperluan', 'file'
+        'alamat_anak', 'keperluan', 'file', 'alasan', 'status'
     ];
 }

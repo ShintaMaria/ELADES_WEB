@@ -12,6 +12,6 @@ class Keramaian extends Model
 
     protected $fillable = [
         'username', 'kode_surat', 'nama', 'alamat', 'nik',
-        'kegiatan', 'tanggal', 'waktu', 'tempat', 'file'
+        'kegiatan', 'tanggal', 'waktu', 'tempat', 'file', 'status', 'alasan'
     ];
 }

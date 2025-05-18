@@ -10,7 +10,7 @@
         <h1 style="margin-top: 0px;">Layanan Surat Izin Keramaian</h1>
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active">Izin Keramaian</li>
+            <li class="breadcrumb-item active">Surat Izin Keramaian</li>
         </ol>
 
         <!-- DataTales Example -->
@@ -30,10 +30,10 @@
                             <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"/>
                             <tr>
                                 <th>ID</th>
-                                <th>NIK</th>
-                                <th>Nama Pemohon</th>
-                                <th>Tanggal Pengajuan</th>
                                 <th>Tipe Surat</th>
+                                <th>Nama</th>
+                                <th>Keperluan</th>
+                                <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -41,63 +41,213 @@
                             @isset($keramaian)
                             @foreach($keramaian as $k)
                             <tr>
-                                <td>{{ $k->id }}</td>
-                                <td>{{ $k->nik }}</td>
-                                <td>{{ $k->nama }}</td>
-                                <td>{{ $k->tanggal }}</td>
+                                <td>{{ $k->no_pengajuan }}</td>
                                 <td>{{ $k->kode_surat }}</td>
-                                <td>{{ $k->aksi }}
-                                    <a href="{{ route('keramaian.show', $k->id) }}" class="btn btn-primary btn-sm mb-1">Detail</a>
-
-                                    <form action="{{ route('keramaian.selesai', $k->id) }}" method="POST" style="display: inline;">
-                                        @csrf
-                                        <button type="submit" class="btn btn-success btn-sm mb-1">Selesai</button>
-                                    </form>
-
-                                    <!-- Tombol yang membuka modal -->
-                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#tolakModal{{ $k->id }}">Tolak
-                                    </button>
-
+                                <td>{{ $k->username }}</td>
+                                <td>{{ $k->keperluan }}</td>
+                                 <td> <span class="badge badge-warning">{{ $k->status }}</span> </td>
+                                <td>
+                                    <!-- Tombol yang membuka modal detail -->
+                                    <button class="btn btn-primary btn-sm mb-1" data-toggle="modal" data-target="#detailModal{{ $k->no_pengajuan }}">Detail</button>
+                                     <button class="btn btn-success btn-sm mb-1" data-toggle="modal" data-target="#selesaiModal{{ $k->no_pengajuan }}">Selesai</button>
+                                    <button class="btn btn-danger btn-sm mb-1" data-toggle="modal" data-target="#tolakModal{{ $k->no_pengajuan }}">Tolak</button>
                                 </td>
                             </tr>
-                            <!-- Modal Tolak -->
-                            <div class="modal fade" id="tolakModal{{ $k->id }}" tabindex="-1" role="dialog" aria-labelledby="tolakModalLabel{{ $k->id }}" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                <form method="POST" action="{{ route('keramaian.tolak', $k->id) }}">
-                                    @csrf
-                                    @method('PUT')
-                                    <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="tolakModalLabel{{ $k->id }}">Tolak Pesan Untuk Id Surat : {{ $k->id }}</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
-                                        <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <label for="alasan">Alasan:</label>
-                                        <textarea name="alasan" class="form-control" required placeholder="Masukkan alasan penolakan"></textarea>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-danger">Ya, Tolak</button>
-                                    </div>
-                                    </div>
-                                </form>
-                                </div>
-                            </div>
-
                             @endforeach
                             @endisset
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>
-
     </div>
     <!-- /.container-fluid -->
 </div>
 <!-- End of Page Wrapper -->
+
+<!-- Modal Detail untuk setiap pengajuan -->
+@isset($keramaian)
+@foreach($keramaian as $k)
+<div class="modal fade" id="detailModal{{ $k->no_pengajuan }}" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel{{ $k->no_pengajuan }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailModalLabel{{ $k->no_pengajuan }}">Detail Pengajuan Izin Keramaian #{{ $k->no_pengajuan }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>No Pengajuan</th>
+                                <td>{{ $k->no_pengajuan }}</td>
+                            </tr>
+                            <tr>
+                                <th>Tipe Surat</th>
+                                <td>{{ $k->kode_surat }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nama Pemohon</th>
+                                <td>{{ $k->nama ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <th>NIK</th>
+                                <td>{{ $k->nik ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Alamat</th>
+                                <td>{{ $k->alamat ?? '-' }}</td>
+                            </tr>
+
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Kegiatan</th>
+                                <td>{{ $k->kegiatan ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Tanggal Kegiatan</th>
+                                <td>{{ $k->tanggal ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Waktu Kegiatan</th>
+                                <td>{{ $k->waktu ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Tempat kegiatan</th>
+                                <td>{{ $k->tempat ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Status</th>
+                                <td>
+                                    @if($k->status == 'Diproses')
+                                        <span class="badge badge-warning">Diproses</span>
+                                    @elseif($k->status == 'selesai')
+                                        <span class="badge badge-success">Selesai</span>
+                                    @elseif($k->status == 'ditolak')
+                                        <span class="badge badge-danger">Ditolak</span>
+                                    @else
+                                        <span class="badge badge-secondary">{{ $k->status }}</span>
+                                    @endif
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <h6 class="font-weight-bold">Dokumen Pendukung:</h6>
+                        <div class="row">
+                            @if(isset($k->file) && !empty($k->file))
+                            <div class="col-md-4 mb-3">
+                                <div class="card">
+                                    <div class="card-header">Dokumen Keramaian</div>
+                                    <div class="card-body text-center">
+                                        <img src="{{ asset('uploads/pengajuan/'.$k->file) }}"
+                                             class="img-thumbnail" style="max-height: 150px;"
+                                             alt="Dokumen Keramaian"
+                                             data-toggle="modal"
+                                             data-target="#imageModal{{ $k->no_pengajuan }}_file"
+                                             style="cursor: pointer;">
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                </div>
+                <div>
+                    <a href="{{ route('keramaian.preview', $k->no_pengajuan) }}" target="_blank" class="btn btn-info">Preview</a>
+                    <a href="{{ route('keramaian.cetak', $k->no_pengajuan) }}" target="_blank" class="btn btn-primary">Cetak</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Preview Gambar -->
+@if(isset($k->file) && !empty($k->file))
+<div class="modal fade" id="imageModal{{ $k->no_pengajuan }}_file" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Preview Dokumen Keramaian</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="{{ asset('uploads/pengajuan/'.$k->file) }}" class="img-fluid" alt="Dokumen SKTM">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+{{-- Modal Selesai --}}
+<div class="modal fade" id="selesaiModal{{ $k->no_pengajuan }}" tabindex="-1" role="dialog" aria-labelledby="selesaiModalLabel{{ $k->no_pengajuan }}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="POST" action="{{ route('keramaian.selesai', $k->no_pengajuan) }}">
+            @csrf
+            @method('PUT')
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="selesaiModalLabel{{ $k->no_pengajuan }}">Selesai Pesan Untuk Id Surat : {{ $k->no_pengajuan }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label for="alasan">Apakah anda yakin ingin mengonfirmasi surat ini?</label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success">Ya, Selesai</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Modal Tolak -->
+<div class="modal fade" id="tolakModal{{ $k->no_pengajuan }}" tabindex="-1" role="dialog" aria-labelledby="tolakModalLabel{{ $k->no_pengajuan }}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="POST" action="{{ route('keramaian.tolak', $k->no_pengajuan) }}">
+            @csrf
+            @method('PUT')
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tolakModalLabel{{ $k->no_pengajuan }}">Tolak Pesan Untuk Id Surat : {{ $k->no_pengajuan }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label for="alasan">Alasan:</label>
+                    <textarea name="alasan" class="form-control" required placeholder="Masukkan alasan penolakan"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-danger">Ya, Tolak</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@endforeach
+@endisset
 
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">
@@ -109,7 +259,7 @@
 <script src="{{ asset('dashboard/assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Core plugin JavaScript-->
 <script src="{{ asset('dashboard/assets/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
@@ -120,7 +270,7 @@
 <script src="{{ asset('dashboard/assets/vendor/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{ asset('dashboard/assets/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 
-<!-- Page level custom scripts -->
+<!-- Page level untuk java scripts -->
 <script>
     $(document).ready(function () {
       $('#dataTable').DataTable({
@@ -136,6 +286,39 @@
         }
       });
     });
-  </script>
+
+    // Fungsi untuk preview surat
+    function previewSurat(id) {
+        // Buka halaman preview di tab baru
+        window.open('{{ url("sktm/preview") }}/' + id, '_blank');
+    }
+
+    // Fungsi untuk cetak surat
+    function cetakSurat(id) {
+        // Buka halaman cetak di tab baru
+        window.open('{{ url("sktm/cetak") }}/' + id, '_blank');
+    }
+
+    @if(session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: '{{ session('success') }}',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+        });
+    @endif
+
+    @if(session('error'))
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal!',
+            text: '{{ session('error') }}',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Tutup'
+        });
+    @endif
+
+</script>
 
 @endsection

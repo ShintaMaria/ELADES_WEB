@@ -14,6 +14,6 @@ class Sktm extends Model
         'username', 'kode_surat', 'nama_bapak', 'tempat_tanggal_lahir_bapak',
         'pekerjaan_bapak', 'alamat_bapak', 'nama_ibu', 'tempat_tanggal_lahir_ibu',
         'pekerjaan_ibu', 'alamat_ibu', 'nama', 'nik', 'tempat_tanggal_lahir_anak',
-        'jenis_kelamin_anak', 'alamat', 'keperluan', 'file'
+        'jenis_kelamin_anak', 'alamat', 'keperluan', 'file', 'alasan', 'status'
     ];
 }
