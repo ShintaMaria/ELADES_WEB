@@ -14,13 +14,6 @@ use App\Http\Controllers\informasi\KabarDesaController;
 use App\Http\Controllers\informasi\ArtikelTerkiniController;
 use App\Http\Controllers\informasi\StatistikController;
 use App\Http\Controllers\dashboard\ProfileController;
-//use App\Http\Controllers\DetailPengajuanController;
-// use App\Http\Controllers\pengaduan\LaporanSKCKController;
-// use App\Http\Controllers\surat\SkckController;
-// use App\Http\Controllers\surat\SktmController;
-// use App\Http\Controllers\surat\PenghasilanController;
-// use App\Http\Controllers\TampilanSuratController;
-// use App\Http\Controllers\laporan\laporan_pengajuan\LaporanPengajuanController;
 use App\Http\Controllers\surat\SkckController;
 use App\Http\Controllers\surat\Sktmcontroller;
 use App\Http\Controllers\surat\PenghasilanController;
@@ -30,7 +23,7 @@ use App\Http\Controllers\surat\IzinKeramaianController;
 use App\Http\Controllers\TampilanSuratController;
 use App\Http\Controllers\laporan\LaporanPengajuanController;
 use App\Http\Controllers\laporan\LaporanPengaduanController;
-
+use App\Http\Controllers\NotifikasiController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -114,18 +107,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/penghasilan/{id}/cetak', [PenghasilanController::class, 'cetak'])->name('penghasilan.cetak');
 
     //Izin Kerja
-    Route::get('/izin-kerja', [IzinKerjaController::class, 'index'])->name('izin-kerja');
-    Route::put('/izin-kerja/{id}/selesai', [IzinKerjaController::class, 'selesai'])->name('izin-kerja.selesai');
-    Route::put('/izin-kerja/{id}/tolak', [IzinKerjaController::class, 'tolak'])->name('izin-kerja.tolak');
-    Route::get('/izin-kerja/{id}/preview', [IzinKerjaController::class, 'preview'])->name('izin-kerja.preview');
-    Route::get('/izin-kerja/{id}/cetak', [IzinKerjaController::class, 'cetak'])->name('izin-kerja.cetak');
+    Route::get('/izin-kerja', [IzinKerjaController::class, 'index'])->name('izinkerja');
+    Route::put('/izin-kerja/{id}/selesai', [IzinKerjaController::class, 'selesai'])->name('izinkerja.selesai');
+    Route::put('/izin-kerja/{id}/tolak', [IzinKerjaController::class, 'tolak'])->name('izinkerja.tolak');
+    Route::get('/izin-kerja/{id}/preview', [IzinKerjaController::class, 'preview'])->name('izinkerja.preview');
+    Route::get('/izin-kerja/{id}/cetak', [IzinKerjaController::class, 'cetak'])->name('izinkerja.cetak');
 
     //Izin Keramaian
-    Route::get('/izin-keramaian', [IzinKeramaianController::class, 'index'])->name('izin-keramaian');
-    Route::put('/izin-keramaian/{id}/selesai', [IzinKeramaianController::class, 'selesai'])->name('izin-keramaian.selesai');
-    Route::put('/izin-keramaian/{id}/tolak', [IzinKeramaianController::class, 'tolak'])->name('izin-keramaian.tolak');
-    Route::get('/izin-keramaian/{id}/preview', [IzinKeramaianController::class, 'preview'])->name('izin-keramaian.preview');
-    Route::get('/izin-keramaian/{id}/cetak', [IzinKeramaianController::class, 'cetak'])->name('izin-keramaian.cetak');
+    Route::get('/izin-keramaian', [IzinKeramaianController::class, 'index'])->name('keramaian');
+    Route::put('/izin-keramaian/{id}/selesai', [IzinKeramaianController::class, 'selesai'])->name('keramaian.selesai');
+    Route::put('/izin-keramaian/{id}/tolak', [IzinKeramaianController::class, 'tolak'])->name('keramaian.tolak');
+    Route::get('/izin-keramaian/{id}/preview', [IzinKeramaianController::class, 'preview'])->name('keramaian.preview');
+    Route::get('/izin-keramaian/{id}/cetak', [IzinKeramaianController::class, 'cetak'])->name('keramaian.cetak');
 
     //Laporan pengajuan
     // Route::get('/laporan', [LaporanPengajuanController::class, 'show'])->name('laporan_pengajuan');
@@ -150,9 +143,14 @@ Route::get('/laporan/pengajuan/download', [LaporanPengajuanController::class, 'd
     //Laporan Pengaduan
     Route::get('/laporan-pengaduan', [LaporanPengaduanController::class, 'show'])->name('laporan_pengaduan');
     Route::get('/laporan-pengaduan/download', [LaporanPengaduanController::class, 'download'])->name('laporan_pengaduan.download');
-    
 
-    //Detail Pengajuan Surat
+
+     //Notifikasi
+    Route::get('/notifications', [NotifikasiController::class, 'getNotifications'])->name('notifications.get');
+    Route::post('/notifications/mark-as-read', [NotifikasiController::class, 'markAsRead'])->name('notifications.mark-as-read');
+    Route::post('/notifications/mark-all-as-read', [NotifikasiController::class, 'markAllAsRead'])->name('notifications.mark-all-as-read');
+    Route::post('/notifikasi/clear', [NotifikasiController::class, 'clearNotifikasi'])->name('notifikasi.clear');
+
 
 }); // Lek nambah route, tambahin di atas ini ya gaes, biar ikut kebungkus middleware (cuma bisa diakses kalau sudah login)
 // oke
