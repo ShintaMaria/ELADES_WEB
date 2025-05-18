@@ -1,225 +1,167 @@
 @extends('dashboard/layouts.template')
 @section('content')
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+        <form action="#" method="GET" class="form-inline">
+            <label class="mr-2">Filter:</label>
+            <select name="filter" class="form-control mr-2" onchange="this.form.submit()">
+                <option value="day" {{ ($currentFilter ?? 'month') == 'day' ? 'selected' : '' }}>Hari</option>
+                <option value="week" {{ ($currentFilter ?? 'month') == 'week' ? 'selected' : '' }}>Minggu</option>
+                <option value="month" {{ ($currentFilter ?? 'month') == 'month' ? 'selected' : '' }}>Bulan</option>
+                <option value="year" {{ ($currentFilter ?? 'month') == 'year' ? 'selected' : '' }}>Tahun</option>
+            </select>
+        </form>
+    </div>
 
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <form action="#" method="GET" class="form-inline">
-    <label class="mr-2">Filter:</label>
-    <select name="filter" class="form-control mr-2" onchange="this.form.submit()">
-        <option value="day" {{ $_GET['filter'] ?? '' == 'day' ? 'selected' : '' }}>Hari</option>
-        <option value="week" {{ $_GET['filter'] ?? '' == 'week' ? 'selected' : '' }}>Minggu</option>
-        <option value="month" {{ $_GET['filter'] ?? '' == 'month' ? 'selected' : '' }}>Bulan</option>
-        <option value="year" {{ $_GET['filter'] ?? '' == 'year' ? 'selected' : '' }}>Tahun</option>
-    </select>
-</form>
+    <!-- Info Cards -->
+    <div class="row">
+        <!-- Jam & Kalender (atas bawah, di kiri) -->
+        <div class="col-12 col-md-4">
+            <!-- Jam -->
+            <div class="card shadow mb-3">
+                <div class="card-body d-flex justify-content-center align-items-center" style="height: 45px;">
+                    <h5 class="mb-0 font-weight-bold text-primary" id="realTimeClock" style="font-size: 24px;"></h5>
+                </div>
+            </div>
 
-
-                    </div>
-<div class="row">
-
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-2 col-md-4 mb-2">
-        <div class="card border-left-primary shadow" style="height: auto; min-height: 100px;">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="font-weight-bold text-primary text-uppercase mb-1" style="font-size: 10px;">
-                            Surat Masuk
+            <!-- Kalender -->
+            <div class="card shadow">
+                <div class="card-body d-flex justify-content-center align-items-center" style="height: 45px;">
+                    <h5 class="mb-0 font-weight-bold text-success" id="currentDate" style="font-size: 20px;"></h5>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Surat Masuk (tengah) -->
+        <div class="col-12 col-md-4 mb-3">
+            <div class="card border-left-primary shadow h-100">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center h-100">
+                        <div class="col mr-2">
+                            <div class="font-weight-bold text-primary text-uppercase mb-2" style="font-size: 16px;">
+                                Surat Masuk
+                            </div>
+                            <div class="display-6 font-weight-bold text-gray-800" style="font-size: 28px;">
+                                {{ $suratMasukCount }}
+                            </div>
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">14</div>
+                        <div class="col-auto">
+                            <i class="fas fa-envelope fa-2x text-gray-300"></i>
+                        </div>
                     </div>
-                    <div class="col-auto">
-                        <i class="fas fa-envelope fa-sm text-gray-300"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pengaduan Masuk (kanan) -->
+        <div class="col-12 col-md-4 mb-3">
+            <div class="card border-left-warning shadow h-100">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center h-100">
+                        <div class="col mr-2">
+                            <div class="font-weight-bold text-warning text-uppercase mb-2" style="font-size: 16px;">
+                                Pengaduan Masuk
+                            </div>
+                            <div class="display-6 font-weight-bold text-gray-800" style="font-size: 28px;">
+                                {{ $pengaduanCount }}
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Earnings (Annual) Card Example -->
-    <div class="col-xl-2 col-md-4 mb-2">
-        <div class="card border-left-success shadow" style="height: auto; min-height: 100px;">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="font-weight-bold text-success text-uppercase mb-1" style="font-size: 10px;">
-                            Surat Keluar
-                        </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">11</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-paper-plane fa-sm text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Tasks Card Example -->
-    <div class="col-xl-2 col-md-4 mb-2">
-        <div class="card border-left-info shadow" style="height: auto; min-height: 100px;">
-        <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="font-weight-bold text-success text-uppercase mb-1" style="font-size: 10px;">
-                            Surat Ditolak
-                        </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-times-circle fa-sm text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Pending Requests Card Example -->
-    <div class="col-xl-2 col-md-4 mb-2">
-        <div class="card border-left-warning shadow" style="height: auto; min-height: 100px;">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="font-weight-bold text-warning text-uppercase mb-1" style="font-size: 10px;">
-                            Pengaduan Masuk
-                        </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-comments fa-sm text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- New Users Card Example -->
-    <div class="col-xl-2 col-md-4 mb-2">
-        <div class="card border-left-dark shadow" style="height: auto; min-height: 100px;">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="font-weight-bold text-dark text-uppercase mb-1" style="font-size: 10px;">
-                            Pengaduan Dalam Tindakan
-                        </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">150</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-tools fa-sm text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Total Sales Card (Patokan) -->
-    <div class="col-xl-2 col-md-4 mb-2">
-        <div class="card border-left-secondary shadow" style="height: auto; min-height: 100px;">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="font-weight-bold text-primary text-uppercase mb-1" style="font-size: 10px;">
-                            Pengaduan Selesai
-                        </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">21</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-check-circle fa-sm text-gray-300"></i>
+    <!-- Area Chart -->
+    <div class="row">
+        <div class="col-xl-12 col-lg-7">
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="myAreaChart"></canvas>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-                    <!-- Content Row -->
-                    <div class="row">
-                        <!-- Area Chart -->
-                        <div class="col-xl-12 col-lg-7">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
 
-                                <script>
-                                document.addEventListener("DOMContentLoaded", function () {
-                                    var ctx = document.getElementById("myAreaChart").getContext("2d");
+<!-- Scripts -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Area Chart
+        var ctx = document.getElementById("myAreaChart").getContext("2d");
+        var chartData = @json($chartData);
 
-                                    var myAreaChart = new Chart(ctx, {
-                                        type: "line",
-                                        data: {
-                                            labels: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"], // Label bulan
-                                            datasets: [
-                                                {
-                                                    label: "Surat Masuk",
-                                                    data: [12, 19, 3, 5, 2, 3, 10, 15, 8, 6, 9, 4], // Data surat masuk
-                                                    borderColor: " #6a9f73",
-                                                    backgroundColor: "rgba(81, 255, 0, 0.3)", // Warna merah transparan
-                                                    fill: true
-                                                },
-                                                {
-                                                    label: "Pengaduan Masuk",
-                                                    data: [8, 10, 5, 2, 14, 7, 9, 4, 6, 11, 13, 7], // Data pengaduan masuk
-                                                    borderColor: " #e74a3b",
-                                                    backgroundColor: "rgba(229, 255, 0, 0.3)", // Warna biru transparan
-                                                    fill: true
-                                                }
-                                            ]
-                                        },
-                                        options: {
-                                            responsive: true,
-                                            maintainAspectRatio: false,
-                                            scales: {
-                                                x: {
-                                                    grid: {
-                                                        display: false
-                                                    }
-                                                },
-                                                y: {
-                                                    beginAtZero: true
-                                                }
-                                            }
-                                        }
-                                    });
-                                });
-                                </script>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-area">
-                                        <canvas id="myAreaChart"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.container-fluid -->
-            </div>
-        </div>
-        <!-- End of Content Wrapper -->
-    </div>
-    <!-- End of Page Wrapper -->
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+        new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: chartData.labels,
+                datasets: [
+                    {
+                        label: "Surat Masuk",
+                        data: chartData.surat_masuk,
+                        borderColor: "#6a9f73",
+                        backgroundColor: "rgba(81, 255, 0, 0.3)",
+                        fill: true
+                    },
+                    {
+                        label: "Pengaduan Masuk",
+                        data: chartData.pengaduan,
+                        borderColor: "#e74a3b",
+                        backgroundColor: "rgba(229, 255, 0, 0.3)",
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { beginAtZero: true }
+                }
+            }
+        });
 
+        // Clock and Date
+        function updateClockAndDate() {
+            const now = new Date();
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="{{ asset('dashboard/assets/vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{ asset('dashboard/assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+            const hours = now.getHours().toString().padStart(2, "0");
+            const minutes = now.getMinutes().toString().padStart(2, "0");
+            const seconds = now.getSeconds().toString().padStart(2, "0");
+            const timeString = `${hours}:${minutes}:${seconds}`;
 
-    <!-- Core plugin JavaScript-->
-    <script src="{{ asset('dashboard/assets/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+            const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+            const months = [
+                "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+            ];
+            const dayName = days[now.getDay()];
+            const date = now.getDate();
+            const month = months[now.getMonth()];
+            const year = now.getFullYear();
+            const dateString = `${dayName}, ${date} ${month} ${year}`;
 
-    <!-- Custom scripts for all pages -->
-    <script src="{{ asset('dashboard/assets/js/sb-admin-2.min.js')}}"></script>
+            document.getElementById("realTimeClock").textContent = timeString;
+            document.getElementById("currentDate").textContent = dateString;
+        }
 
-    <!-- Page level custom scripts -->
-    <script src="{{ asset('dashboard/assets/js/demo/chart-area-demo.js')}}"></script>
-    <script src="{{ asset('dashboard/assets/js/demo/chart-pie-demo.js')}}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    </body>
+        setInterval(updateClockAndDate, 1000);
+        updateClockAndDate();
+    });
+</script>
 
-</html>
+<!-- Bootstrap core JavaScript-->
+<script src="{{ asset('dashboard/assets/vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('dashboard/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('dashboard/assets/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+<script src="{{ asset('dashboard/assets/js/sb-admin-2.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 @endsection

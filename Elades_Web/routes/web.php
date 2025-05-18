@@ -14,8 +14,15 @@ use App\Http\Controllers\informasi\KabarDesaController;
 use App\Http\Controllers\informasi\ArtikelTerkiniController;
 use App\Http\Controllers\informasi\StatistikController;
 use App\Http\Controllers\dashboard\ProfileController;
+//use App\Http\Controllers\DetailPengajuanController;
+// use App\Http\Controllers\pengaduan\LaporanSKCKController;
+// use App\Http\Controllers\surat\SkckController;
+// use App\Http\Controllers\surat\SktmController;
+// use App\Http\Controllers\surat\PenghasilanController;
+// use App\Http\Controllers\TampilanSuratController;
+// use App\Http\Controllers\laporan\laporan_pengajuan\LaporanPengajuanController;
 use App\Http\Controllers\surat\SkckController;
-use App\Http\Controllers\surat\SktmController;
+use App\Http\Controllers\surat\Sktmcontroller;
 use App\Http\Controllers\surat\PenghasilanController;
 use App\Http\Controllers\surat\KehilanganBarangController;
 use App\Http\Controllers\surat\IzinKerjaController;
@@ -50,9 +57,7 @@ Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name(
 Route::middleware('auth')->group(function () {
 
     // Dashboard
-    Route::get('/dashboardd', function () {
-        return view('dashboard.dashboardd');
-    })->name('dashboard');
+    Route::get('/dashboardd', [DashboardController::class, 'index'])->name('dashboard');
 
     // Pengaduan
     Route::get('/infrastruktur', [InfrastrukturController::class, 'index'])->name('infras');
@@ -123,8 +128,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/izin-keramaian/{id}/cetak', [IzinKeramaianController::class, 'cetak'])->name('izin-keramaian.cetak');
 
     //Laporan pengajuan
-    Route::get('/laporan', [LaporanPengajuanController::class, 'show'])->name('laporan_pengajuan');
-
+    // Route::get('/laporan', [LaporanPengajuanController::class, 'show'])->name('laporan_pengajuan');
+    Route::get('/laporan/pengajuan', [LaporanPengajuanController::class, 'show'])->name('laporan_pengajuan');
+Route::get('/laporan/pengajuan/download', [LaporanPengajuanController::class, 'download'])->name('laporan_pengajuan.download');
     //Pengaduan
     //Pengaduan Infrastruktur
     Route::get('/infrastruktur', [InfrastrukturController::class, 'index'])->name('infrastruktur');
@@ -143,11 +149,10 @@ Route::middleware('auth')->group(function () {
 
     //Laporan Pengaduan
     Route::get('/laporan-pengaduan', [LaporanPengaduanController::class, 'show'])->name('laporan_pengaduan');
-
+    Route::get('/laporan-pengaduan/download', [LaporanPengaduanController::class, 'download'])->name('laporan_pengaduan.download');
+    
 
     //Detail Pengajuan Surat
 
-
-
-    }); // Lek nambah route, tambahin di atas ini ya gaes, biar ikut kebungkus middleware (cuma bisa diakses kalau sudah login)
+}); // Lek nambah route, tambahin di atas ini ya gaes, biar ikut kebungkus middleware (cuma bisa diakses kalau sudah login)
 // oke
