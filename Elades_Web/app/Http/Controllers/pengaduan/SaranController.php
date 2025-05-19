@@ -10,7 +10,7 @@ class SaranController extends Controller
 {
     public function index()
     {
-        $saran = Saran::all(); // Ambil semua data
+        $saran = Saran::where('status', 'Diproses')->get(); // Ambil semua data
         return view('pengaduan.saran', compact('saran'));
     }
    public function selesai( $id)
