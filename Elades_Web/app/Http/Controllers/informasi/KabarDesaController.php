@@ -25,7 +25,11 @@ class KabarDesaController extends Controller
             'judul' => 'required',
             'deskripsi' => 'required',
             'tanggal' => 'required|date',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
+        ], [
+            'gambar.image' => 'File yang diunggah harus berupa gambar.',
+            'gambar.mimes' => 'Format gambar harus jpeg, jpg, atau png.',
+            'gambar.max' => 'Ukuran gambar maksimal 2MB.',
         ]);
 
         $gambar = null;
@@ -57,10 +61,15 @@ class KabarDesaController extends Controller
             'judul' => 'required',
             'deskripsi' => 'required',
             'tanggal' => 'required|date',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
+        ], [
+            'gambar.image' => 'File yang diunggah harus berupa gambar.',
+            'gambar.mimes' => 'Format gambar harus jpeg, jpg, atau png.',
+            'gambar.max' => 'Ukuran gambar maksimal 2MB.',
         ]);
 
         if ($request->hasFile('gambar')) {
+            // Hapus gambar lama jika ada
             if ($kabardesa->gambar && file_exists(public_path($kabardesa->gambar))) {
                 unlink(public_path($kabardesa->gambar));
             }

@@ -23,10 +23,8 @@
 
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
-            <!-- Header dengan judul dan search box -->
             <div class="card-header py-3 d-flex justify-content-between align-items-center">
-            <a href="{{ route('artikels.create') }}" class="btn btn-primary btn-sm">Tambah Artikel Terbaru</a>
-
+                <a href="{{ route('artikels.create') }}" class="btn btn-primary btn-sm">Tambah Artikel Terbaru</a>
                 <div id="customSearchContainer"></div>
             </div>
 
@@ -52,21 +50,39 @@
                                 <td>{{ $artikel->created_at ? $artikel->created_at->format('d-m-Y') : '-' }}</td>
                                 <td>
                                     <!-- Tombol Edit -->
+                                    <div class="mb-2">
                                     <a href="{{ route('artikels.edit', $artikel->id) }}" class="btn btn-primary btn-sm">
-
-
                                         <i class="fas fa-edit"></i>
                                     </a>
+                                    </div>
 
-                                    <!-- Tombol Hapus -->
-                                    <form action="{{ route('artikels.destroy', $artikel->id) }}" method="POST" style="display:inline;">
+                                    <!-- Tombol Hapus dengan Modal -->
+                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal{{ $artikel->id }}">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
 
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus artikel ini?');">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </form>
+                                    <!-- Modal Konfirmasi Hapus -->
+                                    <div class="modal fade" id="deleteModal{{ $artikel->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel{{ $artikel->id }}" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteModalLabel{{ $artikel->id }}">Konfirmasi Hapus</h5>
+                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">×</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">Apakah Anda yakin ingin menghapus artikel ini?</div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                                                    <form action="{{ route('artikels.destroy', $artikel->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger">Hapus</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach
@@ -77,14 +93,15 @@
             </div>
         </div>
     </div>
-    <!-- /.container-fluid -->
 </div>
-<!-- End of Page Wrapper -->
 
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
 </a>
+
+<!-- FontAwesome (pastikan sudah ada) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <!-- Bootstrap core JavaScript-->
 <script src="{{ asset('dashboard/assets/vendor/jquery/jquery.min.js')}}"></script>
@@ -104,17 +121,14 @@
 <script>
     $(document).ready(function () {
         var table = $('#dataTable').DataTable({
-            lengthChange: false // Menghilangkan opsi "Show X entries"
+            lengthChange: false
         });
 
-        // Memindahkan search box ke dalam #customSearchContainer
         $('#dataTable_filter').appendTo("#customSearchContainer");
-
-        // Menyesuaikan tampilan search box agar lebih rapi
         $('#customSearchContainer input').addClass('form-control').attr('placeholder', 'Cari data...');
         $('#customSearchContainer label').contents().filter(function () {
             return this.nodeType === 3;
-        }).remove(); // Menghapus label default DataTables
+        }).remove();
     });
 </script>
 

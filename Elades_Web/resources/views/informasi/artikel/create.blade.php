@@ -21,4 +21,14 @@
         <a href="{{ route('artikels.index') }}" class="btn btn-secondary">Kembali</a>
     </form>
 </div>
+<!-- FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<!-- DataTables Scripts -->
+<script src="{{ asset('dashboard/assets/vendor/jquery/jquery.min.js')}}"></script>
+<script src="{{ asset('dashboard/assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{ asset('dashboard/assets/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+<script src="{{ asset('dashboard/assets/js/sb-admin-2.min.js')}}"></script>
+<script src="{{ asset('dashboard/assets/vendor/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{ asset('dashboard/assets/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 @endsection
