@@ -18,19 +18,22 @@ class LaporanPengajuanController extends Controller
         $tahun = $request->input('tahun');
         $tipe = $request->input('tipe');
 
-        if ($bulan) {
+        // Filter bulan hanya jika dipilih (bukan "Semua")
+        if ($bulan && $bulan !== '') {
             $query->whereMonth('tanggal', $bulan);
         }
 
-        if ($tahun) {
+        // Filter tahun hanya jika dipilih (bukan "Semua")
+        if ($tahun && $tahun !== '') {
             $query->whereYear('tanggal', $tahun);
         }
 
-        if (!empty($tipe)) {
+        // Filter tipe hanya jika dipilih (bukan "Semua")
+        if ($tipe && $tipe !== '') {
             $query->where('kode_surat', $tipe);
         }
 
-        $laporan = $query->get();
+        $laporan = $query->orderBy('tanggal', 'desc')->get();
 
         return view('laporan_pengajuan.laporan', compact('laporan', 'bulan', 'tahun', 'tipe'));
     }
@@ -49,11 +52,11 @@ class LaporanPengajuanController extends Controller
         $query = PengajuanSurat::whereMonth('tanggal', $bulan)
                                ->whereYear('tanggal', $tahun);
 
-        if (!empty($tipe)) {
+        if ($tipe && $tipe !== '') {
             $query->where('kode_surat', $tipe);
         }
 
-        $laporan = $query->get();
+        $laporan = $query->orderBy('tanggal', 'desc')->get();
 
         $pdf = PDF::loadView('laporan_pengajuan.laporan_pdf', [
             'laporan' => $laporan,

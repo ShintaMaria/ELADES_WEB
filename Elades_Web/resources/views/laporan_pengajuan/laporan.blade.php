@@ -10,20 +10,38 @@
         </ol>
 
         <!-- Filter Form -->
-        <form action="{{ route('laporan_pengajuan.download') }}" method="GET" class="form-inline mb-4">
+        <form id="filterForm" class="form-inline mb-4">
             <div class="form-group mr-2">
                 <label for="bulan" class="mr-2">Bulan</label>
-                <select name="bulan" id="bulan" class="form-control" required>
+                <select name="bulan" id="bulan" class="form-control">
+                    <option value="">Semua</option>
+                    @php
+                        $bulanIndo = [
+                            1 => 'Januari',
+                            2 => 'Februari',
+                            3 => 'Maret',
+                            4 => 'April',
+                            5 => 'Mei',
+                            6 => 'Juni',
+                            7 => 'Juli',
+                            8 => 'Agustus',
+                            9 => 'September',
+                            10 => 'Oktober',
+                            11 => 'November',
+                            12 => 'Desember'
+                        ];
+                    @endphp
                     @foreach(range(1, 12) as $b)
                         <option value="{{ sprintf('%02d', $b) }}" {{ request('bulan') == sprintf('%02d', $b) ? 'selected' : '' }}>
-                            {{ DateTime::createFromFormat('!m', $b)->format('F') }}
+                            {{ $bulanIndo[$b] }}
                         </option>
                     @endforeach
                 </select>
             </div>
             <div class="form-group mr-2">
                 <label for="tahun" class="mr-2">Tahun</label>
-                <select name="tahun" id="tahun" class="form-control" required>
+                <select name="tahun" id="tahun" class="form-control">
+                    <option value="">Semua</option>
                     @php $now = date('Y'); @endphp
                     @for($t = $now; $t >= $now - 5; $t--)
                         <option value="{{ $t }}" {{ request('tahun') == $t ? 'selected' : '' }}>{{ $t }}</option>
@@ -42,10 +60,30 @@
                     @endforeach
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">
+            <button type="button" id="downloadBtn" class="btn btn-primary">
                 <i class="fas fa-download fa-sm text-white-50"></i> Unduh Laporan
             </button>
         </form>
+
+        <!-- Modal Konfirmasi Download -->
+        <div class="modal fade" id="downloadModal" tabindex="-1" role="dialog" aria-labelledby="downloadModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="downloadModalLabel">Perhatian</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Laporan hanya dapat di unduh dengan priode satu bulan. Anda harus memilih <strong>bulan</strong> dan <strong>tahun</strong> tertentu untuk mengunduh laporan.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Tabel -->
         <div class="card shadow mb-4">
@@ -103,8 +141,6 @@
 <!-- Bootstrap core JavaScript-->
 <script src="{{ asset('dashboard/assets/vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{ asset('dashboard/assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
 <!-- Core plugin JavaScript-->
 <script src="{{ asset('dashboard/assets/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
@@ -115,6 +151,7 @@
 <!-- Page level plugins -->
 <script src="{{ asset('dashboard/assets/vendor/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{ asset('dashboard/assets/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+
 <style>
     /* Atur posisi pencarian ke kanan */
     div.dataTables_filter {
@@ -122,22 +159,74 @@
         text-align: right;
     }
 </style>
-<!-- Page level untuk java scripts -->
+
 <script>
     $(document).ready(function () {
-      $('#dataTable').DataTable({
-        "lengthMenu": [5, 10, 15, 20, 25],  // Dropdown: pilihan jumlah entri
-        "pageLength": 5, // Default jumlah yang ditampilkan saat pertama kali
-        "language": {
-          "lengthMenu": "Tampilkan _MENU_",
-          "search": "Cari:",
-          "zeroRecords": "Data tidak ditemukan",
-          "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
-          "infoEmpty": "Tidak ada data tersedia",
-          "infoFiltered": "(disaring dari total _MAX_ entri)"
-        }
-      });
-    });
+        var table = $('#dataTable').DataTable({
+            "lengthMenu": [5, 10, 15, 20, 25],
+            "pageLength": 5,
+            "language": {
+                "lengthMenu": "Tampilkan _MENU_",
+                "search": "Cari:",
+                "zeroRecords": "Data tidak ditemukan",
+                "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
+                "infoEmpty": "Tidak ada data tersedia",
+                "infoFiltered": "(disaring dari total _MAX_ entri)"
+            }
+        });
 
+        $('#bulan, #tahun, #tipe').change(function() {
+            var bulan = $('#bulan').val();
+            var tahun = $('#tahun').val();
+            var tipe = $('#tipe').val();
+            
+            table.columns().search('').draw();
+            
+            table.rows().every(function() {
+                var row = this.node();
+                var rowDate = $(row).find('td:eq(2)').text();
+                var rowBulan = rowDate.split('-')[1];
+                var rowTahun = rowDate.split('-')[0];
+                var rowTipe = $(row).find('td:eq(3)').text();
+                
+                var showRow = true;
+                
+                if (bulan && rowBulan != bulan) {
+                    showRow = false;
+                }
+                
+                if (tahun && rowTahun != tahun) {
+                    showRow = false;
+                }
+
+                if (tipe && rowTipe != tipe) {
+                    showRow = false;
+                }
+                
+                this.nodes().to$().toggle(showRow);
+            });
+            
+            table.draw();
+        });
+
+        $('#downloadBtn').click(function() {
+            var bulan = $('#bulan').val();
+            var tahun = $('#tahun').val();
+            var tipe = $('#tipe').val();
+            
+            if (!bulan || !tahun) {
+                $('#downloadModal').modal('show');
+                return false;
+            }
+            
+            var url = "{{ route('laporan_pengajuan.download') }}";
+            url += "?bulan=" + bulan + "&tahun=" + tahun;
+            if (tipe) {
+                url += "&tipe=" + tipe;
+            }
+            
+            window.location.href = url;
+        });
+    });
 </script>
 @endsection
