@@ -8,11 +8,18 @@
         @if(session('profile_update'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('profile_update') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
 
         {{-- notifikasi gagal --}}
+        @if($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                @foreach ($errors->all() as $error)
+                    <div>{{ trim($error) }}</div>
+                @endforeach
+            </div>
+        @endif
+
         @if(session('profile_gagal'))
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 {{ session('profile_gagal') }}
@@ -54,7 +61,7 @@
                                 <input type="file" name="foto" class="form-control @error('foto') is-invalid @enderror" accept="image/*" required>
                                 @error('foto')
                                     <div class="invalid-feedback text-center">
-                                        {{ $message }}
+                                        {{ trim($message) }}
                                     </div>
                                 @enderror
                             </div>
@@ -99,15 +106,31 @@
                             @method('PUT')
                             <div class="mb-3">
                                 <label class="form-label" for="current_password">Password Lama</label>
-                                <input type="password" name="current_password" class="form-control" required>
+                                <input type="password" name="current_password" class="form-control @error('current_password') is-invalid @enderror" required>
+                                @error('current_password')
+                                    <div class="invalid-feedback">
+                                        {{ trim($message) }}
+                                    </div>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="new_password">Password Baru</label>
-                                <input type="password" name="new_password" class="form-control" required>
+                                <input type="password" name="new_password" class="form-control @error('new_password') is-invalid @enderror" required>
+                                @error('new_password')
+                                    <div class="invalid-feedback">
+                                        {{ trim($message) }}
+                                    </div>
+                                @enderror
+                                <div class="form-text text-muted mt-1 small">Password minimal 6 karakter</div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="new_password_confirmation">Konfirmasi Password Baru</label>
-                                <input type="password" name="new_password_confirmation" class="form-control" required>
+                                <input type="password" name="new_password_confirmation" class="form-control @error('new_password_confirmation') is-invalid @enderror" required>
+                                @error('new_password_confirmation')
+                                    <div class="invalid-feedback">
+                                        {{ trim($message) }}
+                                    </div>
+                                @enderror
                             </div>
                             <button class="btn btn-warning" type="submit">
                                 <i class="fas fa-key me-1"></i> Ganti Password

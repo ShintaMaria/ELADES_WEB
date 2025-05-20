@@ -45,17 +45,22 @@ class ProfileController extends Controller
 
     // update password
     public function updatePassword(Request $request)
-    {
-        $request->validate([
-            'current_password' => 'required',
-            'new_password' => 'required|min:8|confirmed',
-        ]);
+{
+    $request->validate([
+        'current_password' => 'required',
+        'new_password' => 'required|min:6|confirmed',
+    ], [
+        'current_password.required' => 'Password lama wajib diisi.',
+        'new_password.required' => 'Password baru wajib diisi.',
+        'new_password.min' => 'Password  minimal 6 karakter.',
+        'new_password.confirmed' => 'Konfirmasi password baru tidak sesuai.',
+    ]);
 
-        $user = Auth::user();
+    $user = Auth::user();
 
-        if (!Hash::check($request->current_password, $user->password)) {
-            return back()->with('profile_gagal', 'Password lama tidak sesuai.');
-        }
+    if (!Hash::check($request->current_password, $user->password)) {
+        return back()->with('profile_gagal', 'Password lama tidak sesuai.');
+    }
 
         $user->password = Hash::make($request->new_password);
         $user->save();
