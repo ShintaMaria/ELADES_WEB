@@ -4,9 +4,11 @@ namespace App\Http\Controllers\surat;
 
 use Illuminate\Http\Request;
 use App\Models\Kehilangan;
-use App\Models\PengajuanSurat;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\pejabat;
 class KehilanganBarangController extends Controller
 {
      public function index()
@@ -64,39 +66,63 @@ class KehilanganBarangController extends Controller
                     ->with('error', 'Gagal menolak Surat Kehilangan Barang: ' . $e->getMessage());
             }
         }
-     public function preview($id)
+    public function preview($id)
     {
         $kehilangan = Kehilangan::findOrFail($id);
+        $pejabat = pejabat::first();
+        $ttdPath = $pejabat->ttd_image ? 'uploads/ttd/'.$pejabat->ttd_image : null;
 
-        // Data tambahan yang mungkin diperlukan untuk format surat
-        $data = [
-            'skck' => $kehilangan,
-            'tanggal_surat' => now()->format('d F Y'),
-            'nomor_surat' => 'Kehilangan Barang-' . str_pad($kehilangan->no_pengajuan, 4, '0', STR_PAD_LEFT) . '/' . now()->format('Y')
-        ];
-
-        return view('surat.preview', $data);
+        return view('templatesurat.kehilangan', [
+            'mode' => 'preview',
+            'kehilangan' => $kehilangan,
+            'pejabat' => $pejabat,
+            'ttdPath' => $ttdPath,
+            'logoPath' => 'uploads/ttd/NganjukLogo.png'
+        ]);
     }
 
     public function cetak($id)
     {
         $kehilangan = Kehilangan::findOrFail($id);
+        $pejabat = pejabat::first();
 
-        // Data tambahan yang mungkin diperlukan untuk format surat
-        $data = [
-            'skck' => $kehilangan,
-            'tanggal_surat' => now()->format('d F Y'),
-            'nomor_surat' => 'Kehilangan Barang-' . str_pad($kehilangan->no_pengajuan, 4, '0', STR_PAD_LEFT) . '/' . now()->format('Y')
-        ];
+        // Path untuk tanda tangan (pastikan menggunakan ttd.png)
+        $ttdPath = public_path('uploads/ttd/ttd.png');
+        $logoPath = public_path('uploads/ttd/NganjukLogo.png');
 
-        // Generate PDF
-        // $pdf = PDF::loadView('surat.pengantar.cetak-skck', $data);
+        // Verifikasi file tanda tangan
+        if (!file_exists($ttdPath)) {
+            Log::error("File tanda tangan tidak ditemukan di: ".$ttdPath);
+            $ttdPath = null;
+        }
 
-        // Set paper size (A4)
-        // $pdf->setPaper('a4', 'portrait');
+        // Verifikasi file logo
+        if (!file_exists($logoPath)) {
+            Log::error("File logo tidak ditemukan di: ".$logoPath);
+            $logoPath = null;
+        }
 
-        // // Return PDF sebagai download dengan nama file
-        // return $pdf->stream('Surat_Pengantar_SKCK_'.$skck->nama.'.pdf');
+        $pdf = Pdf::loadView('templatesurat.kehilangan', [
+            'mode' => 'cetak',
+            'kehilangan' => $kehilangan,
+            'pejabat' => $pejabat,
+            'ttdPath' => $ttdPath,
+            'logoPath' => $logoPath
+        ]);
+
+        // Konfigurasi DomPDF yang lebih lengkap
+        $pdf->setOptions([
+            'isRemoteEnabled' => true,
+            'isHtml5ParserEnabled' => true,
+            'isPhpEnabled' => true,
+            'defaultFont' => 'times',
+            'chroot' => public_path(),
+            'enable_remote' => true,
+            'dpi' => 96,
+            'isFontSubsettingEnabled' => true
+        ]);
+
+        return $pdf->download('SPKB-'.$kehilangan->nama.'-'.date('Ymd').'.pdf');
     }
 
 

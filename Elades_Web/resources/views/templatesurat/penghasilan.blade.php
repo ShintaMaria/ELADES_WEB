@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $mode === 'cetak' ? 'Cetak SKCK' : 'Preview SKCK' }}</title>
+    <title>{{ $mode === 'cetak' ? 'Cetak Surat Keterangan Penghasilan' : 'Preview Surat Keterangan Penghasilan' }}</title>
     <style>
         body {
             font-family: "Times New Roman", Times, serif;
@@ -165,8 +165,8 @@
 
         <!-- Document title -->
         <div class="title">
-            <p>SURAT PENGANTAR KETERANGAN CATATAN KEPOLISIAN (SKCK)</p>
-            <p>Nomor: {{ $skck->no_pengajuan }}/SKCK/{{ date('Y') }}</p>
+            <p>SURAT KETERANGAN PENGHASILAN ORANG TUA</p>
+            <p>Nomor: {{ $PenghasilanOrtu->no_pengajuan }}/SKP/{{ date('Y') }}</p>
         </div>
 
         <!-- Content -->
@@ -175,57 +175,57 @@
 
             <table class="data-table">
                 <tr>
-                    <td width="30%">Nama</td>
-                    <td width="5%">:</td>
-                    <td>{{ ucfirst(strtolower($skck->nama)) }}</td>
+                    <td colspan="3"><strong>IDENTITAS ORANG TUA:</strong></td>
                 </tr>
                 <tr>
-                    <td>NIK</td>
+                    <td width="30%">Nama Orang Tua</td>
+                    <td width="5%">:</td>
+                    <td>{{ ucfirst(strtolower($PenghasilanOrtu->nama_ortu)) }}</td>
+                </tr>
+                <tr>
+                    <td>Tempat/Tanggal Lahir Orang Tua</td>
                     <td>:</td>
-                    <td>{{ $skck->nik }}</td>
+                     <td>{{ ucfirst(strtolower($PenghasilanOrtu->tempat_tanggal_lahir_ortu)) }}</td>                </tr>
+                <tr>
+                    <td>Pekerjaan Orang Tua</td>
+                    <td>:</td>
+                    <td>{{ $PenghasilanOrtu->pekerjaan_ortu }}</td>
+                </tr>
+                <tr>
+                    <td>Alamat Orang Tua</td>
+                    <td>:</td>
+                    <td>{{ $PenghasilanOrtu->alamat_ortu }}</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><strong>IDENTITAS ANAK:</strong></td>
+                </tr>
+                <tr>
+                    <td>Nama Anak</td>
+                    <td>:</td>
+                    <td>{{ ucfirst(strtolower($PenghasilanOrtu->nama_anak)) }}</td>
                 </tr>
                 <tr>
                     <td>Tempat/Tanggal Lahir</td>
                     <td>:</td>
-                    <td>{{ ucfirst(strtolower($skck->tempat_lahir)) }}, {{ \Carbon\Carbon::parse($skck->tanggal_lahir)->format('d-m-Y') }}</td>
-                </tr>
+                     <td>{{ ucfirst(strtolower($PenghasilanOrtu->tempat_tanggal_lahir_anak)) }}</td>                </tr>
+
                 <tr>
-                    <td>Kebangsaan</td>
+                    <td>Alamat Anak</td>
                     <td>:</td>
-                    <td>{{ $skck->kebangsaan }}</td>
+                    <td>{{ ucfirst(strtolower($PenghasilanOrtu->alamat_anak)) }}</td>
                 </tr>
-                <tr>
-                    <td>Agama</td>
+                 <tr>
+                    <td>Keperluan</td>
                     <td>:</td>
-                    <td>{{ ucfirst(strtolower($skck->agama)) }}</td>
-                </tr>
-                <tr>
-                    <td>Jenis Kelamin</td>
-                    <td>:</td>
-                    <td>{{ ucfirst(strtolower($skck->jenis_kelamin)) }}</td>
-                </tr>
-                <tr>
-                    <td>Status Perkawinan</td>
-                    <td>:</td>
-                    <td>{{ ucfirst(strtolower($skck->status_perkawinan)) }}</td>
-                </tr>
-                <tr>
-                    <td>Pekerjaan</td>
-                    <td>:</td>
-                    <td>{{ $skck->pekerjaan }}</td>
-                </tr>
-                <tr>
-                    <td>Alamat</td>
-                    <td>:</td>
-                    <td>{{ ucfirst(strtolower($skck->alamat)) }}</td>
+                    <td>{{ ucfirst(strtolower($PenghasilanOrtu->keperluan)) }}</td>
                 </tr>
             </table>
 
             <p class="justify-text" style="margin-top: 20px;">
-                Sepanjang pengetahuan kami, orang tersebut di atas selama bertempat tinggal di Kelurahan Kauman, Kecamatan Nganjuk, Kabupaten Nganjuk berkelakuan baik dan tidak pernah tersangkut perkara pidana.
+                Dengan ini menerangkan bahwa benar orang tua tersebut di atas memiliki penghasilan total sebesar Rp {{ number_format(($PenghasilanOrtu->penghasilan_ayah + $PenghasilanOrtu->penghasilan_ibu), 0, ',', '.') }},- ({{ ucfirst(strtolower($PenghasilanOrtu->terbilang)) }} rupiah) per bulan.
             </p>
             <p class="justify-text">
-                Surat keterangan ini dibuat untuk keperluan {{ $skck->pekerjaan }} dan berlaku sejak tanggal diterbitkan sampai dengan {{ \Carbon\Carbon::now()->addMonths(3)->format('d-m-Y') }} (tiga bulan sejak diterbitkan).
+                Surat keterangan ini dibuat untuk keperluan {{ $PenghasilanOrtu->keperluan }} dan berlaku selama 3 (tiga) bulan sejak tanggal diterbitkan.
             </p>
         </div>
 
@@ -258,9 +258,9 @@
         <!-- Actions for preview mode -->
         @if($mode === 'preview')
         <div class="footer-actions no-print">
-            <a href="{{ route('skck', $skck->no_pengajuan) }}" class="btn btn-secondary">Kembali</a>
-            @if($skck->status == 'Selesai')
-                <a href="{{ route('skck.cetak', $skck->no_pengajuan) }}" class="btn btn-primary ml-2">
+            <a href="{{ route('penghasilan', $PenghasilanOrtu->no_pengajuan) }}" class="btn btn-secondary">Kembali</a>
+            @if($PenghasilanOrtu->status == 'Selesai')
+                <a href="{{ route('penghasilan.cetak', $PenghasilanOrtu->no_pengajuan) }}" class="btn btn-primary ml-2">
                     <i class="fas fa-file-pdf"></i> Cetak/Unduh PDF
                 </a>
                 <button onclick="window.print()" class="btn btn-info ml-2">

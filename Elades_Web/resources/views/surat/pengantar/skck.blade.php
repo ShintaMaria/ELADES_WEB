@@ -8,7 +8,7 @@
 
         <!-- Page Heading -->
         <h1 style="margin-top: 0px;">Layanan Surat Pengantar SKCK</h1>
-        <ol class="breadcrumb mb-4">
+        <ol class="breapdcrumb mb-4">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item active">Pengantar SKCK</li>
         </ol>
@@ -182,10 +182,6 @@
                 <div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                 </div>
-                {{-- <div>
-                    <button type="button" class="btn btn-info" onclick="previewSurat({{ $s->no_pengajuan }})">Preview</button>
-                    <button type="button" class="btn btn-primary" onclick="cetakSurat({{ $s->no_pengajuan }})">Cetak</button>
-                </div> --}}
                 <div>
                     <a href="{{ route('skck.preview', $s->no_pengajuan) }}" target="_blank" class="btn btn-info">Preview</a>
                     <a href="{{ route('skck.cetak', $s->no_pengajuan) }}" target="_blank" class="btn btn-primary">Cetak</a>

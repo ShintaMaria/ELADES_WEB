@@ -3,117 +3,43 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\QueryException;
+use App\Models\DetailSKCK;
+use App\Models\Keramaian;
 use Illuminate\Support\Facades\DB;
+use App\Models\Kehilangan;
+use App\Models\PenghasilanOrtu;
+use App\Models\Sktm;
+use App\Models\IzinKerja;
+use App\Models\pejabat;
 use Barryvdh\DomPDF\Facade\Pdf;
 class SuratController extends Controller
 {
-    public function preview(Request $request)
+    public function preview($jenis, $id)
     {
-        $no_pengajuan = $request->input('no_pengajuan');
-        $kode_surat = $request->input('kode_surat');
-        $ttd = $request->input('ttd', 'kepaladesa');
-
-        // Get surat data
-        $data = DB::table($kode_surat)
-            ->where('no_pengajuan', $no_pengajuan)
-            ->first();
-
-        if (!$data) {
-            $data = (object)[
-                'no_pengajuan' => 'Tidak ditemukan',
-                'nama' => 'Tidak ditemukan',
-                'jenis_kelamin' => 'Tidak ditemukan',
-                'tanggal_kematian' => 'Tidak ditemukan',
-                'alamat' => 'Tidak ditemukan',
-            ];
-
+        $data = $this->getModelInstance($jenis)::where('no_pengajuan', $id)->firstOrFail();
+        $ttd = pejabat::first(); // opsional, untuk kop surat
+        return view('preview', compact('data', 'jenis', 'desa'));
     }
-           // Get desa profile
-        $desa = DB::table('profil_desa')->first();
-        if (!$desa) {
-            $desa = (object)[
-                'kabupaten' => 'Kabupaten tidak ditemukan',
-                'kecamatan' => 'Kecamatan tidak ditemukan',
-                'nama_desa' => 'Desa tidak ditemukan',
-                'alamat' => 'Alamat tidak ditemukan'
-            ];
-        }
-
-        // Get pejabat data
-        $pejabat = DB::table('pejabat')
-            ->where('jabatan', $ttd)
-            ->first();
-        if (!$pejabat) {
-            $pejabat = (object)[
-                'nama' => 'Nama tidak ditemukan',
-                'nip' => 'NIP tidak tersedia'
-            ];
-        }
-
-        return view('surat.preview', [
-            'kode_surat' => $kode_surat,
-            'data' => $data,
-            'desa' => $desa,
-            'pejabat' => $pejabat,
-            'ttd' => $ttd
-        ]);
-    }
-
-    public function cetak(Request $request)
+    private function getModelInstance($jenis)
     {
-        $no_pengajuan = $request->input('no_pengajuan');
-        $kode_surat = $request->input('kode_surat');
-        $ttd = $request->input('ttd', 'kepaladesa');
-
-        // Get surat data
-        $data = DB::table($kode_surat)
-            ->where('no_pengajuan', $no_pengajuan)
-            ->first();
-
-        if (!$data) {
-            $data = (object)[
-                'no_pengajuan' => 'Tidak ditemukan',
-                'nama' => 'Tidak ditemukan',
-                'jenis_kelamin' => 'Tidak ditemukan',
-                'tanggal_kematian' => 'Tidak ditemukan',
-                'alamat' => 'Tidak ditemukan',
-            ];
-        }
-
-        // Get desa profile
-        $desa = DB::table('profil_desa')->first();
-        if (!$desa) {
-            $desa = (object)[
-                'kabupaten' => 'Kabupaten tidak ditemukan',
-                'kecamatan' => 'Kecamatan tidak ditemukan',
-                'nama_desa' => 'Desa tidak ditemukan',
-                'alamat' => 'Alamat tidak ditemukan'
-            ];
-        }
-
-        // Get pejabat data
-        $pejabat = DB::table('pejabat')
-            ->where('jabatan', $ttd)
-            ->first();
-        if (!$pejabat) {
-            $pejabat = (object)[
-                'nama' => 'Nama tidak ditemukan',
-                'nip' => 'NIP tidak tersedia'
-            ];
-        }
-
-        $pdf = Pdf::loadView('surat.cetak', [
-            'kode_surat' => $kode_surat,
-            'data' => $data,
-            'desa' => $desa,
-            'pejabat' => $pejabat,
-            'ttd' => $ttd
-        ]);
-
-        return $pdf->stream("surat-{$kode_surat}-{$no_pengajuan}.pdf");
+        return match ($jenis) {
+            'skck' => DetailSKCK::class,
+            'kehilangan' => Kehilangan::class,
+            'penghasilan' => PenghasilanOrtu::class,
+            'sktm' => Sktm::class,
+            'izinkerja' => IzinKerja::class,
+            'keramaian' => Keramaian::class,
+            default => abort(404, 'Jenis surat tidak dikenali.')
+        };
     }
+    public function cetak($jenis, $id)
+    {
+        $data = $this->getModelInstance($jenis)::where('no_pengajuan', $id)->firstOrFail();
+        $ttd = pejabat::first();
+        $pdf = Pdf::loadView('preview', compact('data', 'jenis', 'desa'));
+       return $pdf->download('surat-' . $jenis . '-' . $id . '.pdf');
 
+    }
     // Helper function for Indonesian date format
     public static function tanggalIndo($tanggal)
     {

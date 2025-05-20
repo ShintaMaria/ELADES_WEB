@@ -4,7 +4,9 @@ namespace App\Http\Controllers\surat;
 
 use Illuminate\Http\Request;
 use App\Models\PenghasilanOrtu;
-use App\Models\PengajuanSurat;
+use Illuminate\Support\Facades\Log;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\pejabat;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
@@ -68,35 +70,59 @@ class PenghasilanController extends Controller
      public function preview($id)
     {
         $PenghasilanOrtu = PenghasilanOrtu::findOrFail($id);
+        $pejabat = pejabat::first();
+        $ttdPath = $pejabat->ttd_image ? 'uploads/ttd/'.$pejabat->ttd_image : null;
 
-        // Data tambahan yang mungkin diperlukan untuk format surat
-        $data = [
-            'skck' => $PenghasilanOrtu,
-            'tanggal_surat' => now()->format('d F Y'),
-            'nomor_surat' => 'PenghasilanOrtu Barang-' . str_pad($PenghasilanOrtu->no_pengajuan, 4, '0', STR_PAD_LEFT) . '/' . now()->format('Y')
-        ];
-
-        return view('surat.preview', $data);
+        return view('templatesurat.penghasilan', [
+            'mode' => 'preview',
+            'PenghasilanOrtu' => $PenghasilanOrtu,
+            'pejabat' => $pejabat,
+            'ttdPath' => $ttdPath,
+            'logoPath' => 'uploads/ttd/NganjukLogo.png'
+        ]);
     }
 
     public function cetak($id)
     {
         $PenghasilanOrtu = PenghasilanOrtu::findOrFail($id);
+        $pejabat = pejabat::first();
 
-        // Data tambahan yang mungkin diperlukan untuk format surat
-        $data = [
-            'skck' => $PenghasilanOrtu,
-            'tanggal_surat' => now()->format('d F Y'),
-            'nomor_surat' => 'PenghasilanOrtu Barang-' . str_pad($PenghasilanOrtu->no_pengajuan, 4, '0', STR_PAD_LEFT) . '/' . now()->format('Y')
-        ];
+        // Path untuk tanda tangan (pastikan menggunakan ttd.png)
+        $ttdPath = public_path('uploads/ttd/ttd.png');
+        $logoPath = public_path('uploads/ttd/NganjukLogo.png');
 
-        // Generate PDF
-        // $pdf = PDF::loadView('surat.pengantar.cetak-skck', $data);
+        // Verifikasi file tanda tangan
+        if (!file_exists($ttdPath)) {
+            Log::error("File tanda tangan tidak ditemukan di: ".$ttdPath);
+            $ttdPath = null;
+        }
 
-        // Set paper size (A4)
-        // $pdf->setPaper('a4', 'portrait');
+        // Verifikasi file logo
+        if (!file_exists($logoPath)) {
+            Log::error("File logo tidak ditemukan di: ".$logoPath);
+            $logoPath = null;
+        }
 
-        // // Return PDF sebagai download dengan nama file
-        // return $pdf->stream('Surat_Pengantar_SKCK_'.$skck->nama.'.pdf');
+        $pdf = Pdf::loadView('templatesurat.penghasilan', [
+            'mode' => 'cetak',
+            'PenghasilanOrtu' => $PenghasilanOrtu,
+            'pejabat' => $pejabat,
+            'ttdPath' => $ttdPath,
+            'logoPath' => $logoPath
+        ]);
+
+        // Konfigurasi DomPDF yang lebih lengkap
+        $pdf->setOptions([
+            'isRemoteEnabled' => true,
+            'isHtml5ParserEnabled' => true,
+            'isPhpEnabled' => true,
+            'defaultFont' => 'times',
+            'chroot' => public_path(),
+            'enable_remote' => true,
+            'dpi' => 96,
+            'isFontSubsettingEnabled' => true
+        ]);
+
+        return $pdf->download('SPO-'.$PenghasilanOrtu->nama.'-'.date('Ymd').'.pdf');
     }
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $mode === 'cetak' ? 'Cetak SKCK' : 'Preview SKCK' }}</title>
+    <title>{{ $mode === 'cetak' ? 'Cetak Surat Keterangan Penghasilan' : 'Preview Surat Keterangan Penghasilan' }}</title>
     <style>
         body {
             font-family: "Times New Roman", Times, serif;
@@ -165,8 +165,8 @@
 
         <!-- Document title -->
         <div class="title">
-            <p>SURAT PENGANTAR KETERANGAN CATATAN KEPOLISIAN (SKCK)</p>
-            <p>Nomor: {{ $skck->no_pengajuan }}/SKCK/{{ date('Y') }}</p>
+            <p>SURAT KETERANGAN TIDAK MAMPU</p>
+            <p>Nomor: {{ $sktm->no_pengajuan }}/SKP/{{ date('Y') }}</p>
         </div>
 
         <!-- Content -->
@@ -175,57 +175,86 @@
 
             <table class="data-table">
                 <tr>
-                    <td width="30%">Nama</td>
-                    <td width="5%">:</td>
-                    <td>{{ ucfirst(strtolower($skck->nama)) }}</td>
+                    <td colspan="3"><strong>IDENTITAS AYAH:</strong></td>
                 </tr>
                 <tr>
-                    <td>NIK</td>
-                    <td>:</td>
-                    <td>{{ $skck->nik }}</td>
+                    <td width="30%">Nama Ayah</td>
+                    <td width="5%">:</td>
+                    <td>{{ ucfirst(strtolower($sktm->nama_bapak)) }}</td>
                 </tr>
                 <tr>
                     <td>Tempat/Tanggal Lahir</td>
                     <td>:</td>
-                    <td>{{ ucfirst(strtolower($skck->tempat_lahir)) }}, {{ \Carbon\Carbon::parse($skck->tanggal_lahir)->format('d-m-Y') }}</td>
-                </tr>
-                <tr>
-                    <td>Kebangsaan</td>
-                    <td>:</td>
-                    <td>{{ $skck->kebangsaan }}</td>
-                </tr>
-                <tr>
-                    <td>Agama</td>
-                    <td>:</td>
-                    <td>{{ ucfirst(strtolower($skck->agama)) }}</td>
-                </tr>
-                <tr>
-                    <td>Jenis Kelamin</td>
-                    <td>:</td>
-                    <td>{{ ucfirst(strtolower($skck->jenis_kelamin)) }}</td>
-                </tr>
-                <tr>
-                    <td>Status Perkawinan</td>
-                    <td>:</td>
-                    <td>{{ ucfirst(strtolower($skck->status_perkawinan)) }}</td>
+                   <td>{{ $sktm->tempat_tanggal_lahir_bapak }}</td>
                 </tr>
                 <tr>
                     <td>Pekerjaan</td>
                     <td>:</td>
-                    <td>{{ $skck->pekerjaan }}</td>
+                    <td>{{ $sktm->pekerjaan_bapak }}</td>
                 </tr>
                 <tr>
-                    <td>Alamat</td>
+                    <td>Alamat Ayah</td>
                     <td>:</td>
-                    <td>{{ ucfirst(strtolower($skck->alamat)) }}</td>
+                   <td>{{ $sktm->alamat_bapak }}</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><strong>IDENTITAS IBU:</strong></td>
+                </tr>
+                <tr>
+                    <td>Nama Ibu</td>
+                    <td>:</td>
+                    <td>{{ ucfirst(strtolower($sktm->nama_ibu)) }}</td>
+                </tr>
+                <tr>
+                    <td>Tempat/Tanggal Lahir Ibu</td>
+                    <td>:</td>
+                    <td>{{ $sktm->tempat_tanggal_lahir_ibu }}</td>
+                </tr>
+                <tr>
+                    <td>Pekerjaan</td>
+                    <td>:</td>
+                    <td>{{ $sktm->pekerjaan_ibu }}</td>
+                </tr>
+                <tr>
+                    <td>Alamat Ibu</td>
+                    <td>:</td>
+                    <td>{{ ucfirst(strtolower($sktm->alamat_ibu)) }}</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><strong>IDENTITAS ANAK:</strong></td>
+                </tr>
+                <tr>
+                    <td>Nama Anak</td>
+                    <td>:</td>
+                    <td>{{ ucfirst(strtolower($sktm->nama)) }}</td>
+                </tr>
+                <tr>
+                    <td>NIK/NIS</td>
+                    <td>:</td>
+                    <td>{{ $sktm->nik }}</td>
+                </tr>
+                <tr>
+                    <td>Tempat/Tanggal Lahir</td>
+                    <td>:</td>
+                     <td>{{ $sktm->tempat_tanggal_lahir_anak }}</td>
+                </tr>
+                <tr>
+                    <td>Jenis Kelamin</td>
+                    <td>:</td>
+                    <td>{{ $sktm->jenis_kelamin_anak }}</td>
+                </tr>
+                 <tr>
+                    <td>Keperluan</td>
+                    <td>:</td>
+                    <td>{{ $sktm->keperluan }}</td>
                 </tr>
             </table>
 
             <p class="justify-text" style="margin-top: 20px;">
-                Sepanjang pengetahuan kami, orang tersebut di atas selama bertempat tinggal di Kelurahan Kauman, Kecamatan Nganjuk, Kabupaten Nganjuk berkelakuan baik dan tidak pernah tersangkut perkara pidana.
+                Berdasarkan data dan hasil pengamatan, yang bersangkutan benar-benar tergolong keluarga tidak mampu secara ekonomi.
             </p>
             <p class="justify-text">
-                Surat keterangan ini dibuat untuk keperluan {{ $skck->pekerjaan }} dan berlaku sejak tanggal diterbitkan sampai dengan {{ \Carbon\Carbon::now()->addMonths(3)->format('d-m-Y') }} (tiga bulan sejak diterbitkan).
+                Surat keterangan ini dibuat untuk keperluan {{ $sktm->keperluan }} dan berlaku selama 3 bulan sejak tanggal diterbitkan.
             </p>
         </div>
 
@@ -258,9 +287,9 @@
         <!-- Actions for preview mode -->
         @if($mode === 'preview')
         <div class="footer-actions no-print">
-            <a href="{{ route('skck', $skck->no_pengajuan) }}" class="btn btn-secondary">Kembali</a>
-            @if($skck->status == 'Selesai')
-                <a href="{{ route('skck.cetak', $skck->no_pengajuan) }}" class="btn btn-primary ml-2">
+            <a href="{{ route('sktm', $sktm->no_pengajuan) }}" class="btn btn-secondary">Kembali</a>
+            @if($sktm->status == 'Selesai')
+                <a href="{{ route('sktm.cetak', $sktm->no_pengajuan) }}" class="btn btn-primary ml-2">
                     <i class="fas fa-file-pdf"></i> Cetak/Unduh PDF
                 </a>
                 <button onclick="window.print()" class="btn btn-info ml-2">

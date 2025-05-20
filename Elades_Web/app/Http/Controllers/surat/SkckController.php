@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DetailSKCK;
 use App\Models\pejabat;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class SkckController extends Controller
@@ -83,20 +84,20 @@ class SkckController extends Controller
     {
         $skck = DetailSKCK::findOrFail($id);
         $pejabat = pejabat::first();
-        
+
         // Path untuk tanda tangan (pastikan menggunakan ttd.png)
         $ttdPath = public_path('uploads/ttd/ttd.png');
         $logoPath = public_path('uploads/ttd/NganjukLogo.png');
 
         // Verifikasi file tanda tangan
         if (!file_exists($ttdPath)) {
-            \Log::error("File tanda tangan tidak ditemukan di: ".$ttdPath);
+            Log::error("File tanda tangan tidak ditemukan di: ".$ttdPath);
             $ttdPath = null;
         }
 
         // Verifikasi file logo
         if (!file_exists($logoPath)) {
-            \Log::error("File logo tidak ditemukan di: ".$logoPath);
+            Log::error("File logo tidak ditemukan di: ".$logoPath);
             $logoPath = null;
         }
 
