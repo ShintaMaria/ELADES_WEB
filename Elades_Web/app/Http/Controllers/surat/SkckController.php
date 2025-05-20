@@ -8,7 +8,7 @@ use App\Models\DetailSKCK;
 use App\Models\pejabat;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
-// use PDF;
+
 class SkckController extends Controller
 {
     public function index()
@@ -18,84 +18,108 @@ class SkckController extends Controller
     }
 
     public function selesai(Request $request, $id)
-{
-    DB::beginTransaction();
-    try {
-        $skck = DetailSKCK::findOrFail($id);
-        $skck->update(['status' => 'Selesai']); // Ini yang akan memicu trigger
+    {
+        DB::beginTransaction();
+        try {
+            $skck = DetailSKCK::findOrFail($id);
+            $skck->update(['status' => 'Selesai']);
 
-        DB::commit();
+            DB::commit();
 
-        return redirect()->route('skck')
-            ->with('success', 'Status berhasil diupdate');
+            return redirect()->route('skck')
+                ->with('success', 'Status berhasil diupdate');
 
-    } catch (\Exception $e) {
-        DB::rollBack();
-        return redirect()->back()
-            ->with('error', 'Gagal: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()
+                ->with('error', 'Gagal: ' . $e->getMessage());
+        }
     }
-}
 
     public function tolak(Request $request, $id)
     {
-   DB::beginTransaction();
+        DB::beginTransaction();
 
-    try {
-        // Validasi alasan harus diisi
-        $request->validate([
-            'alasan' => 'required|string|max:255'
-        ]);
+        try {
+            $request->validate([
+                'alasan' => 'required|string|max:255'
+            ]);
 
-        // Ambil data SKCK berdasarkan ID
-        $skck = DetailSKCK::findOrFail($id);
+            $skck = DetailSKCK::findOrFail($id);
 
-        // Simpan alasan ke tabel skck (trigger akan handle pengajuan_surat)
-        $skck->update([
-            'status' => 'Tolak',
-            'alasan' => $request->input('alasan')
-        ]);
+            $skck->update([
+                'status' => 'Tolak',
+                'alasan' => $request->input('alasan')
+            ]);
 
-        DB::commit();
+            DB::commit();
 
-        return redirect()->route('skck')
-            ->with('success', 'Pengajuan SKCK berhasil ditolak.');
+            return redirect()->route('skck')
+                ->with('success', 'Pengajuan SKCK berhasil ditolak.');
 
-    } catch (\Exception $e) {
-        DB::rollBack();
-        return redirect()->back()
-            ->with('error', 'Gagal menolak SKCK: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()
+                ->with('error', 'Gagal menolak SKCK: ' . $e->getMessage());
+        }
     }
+
+    public function preview($id)
+    {
+        $skck = DetailSKCK::findOrFail($id);
+        $pejabat = pejabat::first();
+        $ttdPath = $pejabat->ttd_image ? 'uploads/ttd/'.$pejabat->ttd_image : null;
+
+        return view('templatesurat.Skck', [
+            'mode' => 'preview',
+            'skck' => $skck,
+            'pejabat' => $pejabat,
+            'ttdPath' => $ttdPath,
+            'logoPath' => 'uploads/ttd/NganjukLogo.png'
+        ]);
+    }
+
+    public function cetak($id)
+    {
+        $skck = DetailSKCK::findOrFail($id);
+        $pejabat = pejabat::first();
+        
+        // Path untuk tanda tangan (pastikan menggunakan ttd.png)
+        $ttdPath = public_path('uploads/ttd/ttd.png');
+        $logoPath = public_path('uploads/ttd/NganjukLogo.png');
+
+        // Verifikasi file tanda tangan
+        if (!file_exists($ttdPath)) {
+            \Log::error("File tanda tangan tidak ditemukan di: ".$ttdPath);
+            $ttdPath = null;
         }
 
-public function preview($id)
-{
-    $skck = DetailSKCK::findOrFail($id);
-    $pejabat = pejabat::first();
+        // Verifikasi file logo
+        if (!file_exists($logoPath)) {
+            \Log::error("File logo tidak ditemukan di: ".$logoPath);
+            $logoPath = null;
+        }
 
-    // Ambil path TTD dari pengajuan (sesuaikan dengan struktur database Anda)
-    $ttdPath = $pejabat->ttd_image ? 'uploads/ttd/'.$pejabat->ttd_image : null;
+        $pdf = Pdf::loadView('templatesurat.Skck', [
+            'mode' => 'cetak',
+            'skck' => $skck,
+            'pejabat' => $pejabat,
+            'ttdPath' => $ttdPath,
+            'logoPath' => $logoPath
+        ]);
 
-    return view('templatesurat.Skck', [
-        'mode' => 'preview',
-        'skck' => $skck,
-        'pejabat' => $pejabat,
-        'ttdPath' => $ttdPath
-    ]);
-}
+        // Konfigurasi DomPDF yang lebih lengkap
+        $pdf->setOptions([
+            'isRemoteEnabled' => true,
+            'isHtml5ParserEnabled' => true,
+            'isPhpEnabled' => true,
+            'defaultFont' => 'times',
+            'chroot' => public_path(),
+            'enable_remote' => true,
+            'dpi' => 96,
+            'isFontSubsettingEnabled' => true
+        ]);
 
-public function cetak($id)
-{
-    $skck = DetailSKCK::findOrFail($id);
-    $pejabat = pejabat::first();
-    $ttdPath = $pejabat->ttd_image ? 'uploads/ttd/'.$pejabat->ttd_image : null;
-
-    $pdf = Pdf::loadView('templatesurat.Skck', [
-        'mode' => 'cetak',
-        'skck' => $skck,
-        'pejabat' => $pejabat,
-        'ttdPath' => $ttdPath
-    ]);
-
-    return $pdf->download('SKCK-'.$skck->nama.'-'.date('Ymd').'.pdf');
-}
+        return $pdf->download('SKCK-'.$skck->nama.'-'.date('Ymd').'.pdf');
+    }
 }

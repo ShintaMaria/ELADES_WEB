@@ -4,159 +4,218 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $mode === 'cetak' ? 'Cetak SKCK' : 'Preview SKCK' }}</title>
-
-    @if($mode === 'cetak')
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Times New Roman", Times, serif;
             margin: 0;
-            padding: 20px;
-        }
-        @page {
-            size: A4;
-            margin: 0;
-        }
-    </style>
-    @else
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .surat-container {
-            background-color: white;
-            padding: 30px;
-            border: 1px solid #ddd;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            max-width: 800px;
-            margin: 0 auto;
-        }
-    </style>
-    @endif
-
-    <style>
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .header img {
-            height: 80px;
-            float: left;
-        }
-        .header-text {
-            margin: 0 auto;
-            width: 70%;
-        }
-        .header-text p {
-            margin: 0;
+            padding: 0;
             line-height: 1.5;
         }
+        
+        .surat-container {
+            max-width: 800px;
+            margin: 0 auto;
+            @if($mode === 'preview')
+                background-color: white;
+                padding: 30px;
+                border: 1px solid #ddd;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            @endif
+        }
+        
+        /* Kop Surat Table Layout */
+        .kop-surat {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #000;
+        }
+        
+        .kop-surat td {
+            vertical-align: middle;
+            padding: 0;
+        }
+        
+        .logo-cell {
+            width: 80px;
+            padding-right: 15px;
+        }
+        
+        .logo-cell img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .text-cell {
+            text-align: center;
+            padding: 5px 0;
+        }
+        
+        .text-cell p {
+            margin: 0;
+            padding: 0;
+            line-height: 1.3;
+        }
+        
+        .text-cell p:first-child {
+            font-weight: bold;
+            font-size: 15px;
+            margin-bottom: 3px;
+        }
+        
+        .text-cell p:last-child {
+            font-size: 13px;
+            margin-top: 3px;
+        }
+        
         .title {
             text-align: center;
             margin: 20px 0;
             font-weight: bold;
             text-decoration: underline;
         }
+        
         .content {
             margin-bottom: 20px;
         }
-        table {
+        
+        .data-table {
             width: 100%;
             border-collapse: collapse;
+            margin: 10px 0;
         }
-        table td {
+        
+        .data-table td {
             padding: 5px;
             vertical-align: top;
         }
+        
         .signature {
             margin-top: 50px;
             text-align: right;
         }
+        
         .signature-name {
-            margin-top: 20px;
+            margin-top: 10px;
             text-decoration: underline;
             font-weight: bold;
         }
+        
         .ttd-image {
-            height: 100px;
+            height: 80px;
             margin-bottom: 10px;
         }
+        
         .footer-actions {
             margin-top: 30px;
             text-align: center;
         }
+        
         @media print {
+            body {
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .surat-container {
+                max-width: 100% !important;
+                margin: 0 auto !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+                border: none !important;
+            }
             .no-print {
                 display: none;
             }
+            .kop-surat {
+                page-break-inside: avoid;
+            }
         }
+
+        @if($mode === 'cetak')
+        <style>
+            @page {
+                size: A4;
+                margin: 20mm 15mm;
+                margin-top: 15mm;
+            }
+        </style>
+        @endif
     </style>
 </head>
 <body>
-    <div class="{{ $mode === 'preview' ? 'surat-container' : '' }}">
-        <div class="header">
-            <div class="header-text">
-                <img src="{{ asset('uploads/ttd/NganjukLogo.png') }}" alt="Logo Desa" width="100" style="position: absolute; left: 80px; top: 40px;"/>
-                <p>PEMERINTAH KABUPATEN NGANJUK</p>
-                <p>KECAMATAN NGANJUK</p>
-                <p>KELURAHAN KAUMAN</p>
-                <p>Jalan Gatot Subroto Nomor: 100 Telpon: 0358-321294 Kodepos 64411</p>
-            </div>
-        </div>
+    <div class="surat-container">
+        <!-- Kop Surat using Table for perfect alignment -->
+        <table class="kop-surat">
+            <tr>
+                <td class="logo-cell">
+                    <img src="{{ $mode === 'preview' ? asset('uploads/ttd/NganjukLogo.png') : 'file://' . str_replace('\\', '/', $logoPath) }}" 
+                         alt="Logo Kabupaten">
+                </td>
+                <td class="text-cell">
+                    <p>PEMERINTAH KABUPATEN NGANJUK</p>
+                    <p>KECAMATAN NGANJUK</p>
+                    <p>KELURAHAN KAUMAN</p>
+                    <p>Jalan Gatot Subroto Nomor: 100 Telpon: 0358-321294 Kodepos 64411</p>
+                </td>
+            </tr>
+        </table>
 
+        <!-- Document title -->
         <div class="title">
             <p>SURAT KETERANGAN CATATAN KEPOLISIAN (SKCK)</p>
             <p>Nomor: {{ $skck->no_pengajuan }}/SKCK/{{ date('Y') }}</p>
         </div>
 
+        <!-- Content -->
         <div class="content">
             <p>Yang bertanda tangan di bawah ini, menerangkan dengan sebenarnya bahwa:</p>
 
-            <table>
+            <table class="data-table">
                 <tr>
-                    <td width="30%"> Nama</td>
+                    <td width="30%">Nama</td>
                     <td width="5%">:</td>
-                    <td>{{ $skck->nama }}</td>
+                    <td>{{ ucfirst(strtolower($skck->nama)) }}</td>
                 </tr>
                 <tr>
-                    <td> NIK</td>
+                    <td>NIK</td>
                     <td>:</td>
                     <td>{{ $skck->nik }}</td>
                 </tr>
                 <tr>
-                    <td> Tempat/Tanggal Lahir</td>
+                    <td>Tempat/Tanggal Lahir</td>
                     <td>:</td>
-                    <td>{{ $skck->tempat_lahir }}, {{ \Carbon\Carbon::parse($skck->tanggal_lahir)->format('d-m-Y') }}</td>
+                    <td>{{ ucfirst(strtolower($skck->tempat_lahir)) }}, {{ \Carbon\Carbon::parse($skck->tanggal_lahir)->format('d-m-Y') }}</td>
                 </tr>
                 <tr>
-                    <td> Kebangsaan</td>
+                    <td>Kebangsaan</td>
                     <td>:</td>
                     <td>{{ $skck->kebangsaan }}</td>
                 </tr>
                 <tr>
-                    <td> Agama</td>
+                    <td>Agama</td>
                     <td>:</td>
-                    <td>{{ $skck->agama }}</td>
+                    <td>{{ ucfirst(strtolower($skck->agama)) }}</td>
                 </tr>
                 <tr>
-                    <td> Jenis Kelamin</td>
+                    <td>Jenis Kelamin</td>
                     <td>:</td>
-                    <td>{{ $skck->jenis_kelamin }}</td>
+                    <td>{{ ucfirst(strtolower($skck->jenis_kelamin)) }}</td>
                 </tr>
                 <tr>
-                    <td> Status Perkawinan</td>
+                    <td>Status Perkawinan</td>
                     <td>:</td>
-                    <td>{{ $skck->status_perkawinan }}</td>
+                    <td>{{ ucfirst(strtolower($skck->status_perkawinan)) }}</td>
                 </tr>
                 <tr>
-                    <td> Pekerjaan</td>
+                    <td>Pekerjaan</td>
                     <td>:</td>
                     <td>{{ $skck->pekerjaan }}</td>
                 </tr>
                 <tr>
-                    <td> Alamat</td>
+                    <td>Alamat</td>
                     <td>:</td>
-                    <td>{{ $skck->alamat }}</td>
+                    <td>{{ ucfirst(strtolower($skck->alamat)) }}</td>
                 </tr>
             </table>
 
@@ -168,14 +227,23 @@
             </p>
         </div>
 
+        <!-- Signature section -->
         <div class="signature">
             <p>Nganjuk, {{ \Carbon\Carbon::now()->format('d-m-Y') }}</p>
             <p>{{ $pejabat->jabatan }}</p>
 
-            <!-- TTD dari Upload -->
-            @if($ttdPath)
+            @if($ttdPath && file_exists($ttdPath))
                 <div>
-                    <img src="{{ asset($ttdPath) }}" alt="Tanda Tangan" class="ttd-image">
+                    @if($mode === 'preview')
+                        <img src="{{ asset('uploads/ttd/ttd.png') }}" alt="Tanda Tangan" class="ttd-image">
+                    @else
+                        <img src="file://{{ str_replace('\\', '/', $ttdPath) }}" alt="Tanda Tangan" class="ttd-image">
+                    @endif
+                </div>
+            @else
+                <div style="height: 80px; margin-bottom: 10px; border-bottom: 1px solid #000;">
+                    <!-- Placeholder jika tanda tangan tidak ditemukan -->
+                    <span style="color: #999;">[Tanda tangan tidak tersedia]</span>
                 </div>
             @endif
 
@@ -185,7 +253,7 @@
             </div>
         </div>
 
-
+        <!-- Actions for preview mode -->
         @if($mode === 'preview')
         <div class="footer-actions no-print">
             <a href="{{ route('skck', $skck->no_pengajuan) }}" class="btn btn-secondary">Kembali</a>
