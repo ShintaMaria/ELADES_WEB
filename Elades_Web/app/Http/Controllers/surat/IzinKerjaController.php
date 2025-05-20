@@ -43,7 +43,7 @@ class IzinKerjaController extends Controller
         try {
         // Validasi alasan harus diisi
         $request->validate([
-            'alasan' => 'required|string|max:255'
+            'alasan_tolak' => 'required|string|max:255'
         ]);
 
         // Ambil data IzinKerja berdasarkan ID
@@ -52,7 +52,7 @@ class IzinKerjaController extends Controller
         // Simpan alasan ke tabel kehilangan (trigger akan handle pengajuan_surat)
         $izinkerja->update([
             'status' => 'Tolak',
-            'alasan' => $request->input('alasan_tolak')
+            'alasan_tolak' => $request->input('alasan_tolak')
         ]);
 
         DB::commit();

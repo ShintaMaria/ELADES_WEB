@@ -165,68 +165,62 @@
 
         <!-- Document title -->
         <div class="title">
-            <p>SURAT PENGANTAR KETERANGAN CATATAN KEPOLISIAN (SKCK)</p>
-            <p>Nomor: {{ $skck->no_pengajuan }}/SKCK/{{ date('Y') }}</p>
+            <p>SURAT IZIN KERAMAIAN</p>
+            <p>Nomor: {{ $keramaian->no_pengajuan }}/SIK/{{ date('Y') }}</p>
         </div>
 
         <!-- Content -->
         <div class="content">
-            <p class="justify-text">Yang bertanda tangan di bawah ini, menerangkan dengan sebenarnya bahwa:</p>
+            <p class="justify-text">Yang bertanda tangan di bawah ini, menerangkan bahwa:</p>
 
             <table class="data-table">
                 <tr>
                     <td width="30%">Nama</td>
                     <td width="5%">:</td>
-                    <td>{{ ucfirst(strtolower($skck->nama)) }}</td>
+                    <td>{{ ucfirst(strtolower($keramaian->nama)) }}</td>
                 </tr>
                 <tr>
                     <td>NIK</td>
                     <td>:</td>
-                    <td>{{ $skck->nik }}</td>
-                </tr>
-                <tr>
-                    <td>Tempat/Tanggal Lahir</td>
-                    <td>:</td>
-                    <td>{{ ucfirst(strtolower($skck->tempat_lahir)) }}, {{ \Carbon\Carbon::parse($skck->tanggal_lahir)->format('d-m-Y') }}</td>
-                </tr>
-                <tr>
-                    <td>Kebangsaan</td>
-                    <td>:</td>
-                    <td>{{ $skck->kebangsaan }}</td>
-                </tr>
-                <tr>
-                    <td>Agama</td>
-                    <td>:</td>
-                    <td>{{ ucfirst(strtolower($skck->agama)) }}</td>
-                </tr>
-                <tr>
-                    <td>Jenis Kelamin</td>
-                    <td>:</td>
-                    <td>{{ ucfirst(strtolower($skck->jenis_kelamin)) }}</td>
-                </tr>
-                <tr>
-                    <td>Status Perkawinan</td>
-                    <td>:</td>
-                    <td>{{ ucfirst(strtolower($skck->status_perkawinan)) }}</td>
-                </tr>
-                <tr>
-                    <td>Pekerjaan</td>
-                    <td>:</td>
-                    <td>{{ $skck->pekerjaan }}</td>
+                    <td>{{ $keramaian->nik }}</td>
                 </tr>
                 <tr>
                     <td>Alamat</td>
                     <td>:</td>
-                    <td>{{ ucfirst(strtolower($skck->alamat)) }}</td>
+                    <td>{{ $keramaian->alamat }}</td>
+                </tr>
+            </table>
+
+               <p class="justify-text" style="margin-top: 20px;">
+                Dengan ini kami memberikan izin kepada yang bersangkutan untuk melakukan kegiatan pada:
+            </p>
+            <table class="data-table">
+                <tr>
+                    <td width="30%">Nama Kegiatan</td>
+                    <td width="5%">:</td>
+                    <td>{{ $keramaian->kegiatan }}</td>
+                </tr>
+                <tr>
+                    <td width="30%">Tanggal Kegiatan/td>
+                    <td width="5%">:</td>
+                    <td>{{ $keramaian->tanggal }}</td>
+                </tr>
+                 <tr>
+                    <td width="30%">Waktu Kegiatan/td>
+                    <td width="5%">:</td>
+                    <td>{{ $keramaian->waktu }} WIB</td>
+                </tr>
+                <tr>
+                    <td>Tempat Kegiatan</td>
+                    <td>:</td>
+                    <td>{{ $keramaian->tempat }}</td>
                 </tr>
             </table>
 
             <p class="justify-text" style="margin-top: 20px;">
-                Sepanjang pengetahuan kami, orang tersebut di atas selama bertempat tinggal di Kelurahan Kauman, Kecamatan Nganjuk, Kabupaten Nganjuk berkelakuan baik dan tidak pernah tersangkut perkara pidana.
+                Demikian surat izin ini dibuat dengan sebenarnya untuk dipergunakan sebagaimana mestinya. Terima kasih atas perhatian dan kerjasamanya.
             </p>
-            <p class="justify-text">
-                Surat keterangan ini dibuat untuk keperluan {{ $skck->pekerjaan }} dan berlaku sejak tanggal diterbitkan sampai dengan {{ \Carbon\Carbon::now()->addMonths(3)->format('d-m-Y') }} (tiga bulan sejak diterbitkan).
-            </p>
+
         </div>
 
         <!-- Signature section -->
@@ -258,9 +252,9 @@
         <!-- Actions for preview mode -->
         @if($mode === 'preview')
         <div class="footer-actions no-print">
-            <a href="{{ route('skck', $skck->no_pengajuan) }}" class="btn btn-secondary">Kembali</a>
-            @if($skck->status == 'Selesai')
-                <a href="{{ route('skck.cetak', $skck->no_pengajuan) }}" class="btn btn-primary ml-2">
+            <a href="{{ route('keramaian', $keramaian->no_pengajuan) }}" class="btn btn-secondary">Kembali</a>
+            @if($keramaian->status == 'Selesai')
+                <a href="{{ route('keramaian.cetak', $keramaian->no_pengajuan) }}" class="btn btn-primary ml-2">
                     <i class="fas fa-file-pdf"></i> Cetak/Unduh PDF
                 </a>
                 <button onclick="window.print()" class="btn btn-info ml-2">
