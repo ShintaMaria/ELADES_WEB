@@ -21,12 +21,12 @@ class SktmController extends Controller
 {
     DB::beginTransaction();
     try {
-        $Sktm = Sktm::findOrFail($id);
-        $Sktm->update(['status' => 'Selesai']); // Ini yang akan memicu trigger
+        $sktm = Sktm::findOrFail($id);
+        $sktm->update(['status' => 'Selesai']); // Ini yang akan memicu trigger
 
         DB::commit();
 
-        return redirect()->route('Sktm')
+        return redirect()->route('sktm')
             ->with('success', 'Status berhasil diupdate');
 
     } catch (\Exception $e) {

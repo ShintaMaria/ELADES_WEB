@@ -230,8 +230,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <label for="alasan">Alasan:</label>
-                    <textarea name="alasan" class="form-control" required placeholder="Masukkan alasan penolakan"></textarea>
+                    <label for="alasan_tolak">Alasan:</label>
+                    <textarea name="alasan_tolak" class="form-control" required placeholder="Masukkan alasan penolakan"></textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>

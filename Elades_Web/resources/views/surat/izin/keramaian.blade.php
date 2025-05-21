@@ -44,7 +44,7 @@
                                 <td>{{ $k->no_pengajuan }}</td>
                                 <td>{{ $k->kode_surat }}</td>
                                 <td>{{ $k->username }}</td>
-                                <td>{{ $k->keperluan }}</td>
+                                <td>{{ $k->kegiatan }}</td>
                                  <td> <span class="badge badge-warning">{{ $k->status }}</span> </td>
                                 <td>
                                     <!-- Tombol yang membuka modal detail -->
