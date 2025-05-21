@@ -122,6 +122,6 @@ class IzinKeramaianController extends Controller
             'isFontSubsettingEnabled' => true
         ]);
 
-        return $pdf->download('SKCK-'.$keramaian->nama.'-'.date('Ymd').'.pdf');
+        return $pdf->download(' Keramaian-'.$keramaian->nama.'-'.date('Ymd').'.pdf');
     }
 }

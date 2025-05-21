@@ -201,12 +201,12 @@
                     <td>{{ $keramaian->kegiatan }}</td>
                 </tr>
                 <tr>
-                    <td width="30%">Tanggal Kegiatan/td>
+                    <td width="30%">Tanggal Kegiatan</td>
                     <td width="5%">:</td>
                     <td>{{ $keramaian->tanggal }}</td>
                 </tr>
                  <tr>
-                    <td width="30%">Waktu Kegiatan/td>
+                    <td width="30%">Waktu Kegiatan</td>
                     <td width="5%">:</td>
                     <td>{{ $keramaian->waktu }} WIB</td>
                 </tr>
