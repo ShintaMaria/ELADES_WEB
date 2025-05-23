@@ -18,7 +18,7 @@
                 @endif
             </a>
             <div class="dropdown-menu dropdown-menu-right p-2" style="width: 350px;">
-                <span class="dropdown-header font-weight-bold">Notifikasi Surat Masuk</span>
+                <span class="dropdown-header font-weight-bold">Notifikasi Surat dan Pengaduan Masuk</span>
                 <div class="dropdown-divider"></div>
 
                 <div style="max-height: 350px; overflow-y: auto;">

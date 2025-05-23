@@ -13,7 +13,7 @@
 
         {{-- notifikasi gagal --}}
         @if($errors->any())
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="alert alert-danger" role="alert">
                 @foreach ($errors->all() as $error)
                     <div>{{ trim($error) }}</div>
                 @endforeach
@@ -21,9 +21,8 @@
         @endif
 
         @if(session('profile_gagal'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="alert alert-danger" role="alert">
                 {{ session('profile_gagal') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
 
@@ -90,16 +89,47 @@
 
             {{-- PENGATURAN AKUN --}}
             <div class="col-xl-8">
+                {{-- CHART PENGGANTIAN EMAIL --}}
                 <div class="card shadow-sm mb-4">
-                    <div class="card-header fw-bold">Pengaturan Akun</div>
+                    <div class="card-header fw-bold">Ganti Email</div>
                     <div class="card-body">
+                        <form method="POST" action="{{ route('profile.updateEmail') }}">
+                            @csrf
+                            @method('PUT')
+                            <div class="mb-3">
+                                <label class="form-label" for="current_email">Email Saat Ini</label>
+                                <input type="email" class="form-control" value="{{ $user->email }}" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="new_email">Email Baru</label>
+                                <input type="email" name="new_email" class="form-control @error('new_email') is-invalid @enderror" required>
+                                @error('new_email')
+                                    <div class="invalid-feedback">
+                                        {{ trim($message) }}
+                                    </div>
+                                @enderror
+                                <div class="form-text text-muted mt-1 small">Email harus menggunakan domain @gmail.com</div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="current_password">Konfirmasi Password</label>
+                                <input type="password" name="current_password" class="form-control @error('current_password') is-invalid @enderror" required>
+                                @error('current_password')
+                                    <div class="invalid-feedback">
+                                        {{ trim($message) }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <button class="btn btn-info text-white" type="submit">
+                                <i class="fas fa-envelope me-1"></i> Ganti Email
+                            </button>
+                        </form>
+                    </div>
+                </div>
 
-                        {{-- Email --}}
-                        <div class="mb-4">
-                            <label class="form-label" for="inputEmailAddress">Email</label>
-                            <input class="form-control" id="inputEmailAddress" type="email" value="{{ $user->email }}" readonly>
-                        </div>
-
+                {{-- CHART PENGGANTIAN PASSWORD --}}
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header fw-bold">Ganti Password</div>
+                    <div class="card-body">
                         {{-- Form Ganti Password --}}
                         <form method="POST" action="{{ route('profile.updatePassword') }}">
                             @csrf
@@ -136,12 +166,10 @@
                                 <i class="fas fa-key me-1"></i> Ganti Password
                             </button>
                         </form>
-
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 

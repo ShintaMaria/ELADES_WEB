@@ -7,7 +7,6 @@
         <form action="#" method="GET" class="form-inline">
             <label class="mr-2">Filter:</label>
             <select name="filter" class="form-control mr-2" onchange="this.form.submit()">
-                <option value="day" {{ ($currentFilter ?? 'month') == 'day' ? 'selected' : '' }}>Hari</option>
                 <option value="week" {{ ($currentFilter ?? 'month') == 'week' ? 'selected' : '' }}>Minggu</option>
                 <option value="month" {{ ($currentFilter ?? 'month') == 'month' ? 'selected' : '' }}>Bulan</option>
                 <option value="year" {{ ($currentFilter ?? 'month') == 'year' ? 'selected' : '' }}>Tahun</option>
@@ -124,7 +123,13 @@
                 maintainAspectRatio: false,
                 scales: {
                     x: { grid: { display: false } },
-                    y: { beginAtZero: true }
+                    y: { 
+                        beginAtZero: true,
+                        min: 0,
+                        ticks: {
+                            precision: 0
+                        }
+                    }
                 }
             }
         });
@@ -165,3 +170,4 @@
 <script src="{{ asset('dashboard/assets/js/sb-admin-2.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 @endsection
+

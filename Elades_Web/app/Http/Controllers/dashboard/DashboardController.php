@@ -11,7 +11,7 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        $filter = $request->get('filter', 'month');
+        $filter = $request->get('filter', 'week');
 
         // ambil data chart sekaligus data count yang sudah difilter
         $result = $this->getChartData($filter);
@@ -32,36 +32,17 @@ class DashboardController extends Controller
             'pengaduan' => []
         ];
         
-        $now = Carbon::now();
+        $now = Carbon::now()->setTimezone('Asia/Jakarta');
+        $today = $now->format('Y-m-d');
         
         switch ($filter) {
-            case 'day':
-                $labels = [];
-                for ($i = 0; $i < 24; $i++) {
-                    $hour = str_pad($i, 2, '0', STR_PAD_LEFT) . ':00';
-                    $labels[] = $hour;
-
-                    $data['surat_masuk'][] = DB::table('surat_masuk')
-                        ->whereDate('tangal', $now->format('Y-m-d'))
-                        ->whereTime('tangal', '>=', "$i:00:00")
-                        ->whereTime('tangal', '<', ($i + 1) . ':00:00')
-                        ->count();
-
-                    $data['pengaduan'][] = DB::table('pengaduan_masuk')
-                        ->whereDate('tanggal', $now->format('Y-m-d'))
-                        ->whereTime('tanggal', '>=', "$i:00:00")
-                        ->whereTime('tanggal', '<', ($i + 1) . ':00:00')
-                        ->count();
-                }
-                $data['labels'] = $labels;
-                break;
-
             case 'week':
                 $labels = [];
-                $startOfWeek = $now->copy()->startOfWeek();
+                $startDate = $now->copy()->subDays(6); // 7 hari terakhir termasuk hari ini
+                
                 for ($i = 0; $i < 7; $i++) {
-                    $date = $startOfWeek->copy()->addDays($i);
-                    $labels[] = $date->format('l');
+                    $date = $startDate->copy()->addDays($i);
+                    $labels[] = $this->getIndonesianDayName($date->format('l')) . ' ' . $date->format('d/m');
 
                     $data['surat_masuk'][] = DB::table('surat_masuk')
                         ->whereDate('tangal', $date->format('Y-m-d'))
@@ -76,8 +57,11 @@ class DashboardController extends Controller
 
             case 'month':
                 $labels = [];
+                $currentDay = $now->day;
                 $daysInMonth = $now->daysInMonth;
-                for ($i = 1; $i <= $daysInMonth; $i++) {
+                
+                // Pastikan menampilkan semua hari hingga hari ini
+                for ($i = 1; $i <= $currentDay; $i++) {
                     $date = $now->copy()->startOfMonth()->addDays($i - 1);
                     $labels[] = $date->format('d');
 
@@ -95,10 +79,11 @@ class DashboardController extends Controller
             case 'year':
                 $labels = [];
                 $startOfYear = $now->copy()->startOfYear();
-
-                for ($i = 0; $i < 12; $i++) {
-                    $month = $startOfYear->copy()->addMonths($i);
-                    $labels[] = $month->format('M');
+                $currentMonth = $now->month;
+                
+                for ($i = 1; $i <= $currentMonth; $i++) {
+                    $month = $startOfYear->copy()->addMonths($i - 1);
+                    $labels[] = $this->getIndonesianMonthName($month->format('M'));
 
                     $data['surat_masuk'][] = DB::table('surat_masuk')
                         ->whereYear('tangal', $month->year)
@@ -115,5 +100,40 @@ class DashboardController extends Controller
         }
 
         return $data;
+    }
+
+    private function getIndonesianDayName($englishDay)
+    {
+        $days = [
+            'Sunday' => 'Minggu',
+            'Monday' => 'Senin',
+            'Tuesday' => 'Selasa',
+            'Wednesday' => 'Rabu',
+            'Thursday' => 'Kamis',
+            'Friday' => 'Jumat',
+            'Saturday' => 'Sabtu'
+        ];
+        
+        return $days[$englishDay] ?? $englishDay;
+    }
+
+    private function getIndonesianMonthName($englishMonth)
+    {
+        $months = [
+            'Jan' => 'Januari',
+            'Feb' => 'Februari',
+            'Mar' => 'Maret',
+            'Apr' => 'April',
+            'May' => 'Mei',
+            'Jun' => 'Juni',
+            'Jul' => 'Juli',
+            'Aug' => 'Agustus',
+            'Sep' => 'September',
+            'Oct' => 'Oktober',
+            'Nov' => 'November',
+            'Dec' => 'Desember'
+        ];
+        
+        return $months[$englishMonth] ?? $englishMonth;
     }
 }

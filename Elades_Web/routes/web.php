@@ -76,7 +76,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/profile/photo', [ProfileController::class, 'updatePhoto'])->name('profile.updatePhoto');
     Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
     Route::delete('/profile/photo', [ProfileController::class, 'deletePhoto'])->name('profile.deletePhoto');
-
+    Route::put('/profile/email', [ProfileController::class, 'updateEmail'])->name('profile.updateEmail');
+    
     //Pengajuan Surat
     //PENGANTAR SKCK
     Route::get('/skck', [SkckController::class, 'index'])->name('skck');

@@ -8,14 +8,14 @@
 
         <!-- Page Heading -->
         <h1 style="margin-top: 0px;">Layanan Surat Pengantar SKCK</h1>
-        <ol class="breapdcrumb mb-4">
+        <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item active">Pengantar SKCK</li>
         </ol>
 
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
-           <!-- Header dengan judul dan search box -->
+            <!-- Header dengan judul dan search box -->
             <div class="card-header py-3 d-flex justify-content-between align-items-center">
                 <h6 class="m-0 font-weight-bold text-primary"></h6>
 
@@ -160,19 +160,55 @@
                         <h6 class="font-weight-bold">Dokumen Pendukung:</h6>
                         <div class="row">
                             @if(isset($s->file) && !empty($s->file))
-                            <div class="col-md-4 mb-3">
-                                <div class="card">
-                                    <div class="card-header">Dokumen SKCK</div>
-                                    <div class="card-body text-center">
-                                        <img src="{{ asset('uploads/pengajuan/'.$s->file) }}"
-                                             class="img-thumbnail" style="max-height: 150px;"
-                                             alt="Dokumen SKCK"
-                                             data-toggle="modal"
-                                             data-target="#imageModal{{ $s->no_pengajuan }}_file"
-                                             style="cursor: pointer;">
+                                @php
+                                    // Handle format penyimpanan file
+                                    $fileData = $s->file;
+                                    
+                                    // Jika format JSON array
+                                    if (is_string($fileData) && Str::startsWith($fileData, '[')) {
+                                        $files = json_decode($fileData, true);
+                                        $file = is_array($files) ? $files[0] : $fileData;
+                                    }
+                                    // Jika format JSON string
+                                    elseif (is_string($fileData) && Str::startsWith($fileData, '"')) {
+                                        $file = json_decode($fileData);
+                                    }
+                                    // Jika sudah string biasa
+                                    else {
+                                        $file = $fileData;
+                                    }
+                                    
+                                    // Bersihkan nama file
+                                    $file = trim($file, '[]"\'');
+                                    $publicPath = 'uploads/pengajuan/'.$file;
+                                    $fullPath = public_path($publicPath);
+                                @endphp
+                                
+                                @if(!empty($file) && file_exists($fullPath))
+                                <div class="col-md-4 mb-3">
+                                    <div class="card">
+                                        <div class="card-header">Dokumen SKCK</div>
+                                        <div class="card-body text-center">
+                                            <img src="{{ asset($publicPath) }}"
+                                                class="img-thumbnail" style="max-height: 150px;"
+                                                alt="Dokumen SKCK"
+                                                data-toggle="modal"
+                                                data-target="#imageModal{{ $s->no_pengajuan }}_file"
+                                                style="cursor: pointer;">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                                @else
+                                <div class="alert alert-warning">
+                                    @if(empty($file))
+                                        Nama file kosong
+                                    @else
+                                        File tidak ditemukan: {{ $file }}<br>
+                                        Path: {{ $fullPath }}<br>
+                                        URL Publik: {{ asset($publicPath) }}
+                                    @endif
+                                </div>
+                                @endif
                             @endif
                         </div>
                     </div>
@@ -193,25 +229,42 @@
 
 <!-- Modal Preview Gambar -->
 @if(isset($s->file) && !empty($s->file))
-<div class="modal fade" id="imageModal{{ $s->no_pengajuan }}_file" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Preview Dokumen SKCK</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-center">
-                <img src="{{ asset('uploads/pengajuan/'.$s->file) }}" class="img-fluid" alt="Dokumen SKCK">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+    @php
+        // Gunakan logika yang sama seperti di atas
+        $fileData = $s->file;
+        if (is_string($fileData) && Str::startsWith($fileData, '[')) {
+            $files = json_decode($fileData, true);
+            $file = is_array($files) ? $files[0] : $fileData;
+        }
+        elseif (is_string($fileData) && Str::startsWith($fileData, '"')) {
+            $file = json_decode($fileData);
+        }
+        else {
+            $file = $fileData;
+        }
+        $file = trim($file, '[]"\'');
+        $publicPath = 'uploads/pengajuan/'.$file;
+    @endphp
+    <div class="modal fade" id="imageModal{{ $s->no_pengajuan }}_file" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Preview Dokumen SKCK</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="{{ asset($publicPath) }}" class="img-fluid" alt="Dokumen SKCK">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 @endif
+
 {{-- Modal Selesai --}}
 <div class="modal fade" id="selesaiModal{{ $s->no_pengajuan }}" tabindex="-1" role="dialog" aria-labelledby="selesaiModalLabel{{ $s->no_pengajuan }}" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -236,6 +289,7 @@
         </form>
     </div>
 </div>
+
 <!-- Modal Tolak -->
 <div class="modal fade" id="tolakModal{{ $s->no_pengajuan }}" tabindex="-1" role="dialog" aria-labelledby="tolakModalLabel{{ $s->no_pengajuan }}" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -257,13 +311,13 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-danger">Ya, Tolak</button>
                 </div>
-
             </div>
         </form>
     </div>
 </div>
 @endforeach
 @endisset
+
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
@@ -272,11 +326,9 @@
 <!-- Bootstrap core JavaScript-->
 <script src="{{ asset('dashboard/assets/vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{ asset('dashboard/assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <!-- Core plugin JavaScript-->
 <script src="{{ asset('dashboard/assets/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
@@ -335,7 +387,6 @@
             confirmButtonText: 'Tutup'
         });
     @endif
-
 </script>
 
 @endsection

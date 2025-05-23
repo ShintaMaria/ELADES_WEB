@@ -140,19 +140,55 @@
                         <h6 class="font-weight-bold">Dokumen Pendukung:</h6>
                         <div class="row">
                             @if(isset($k->file) && !empty($k->file))
-                            <div class="col-md-4 mb-3">
-                                <div class="card">
-                                    <div class="card-header">Dokumen Kehilangan</div>
-                                    <div class="card-body text-center">
-                                        <img src="{{ asset('uploads/pengajuan/'.$k->file) }}"
-                                             class="img-thumbnail" style="max-height: 150px;"
-                                             alt="Dokumen Kehilangan"
-                                             data-toggle="modal"
-                                             data-target="#imageModal{{ $k->no_pengajuan }}_file"
-                                             style="cursor: pointer;">
+                                @php
+                                    // Handle format penyimpanan file
+                                    $fileData = $k->file;
+                                    
+                                    // Jika format JSON array
+                                    if (is_string($fileData) && Str::startsWith($fileData, '[')) {
+                                        $files = json_decode($fileData, true);
+                                        $file = is_array($files) ? $files[0] : $fileData;
+                                    }
+                                    // Jika format JSON string
+                                    elseif (is_string($fileData) && Str::startsWith($fileData, '"')) {
+                                        $file = json_decode($fileData);
+                                    }
+                                    // Jika sudah string biasa
+                                    else {
+                                        $file = $fileData;
+                                    }
+                                    
+                                    // Bersihkan nama file
+                                    $file = trim($file, '[]"\'');
+                                    $publicPath = 'uploads/pengajuan/'.$file;
+                                    $fullPath = public_path($publicPath);
+                                @endphp
+                                
+                                @if(!empty($file) && file_exists($fullPath))
+                                <div class="col-md-4 mb-3">
+                                    <div class="card">
+                                        <div class="card-header">Dokumen Kehilangan</div>
+                                        <div class="card-body text-center">
+                                            <img src="{{ asset($publicPath) }}"
+                                                class="img-thumbnail" style="max-height: 150px;"
+                                                alt="Dokumen Kehilangan"
+                                                data-toggle="modal"
+                                                data-target="#imageModal{{ $k->no_pengajuan }}_file"
+                                                style="cursor: pointer;">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                                @else
+                                <div class="alert alert-warning">
+                                    @if(empty($file))
+                                        Nama file kosong
+                                    @else
+                                        File tidak ditemukan: {{ $file }}<br>
+                                        Path: {{ $fullPath }}<br>
+                                        URL Publik: {{ asset($publicPath) }}
+                                    @endif
+                                </div>
+                                @endif
                             @endif
                         </div>
                     </div>
@@ -162,10 +198,6 @@
                 <div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                 </div>
-                {{-- <div>
-                    <button type="button" class="btn btn-info" onclick="previewSurat({{ $k->no_pengajuan }})">Preview</button>
-                    <button type="button" class="btn btn-primary" onclick="cetakSurat({{ $k->no_pengajuan }})">Cetak</button>
-                </div> --}}
                 <div>
                     <a href="{{ route('kehilangan.preview', $k->no_pengajuan) }}" target="_blank" class="btn btn-info">Preview</a>
                     <a href="{{ route('kehilangan.cetak', $k->no_pengajuan) }}" target="_blank" class="btn btn-primary">Cetak</a>
@@ -177,25 +209,42 @@
 
 <!-- Modal Preview Gambar -->
 @if(isset($k->file) && !empty($k->file))
-<div class="modal fade" id="imageModal{{ $k->no_pengajuan }}_file" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Preview Dokumen Kehilangan</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-center">
-                <img src="{{ asset('uploads/pengajuan/'.$k->file) }}" class="img-fluid" alt="Dokumen Kehilangan">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+    @php
+        // Gunakan logika yang sama seperti di atas
+        $fileData = $k->file;
+        if (is_string($fileData) && Str::startsWith($fileData, '[')) {
+            $files = json_decode($fileData, true);
+            $file = is_array($files) ? $files[0] : $fileData;
+        }
+        elseif (is_string($fileData) && Str::startsWith($fileData, '"')) {
+            $file = json_decode($fileData);
+        }
+        else {
+            $file = $fileData;
+        }
+        $file = trim($file, '[]"\'');
+        $publicPath = 'uploads/pengajuan/'.$file;
+    @endphp
+    <div class="modal fade" id="imageModal{{ $k->no_pengajuan }}_file" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Preview Dokumen Kehilangan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="{{ asset($publicPath) }}" class="img-fluid" alt="Dokumen Kehilangan">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 @endif
+
 {{-- Modal Selesai --}}
 <div class="modal fade" id="selesaiModal{{ $k->no_pengajuan }}" tabindex="-1" role="dialog" aria-labelledby="selesaiModalLabel{{ $k->no_pengajuan }}" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -220,6 +269,7 @@
         </form>
     </div>
 </div>
+
 <!-- Modal Tolak -->
 <div class="modal fade" id="tolakModal{{ $k->no_pengajuan }}" tabindex="-1" role="dialog" aria-labelledby="tolakModalLabel{{ $k->no_pengajuan }}" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -317,7 +367,6 @@
             confirmButtonText: 'Tutup'
         });
     @endif
-
 </script>
 
 @endsection
