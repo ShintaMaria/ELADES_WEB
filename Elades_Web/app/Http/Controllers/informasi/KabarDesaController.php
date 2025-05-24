@@ -47,7 +47,7 @@ class KabarDesaController extends Controller
             'gambar' => $gambar,
         ]);
 
-        return redirect()->route('kabardesa.index')->with('success', 'Data berhasil ditambahkan.');
+        return redirect()->route('kabardesa.index')->with('success', 'Kabar Desa berhasil ditambahkan.');
     }
 
     public function edit(KabarDesa $kabardesa)
@@ -87,7 +87,7 @@ class KabarDesaController extends Controller
             'gambar' => $kabardesa->gambar,
         ]);
 
-        return redirect()->route('kabardesa.index')->with('success', 'Data berhasil diperbarui.');
+        return redirect()->route('kabardesa.index')->with('success', 'Kabar Desa berhasil diperbarui.');
     }
 
     public function destroy(KabarDesa $kabardesa)
@@ -98,6 +98,6 @@ class KabarDesaController extends Controller
 
         $kabardesa->delete();
 
-        return redirect()->route('kabardesa.index')->with('success', 'Data berhasil dihapus.');
+        return redirect()->route('kabardesa.index')->with('success', 'Kabar Desa berhasil dihapus.');
     }
 }

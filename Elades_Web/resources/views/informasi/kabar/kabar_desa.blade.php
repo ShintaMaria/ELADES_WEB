@@ -8,7 +8,13 @@
         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
         <li class="breadcrumb-item active">Kabar Desa</li>
     </ol>
-
+<!-- Notifikasi sukses -->
+        @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
+        
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <a href="{{ route('kabardesa.create') }}" class="btn btn-primary btn-sm">Tambah Kabar Desa Baru</a>
