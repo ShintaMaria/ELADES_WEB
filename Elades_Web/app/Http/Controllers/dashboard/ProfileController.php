@@ -29,21 +29,41 @@ class ProfileController extends Controller
 
         $user = Auth::user();
 
-        // hapus foto lama jika ada
-        if ($user->gambar && Storage::disk('public')->exists('gambar_profil/' . $user->gambar)) {
-            Storage::disk('public')->delete('gambar_profil/' . $user->gambar);
-        }
+    // Hapus foto lama jika ada
+    if ($user->gambar && file_exists(public_path('uploads/profilweb/' . $user->gambar))) {
+        unlink(public_path('uploads/profilweb/' . $user->gambar));
+    }
 
-        // simpan foto baru dengan nama unik
-        $namaFile = uniqid() . '.' . $request->file('foto')->getClientOriginalExtension();
-        $request->file('foto')->storeAs('gambar_profil', $namaFile, 'public');
 
-        // update nama file ke kolom 'gambar'
-        $user->gambar = $namaFile;
+    if (!file_exists(public_path('uploads/profilweb'))) {
+        mkdir(public_path('uploads/profilweb'), 0777, true);
+    }
+
+    // Simpan foto baru
+    $namaFile = uniqid() . '.' . $request->file('foto')->getClientOriginalExtension();
+    $request->file('foto')->move(public_path('uploads/profilweb'), $namaFile);
+
+    // Update database
+    $user->gambar = $namaFile;
+    $user->save();
+
+    return back()->with('profile_update', 'Foto profil berhasil diperbarui.');
+}
+
+public function deletePhoto(Request $request)
+{
+    $user = Auth::user();
+
+    if ($user->gambar && file_exists(public_path('uploads/profilweb/' . $user->gambar))) {
+        unlink(public_path('uploads/profilweb/' . $user->gambar));
+        $user->gambar = null;
         $user->save();
 
-        return back()->with('profile_update', 'Foto profil berhasil diperbarui.');
+        return back()->with('profile_update', 'Foto profil berhasil dihapus.');
     }
+
+    return back()->with('profile_gagal', 'Tidak ada foto profil untuk dihapus.');
+}
 
     // update email
 public function updateEmail(Request $request)
@@ -104,18 +124,5 @@ public function updateEmail(Request $request)
     }
 
     // hapus foto profil
-    public function deletePhoto(Request $request)
-    {
-        $user = Auth::user();
-
-        if ($user->gambar && Storage::disk('public')->exists('gambar_profil/' . $user->gambar)) {
-            Storage::disk('public')->delete('gambar_profil/' . $user->gambar);
-            $user->gambar = null;
-            $user->save();
-
-            return back()->with('profile_update', 'Foto profil berhasil dihapus.');
-        }
-
-        return back()->with('profile_gagal', 'Tidak ada foto profil untuk dihapus.');
-    }
+    
 }

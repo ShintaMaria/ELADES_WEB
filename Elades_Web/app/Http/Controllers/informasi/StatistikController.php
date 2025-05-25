@@ -15,7 +15,7 @@ class StatistikController extends Controller
     public function edit()
     {
         $statistik = Statistik::first(); 
-        // ambil data dari database jika ada
+        // ambil data dari database 
         return view('informasi.statistik.statistik_edit', compact('statistik'));
     }
     public function update(Request $request)
@@ -28,7 +28,7 @@ class StatistikController extends Controller
             'luas_wilayah' => 'required|numeric',
         ]);
 
-        // update ke database (contoh 1 baris saja, kamu sesuaikan)
+        // update ke database
         $statistik = Statistik::first(); 
         $statistik->update($request->all());
 

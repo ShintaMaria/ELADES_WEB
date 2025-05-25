@@ -52,7 +52,7 @@
                     @if(Auth::user()->gambar)
                         {{-- jika ada gambar, tampilkan gambar profil --}}
                         <img class="img-profile rounded-circle"
-                                src="{{ asset('storage/gambar_profil/' . Auth::user()->gambar) }}"
+                                src="{{ asset('uploads/profilweb/' . auth()->user()->gambar) }}"
                                 style="width: 40px; height: 40px; object-fit: cover; border: 2px solid #dee2e6;">
                     @else
                         {{-- jika tidak ada gambar, tampilkan icon user --}}
