@@ -70,7 +70,7 @@ class IzinKerjaController extends Controller
     {
         $izinkerja = IzinKerja::findOrFail($id);
         $pejabat = pejabat::first();
-        $ttdPath = $pejabat->ttd_image ? 'uploads/ttd/'.$pejabat->ttd_image : null;
+        $ttdPath = $pejabat->ttd_image ? 'uploads/ttd/ttd.png' : null;
 
         return view('templatesurat.izinkerja', [
             'mode' => 'preview',
