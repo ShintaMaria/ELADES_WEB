@@ -71,7 +71,7 @@ class PenghasilanController extends Controller
     {
         $PenghasilanOrtu = PenghasilanOrtu::findOrFail($id);
         $pejabat = pejabat::first();
-        $ttdPath = $pejabat->ttd_image ? 'uploads/ttd/'.$pejabat->ttd_image : null;
+        $ttdPath = $pejabat->ttd_image ? 'uploads/ttd/ttd.png' : null;
 
         return view('templatesurat.penghasilan', [
             'mode' => 'preview',

@@ -70,7 +70,7 @@ class KehilanganBarangController extends Controller
     {
         $kehilangan = Kehilangan::findOrFail($id);
         $pejabat = pejabat::first();
-        $ttdPath = $pejabat->ttd_image ? 'uploads/ttd/'.$pejabat->ttd_image : null;
+        $ttdPath = $pejabat->ttd_image ? 'uploads/ttd/ttd.png' : null;
 
         return view('templatesurat.kehilangan', [
             'mode' => 'preview',
